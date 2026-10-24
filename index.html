@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>박경민 (PARK GYEONG MIN) | 3D Technical Artist &amp; Game Developer</title>
+  <meta name="description" content="Maya 하드서페이스 모델링, Substance Painter 4K PBR, Unity 6 실시간 엔진 및 AI 에이전트 파이프라인을 융합한 1인 인터랙티브 3D & 게임 개발자 포트폴리오">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏎️</text></svg>">
+
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- Fonts: Barlow Condensed (display) / Space Grotesk (UI) / JetBrains Mono (telemetry) / Noto Sans KR (Korean) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700;1,800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN. Token names (showroom-*) are kept on purpose: app.js builds class strings with them. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            showroom: {
+              950: '#09090a',
+              900: '#0e0e10',
+              850: '#131315',
+              800: '#1a1a1d',
+              700: '#27272b',
+              gold: '#c6ff32',   /* single accent: signal lime (same family as the in-game HUD) */
+              neon: '#c6ff32',
+              crimson: '#ff3b30'
+            },
+            /* remap slate -> neutral so every existing slate-* class loses its blue cast */
+            slate: {
+              50: '#fafafa', 100: '#f5f5f5', 200: '#e5e5e5', 300: '#d4d4d4', 400: '#a3a3a3',
+              500: '#737373', 600: '#525252', 700: '#404040', 800: '#262626', 900: '#171717', 950: '#0a0a0a'
+            }
+          },
+          borderRadius: { lg: '2px', xl: '3px', '2xl': '4px', '3xl': '4px' },
+          fontFamily: {
+            sans: ['"Space Grotesk"', '"Noto Sans KR"', 'sans-serif'],
+            display: ['"Barlow Condensed"', '"Noto Sans KR"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', '"Noto Sans KR"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Browser Protocol / CORS Guard -->
+  <script>
+    if (window.location.protocol === 'file:') {
+      window.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.createElement('div');
+        overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:999999;background:rgba(7,7,9,0.96);backdrop-filter:blur(16px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;color:#fff;font-family:sans-serif;';
+        overlay.innerHTML = `
+          <div style="max-width:540px;background:#12141c;border:1px solid #c6ff32;border-radius:4px;padding:36px;box-shadow:0 25px 60px rgba(0,0,0,0.85);">
+            <div style="font-size:48px;margin-bottom:16px;">🏎️</div>
+            <h2 style="font-size:22px;font-weight:800;margin-bottom:12px;color:#fff;letter-spacing:-0.5px;">로컬 HTTP 서버로 접속해 주세요</h2>
+            <p style="font-size:13px;color:#94a3b8;line-height:1.7;margin-bottom:28px;">
+              크롬/엣지 브라우저는 보안(CORS) 정책상 <code style="color:#c6ff32;background:#000;padding:3px 6px;border-radius:4px;">file:///</code> 경로에서는 3D 모델(FBX)과 2K 텍스처 파일을 읽지 못하도록 차단합니다.<br><br>
+              이미 백그라운드에 전용 로컬 서버가 실행 중이므로, 아래 버튼을 클릭하시면 <strong>CORS 차단 없이 3D 쇼룸이 즉시 정상 작동</strong>합니다!
+            </p>
+            <a href="http://127.0.0.1:8080/" style="display:inline-block;padding:14px 36px;background:#c6ff32;color:#000;font-weight:bold;font-size:14px;border-radius:2px;text-decoration:none;box-shadow:0 10px 25px rgba(198,255,50,0.25);">
+              http://127.0.0.1:8080/ 접속하기 ➔
+            </a>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+      });
+    }
+  </script>
+
+  <!-- Lucide Icons (Local) -->
+  <script src="libs/lucide.js"></script>
+
+  <!-- Three.js and Loaders (Local) -->
+  <script src="libs/three.min.js"></script>
+  <script src="libs/OrbitControls.js"></script>
+  <script src="libs/GLTFLoader.js"></script>
+  <script src="libs/fflate.min.js"></script>
+  <script src="libs/FBXLoader.js"></script>
+
+  <!-- High-End Post-Processing Engine (Bloom / ACES Tone Mapping) -->
+  <script src="libs/CopyShader.js"></script>
+  <script src="libs/LuminosityHighPassShader.js"></script>
+  <script src="libs/EffectComposer.js"></script>
+  <script src="libs/RenderPass.js"></script>
+  <script src="libs/ShaderPass.js"></script>
+  <script src="libs/UnrealBloomPass.js"></script>
+
+  <!-- GSAP (Local) -->
+  <script src="libs/gsap.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-showroom-950 text-slate-200 font-sans antialiased selection:bg-showroom-gold selection:text-black overflow-x-hidden">
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-showroom-950/85 backdrop-blur-md border-b border-white/[0.08]">
+    <div class="max-w-[1400px] mx-auto px-5 md:px-10 h-16 flex items-center justify-between gap-6">
+      <a href="#hero" class="flex items-baseline gap-3 group min-w-0">
+        <span class="font-display font-extrabold text-[22px] leading-none tracking-tight uppercase text-white group-hover:text-showroom-gold transition-colors whitespace-nowrap">Park Gyeong Min</span>
+        <span class="hidden lg:inline font-mono text-[10px] text-slate-500 uppercase tracking-[0.18em] whitespace-nowrap">박경민 / 3D Artist &amp; Game Dev</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 font-mono text-[11px] uppercase tracking-[0.14em] text-slate-400">
+        <a href="#showroom" class="nav-link"><span>01</span>Showroom</a>
+        <a href="#projects" class="nav-link"><span>02</span>Work</a>
+        <a href="#pipeline" class="nav-link"><span>03</span>Pipeline</a>
+        <a href="#about" class="nav-link"><span>04</span>About</a>
+        <a href="#contact" class="nav-link"><span>05</span>Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="btn-audio-toggle" class="w-9 h-9 flex items-center justify-center border border-white/15 hover:border-showroom-gold text-slate-400 hover:text-showroom-gold transition-colors" title="엔진 앰비언스 사운드">
+          <i data-lucide="volume-x" class="w-4 h-4"></i>
+        </button>
+        <button class="btn-launch-demo btn-lime btn-sm">
+          <span class="live-dot"></span>
+          <span>Play NIGHTRO</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 pt-16">
+
+    <!-- HERO -->
+    <section id="hero" class="relative flex flex-col justify-between border-b border-white/[0.08] overflow-hidden" style="min-height:min(calc(100svh - 4rem), 920px)">
+      <div class="hero-grid" aria-hidden="true"></div>
+
+      <div class="relative max-w-[1400px] w-full mx-auto px-5 md:px-10 pt-5 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.18em] text-slate-500">
+        <span>Portfolio — 2026</span>
+        <span class="hidden sm:inline">Technical 3D Artist / Game Developer</span>
+        <span class="text-showroom-gold">● Online</span>
+      </div>
+
+      <div class="relative max-w-[1400px] w-full mx-auto px-5 md:px-10 py-6 md:py-9">
+        <h1 class="hero-title font-display font-extrabold uppercase text-white">
+          <span class="block">3D Art<span class="text-showroom-gold">+</span></span>
+          <span class="block">Engine<span class="text-showroom-gold">+</span></span>
+          <span class="block">AI Agent</span>
+        </h1>
+
+        <div class="mt-7 md:mt-10 grid md:grid-cols-12 gap-6 items-end">
+          <p class="md:col-span-6 text-lg md:text-2xl text-slate-200 leading-[1.35] font-medium tracking-tight">
+            아이디어 구상부터 실시간 렌더링, 플레이 가능한 게임까지.<br>
+            <span class="text-slate-500">한 사람이 끝까지 만듭니다.</span>
+          </p>
+          <div class="md:col-span-6 flex flex-wrap gap-3 md:justify-end">
+            <button class="btn-launch-demo btn-lime">
+              <span>Play NIGHTRO</span><span aria-hidden="true">↗</span>
+            </button>
+            <a href="#showroom" class="btn-ghost"><span>Enter Showroom</span><span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative border-t border-white/[0.08]">
+        <div class="max-w-[1400px] mx-auto px-5 md:px-10 grid grid-cols-3 divide-x divide-white/[0.08]">
+          <div class="py-4 pr-4 md:pr-8">
+            <div class="font-display font-extrabold text-3xl md:text-5xl leading-none text-white">10</div>
+            <div class="mt-1.5 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.14em] text-slate-500">Production vehicles</div>
+          </div>
+          <div class="py-4 px-4 md:px-8">
+            <div class="font-display font-extrabold text-3xl md:text-5xl leading-none text-white">1</div>
+            <div class="mt-1.5 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.14em] text-slate-500">Playable game / NIGHTRO</div>
+          </div>
+          <div class="py-4 pl-4 md:pl-8">
+            <div class="font-display font-extrabold text-3xl md:text-5xl leading-none text-showroom-gold">1</div>
+            <div class="mt-1.5 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.14em] text-slate-500">Creator, full cycle</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="marquee relative border-t border-white/[0.08] py-2.5" aria-hidden="true">
+        <div class="marquee-track font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500">
+          <span>Maya<i>/</i>Substance Painter<i>/</i>Unity 6<i>/</i>URP<i>/</i>C# Vehicle Dynamics<i>/</i>Three.js<i>/</i>WebGL<i>/</i>Antigravity<i>/</i>Codex<i>/</i>Gemini<i>/</i>Meshy<i>/</i></span>
+          <span>Maya<i>/</i>Substance Painter<i>/</i>Unity 6<i>/</i>URP<i>/</i>C# Vehicle Dynamics<i>/</i>Three.js<i>/</i>WebGL<i>/</i>Antigravity<i>/</i>Codex<i>/</i>Gemini<i>/</i>Meshy<i>/</i></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 SHOWROOM -->
+    <section id="showroom" class="relative h-[88svh] min-h-[640px] max-h-[960px] flex flex-col justify-between overflow-hidden border-b border-white/5">
+      
+      <!-- 3D Canvas Container -->
+      <div id="canvas-container" class="absolute inset-0 z-0 cursor-grab active:cursor-grabbing">
+        <!-- Three.js Canvas injected here -->
+      </div>
+
+      <!-- Showroom caption (non-interactive) -->
+      <div class="pointer-events-none relative z-10 p-6 md:p-10 max-w-md">
+        <div class="eyebrow mb-4">01 — Showroom</div>
+        <h2 class="font-display font-extrabold uppercase leading-[0.86] tracking-tight text-6xl md:text-8xl text-white [text-shadow:0_2px_30px_rgba(0,0,0,0.45)]">Studio<br>Showroom</h2>
+        <p class="mt-5 text-sm text-slate-300 max-w-xs leading-relaxed [text-shadow:0_1px_12px_rgba(0,0,0,0.6)]">
+          Maya · Substance Painter 2K PBR로 만든 차량 10종. 우측 컨트롤러에서 차량, 조명, 각도, 머티리얼을 바꿔볼 수 있습니다.
+        </p>
+      </div>
+
+      <!-- Controls Overlay: Floating Right Panel (Car Customizer) -->
+      <aside class="absolute top-8 right-6 md:right-10 z-20 w-80 max-w-[calc(100vw-3rem)] max-h-[calc(100vh-4rem)] overflow-y-auto bg-showroom-900/85 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl transition-all duration-300">
+        <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+          <div class="flex items-center gap-2">
+            <i data-lucide="sliders" class="w-4 h-4 text-showroom-gold"></i>
+            <span class="font-mono text-xs uppercase tracking-wider font-semibold text-white">SHOWROOM CONTROLLER</span>
+          </div>
+          <!-- Dev Mode Lock/Unlock Toggle -->
+          <button id="btn-dev-toggle" class="flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono border border-white/10 bg-white/5 hover:border-showroom-gold/50 hover:bg-showroom-gold/10 text-slate-400 hover:text-showroom-gold transition-all" title="개발자 정밀 디버그 튜너 모드 토글 (단축키: Alt + D)">
+            <i data-lucide="lock" id="dev-lock-icon" class="w-3 h-3 text-slate-400"></i>
+            <span id="dev-mode-label">DEV 튜너</span>
+          </button>
+        </div>
+
+        <!-- 0. Live Vehicle Model Switcher -->
+        <div class="mb-5 pb-4 border-b border-white/10">
+          <label class="text-[11px] font-mono uppercase text-slate-400 block mb-2 tracking-wider flex justify-between">
+            <span class="flex items-center gap-1.5">
+              <i data-lucide="car" class="w-3.5 h-3.5 text-showroom-gold"></i>
+              <span>전시장 전시 차량 선택</span>
+            </span>
+            <span class="text-showroom-gold font-bold">1차 완성 3D 모델</span>
+          </label>
+          <select id="vehicle-select" class="w-full bg-showroom-950 border border-showroom-gold/40 hover:border-showroom-gold text-white text-xs font-mono rounded-xl p-2.5 focus:outline-none focus:ring-1 focus:ring-showroom-gold cursor-pointer transition-all">
+            <option value="concept">Concept GT (Unity Flop Paint Lab 프로토타입)</option>
+            <option value="bentley" selected>1993 Bentley Turbo R (2K GLB)</option>
+            <option value="lambo">2012 Lamborghini LP700-4 (2K PBR)</option>
+            <option value="bugatti">2015 Bugatti Veyron 16.4 (2K PBR)</option>
+            <option value="mustang">2013 Ford Mustang Shelby GT500 (2K PBR)</option>
+            <option value="spano">2016 GTA Spano (2K PBR)</option>
+            <option value="stinger">2018 Kia Stinger GT 3.3T (2K PBR)</option>
+            <option value="svr">2020 Range Rover Sport SVR (2K PBR)</option>
+            <option value="cobalt">2012 Chevy Cobalt SS Pro (2K PBR)</option>
+            <option value="spark">2010 Chevy Spark M300 (2K PBR)</option>
+            <option value="golf">2012 VW Golf GTi (2K PBR)</option>
+          </select>
+          <div id="vehicle-fixed-hint" class="hidden mt-2 text-[10px] font-mono text-amber-300/80 bg-amber-500/10 border border-amber-500/20 rounded-lg p-2">
+            제작자 안내: 이 차량은 원본 4K→2K URP 베이크 텍스처(고정 컬러)로 렌더링되며, 턴테이블 회전·라이팅·와이어프레임 토폴로지 검증이 지원됩니다.
+          </div>
+
+          <!-- Material Transparency & PBR Live Tuner Studio -->
+          <div class="mt-3 pt-3 border-t border-white/10" id="mat-inspector-section">
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-[11px] font-mono uppercase text-slate-300 tracking-wider flex items-center gap-1.5 font-bold">
+                <i data-lucide="layers" class="w-3.5 h-3.5 text-showroom-gold"></i>
+                <span>머티리얼 투명도 &amp; 재질 튜너</span>
+              </label>
+              <button id="btn-toggle-mat-inspector" class="text-[10px] font-mono text-showroom-gold hover:text-amber-300 px-2 py-0.5 rounded bg-showroom-gold/10 border border-showroom-gold/30 flex items-center gap-1 transition-all">
+                <span id="mat-inspector-toggle-label">튜너 열기 ▼</span>
+              </button>
+            </div>
+            
+            <div id="mat-inspector-panel" class="hidden mt-2 space-y-2 text-[10px] font-mono">
+              <!-- Filter chips & Toolbar -->
+              <div class="flex items-center justify-between gap-1 pb-1 border-b border-white/5">
+                <div class="flex items-center gap-1 overflow-x-auto pb-0.5" id="mat-filter-chips">
+                  <button data-filter="all" class="mat-filter-btn px-2 py-0.5 rounded bg-showroom-gold/20 text-showroom-gold border border-showroom-gold/40 text-[9px]">전체</button>
+                  <button data-filter="glass" class="mat-filter-btn px-2 py-0.5 rounded bg-white/5 text-slate-400 hover:text-white border border-white/10 text-[9px]">유리/램프</button>
+                  <button data-filter="body" class="mat-filter-btn px-2 py-0.5 rounded bg-white/5 text-slate-400 hover:text-white border border-white/10 text-[9px]">바디/내외장</button>
+                  <button data-filter="wheel" class="mat-filter-btn px-2 py-0.5 rounded bg-white/5 text-slate-400 hover:text-white border border-white/10 text-[9px]">휠/브레이크</button>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between gap-1 text-[9px]">
+                <button id="btn-reset-mat-settings" class="px-2 py-1 rounded bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 flex items-center gap-1 transition-all" title="현재 차량의 머티리얼 세팅을 기본값으로 복원">
+                  <span>기본값 리셋</span>
+                </button>
+                <button id="btn-copy-mat-json" class="px-2 py-1 rounded bg-showroom-gold/15 hover:bg-showroom-gold/25 text-showroom-gold border border-showroom-gold/30 flex items-center gap-1 transition-all" title="현재 세팅 JSON을 클립보드로 복사">
+                  <span>JSON 복사</span>
+                </button>
+              </div>
+
+              <!-- Toast notification -->
+              <div id="mat-inspector-toast" class="hidden p-1.5 rounded bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[9px] text-center"></div>
+
+              <!-- Dynamic list of materials -->
+              <div id="mat-inspector-container" class="space-y-2 max-h-72 overflow-y-auto pr-1">
+                <!-- Dynamically populated with loaded car materials -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. Paint Color Switcher & Unity Flop Engine -->
+        <div class="mb-5" id="flop-paint-section">
+          <!-- All Vehicles Flop Disabled Notice Banner -->
+          <div id="flop-disabled-banner" class="mb-3 text-[10px] font-mono text-amber-300/90 bg-amber-500/10 border border-amber-500/25 rounded-xl p-2.5 flex items-start gap-2 transition-all">
+            <i data-lucide="info" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+            <div>
+              <span class="font-bold block text-amber-200">Substance Painter 2K PBR 순정 베이크 전시 모드</span>
+              <span class="text-[9px] text-slate-400 block mt-0.5">현재 전 차종의 Maya 정밀 모델링 및 Substance Painter 오리지널 도색 디테일을 온전히 감상하실 수 있도록 순정 PBR 상태로 전시 중입니다. (Unity 3-Channel Region Mask 기반 실시간 Flop Paint 셰이더 엔진은 구현 완료되었으며, 전 차종 정밀 마스크맵 전수 제작 후 활성화 대기 중입니다.)</span>
+            </div>
+          </div>
+
+          <div id="flop-controls-wrapper" class="opacity-40 pointer-events-none transition-opacity duration-300">
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-[11px] font-mono uppercase text-slate-400 tracking-wider flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-showroom-gold"></span>
+                <span>Unity Flop Paint Lab</span>
+              </label>
+              <div class="flex items-center gap-2">
+                <span class="text-[9px] font-mono text-slate-400">FLOP 틴트</span>
+                <input type="checkbox" id="toggle-flop" checked class="w-3.5 h-3.5 accent-showroom-gold cursor-pointer" title="경사각 의존성 Flop 틴트 효과 활성화">
+              </div>
+            </div>
+
+            <!-- Public Presets (Always Visible for All Users) -->
+            <div class="grid grid-cols-2 gap-1.5 mb-2 font-mono text-[10px]" id="flop-presets">
+              <!-- Rendered dynamically by app.js (Built-in + Custom Presets) -->
+            </div>
+
+            <!-- Regular User Notice (Shown when Dev Mode is Locked) -->
+            <div id="dev-locked-notice" class="flex items-center justify-between text-[10px] font-mono text-slate-500 bg-white/[0.02] border border-white/5 px-2.5 py-1.5 rounded-lg mb-2">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="shield-check" class="w-3 h-3 text-slate-400"></i>
+                <span>일반 관람 모드 (정밀 튜너 잠김)</span>
+              </span>
+              <span class="text-[9px] text-slate-600">제작자 전용</span>
+            </div>
+
+            <!-- Developer Debug Sliders & Preset Studio (Hidden for regular visitors by default, toggled via Dev Mode) -->
+            <div id="flop-debug-panel" class="hidden bg-black/60 rounded-xl p-3 border border-showroom-gold/30 space-y-2.5 text-[10px] font-mono shadow-inner">
+            <div class="flex items-center justify-between border-b border-white/10 pb-1.5 mb-2">
+              <span class="text-showroom-gold font-bold flex items-center gap-1">
+                <i data-lucide="wrench" class="w-3 h-3"></i>
+                <span>FLOP PBR SHADER TUNER</span>
+              </span>
+              <span class="text-[9px] text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">DEV UNLOCKED</span>
+            </div>
+
+            <!-- Base & Flop Color Pickers -->
+            <div class="grid grid-cols-2 gap-2">
+              <div class="bg-black/40 p-2 rounded-lg border border-white/5">
+                <span class="text-slate-400 block mb-1">Base Coat (정면)</span>
+                <div class="flex items-center gap-2">
+                  <input type="color" id="flop-base-picker" value="#d81422" class="w-6 h-5 rounded cursor-pointer bg-transparent border-0">
+                  <span id="flop-base-label" class="text-slate-200 font-bold">#D81422</span>
+                </div>
+              </div>
+              <div class="bg-black/40 p-2 rounded-lg border border-white/5">
+                <span class="text-slate-400 block mb-1">Flop Tint (경사각)</span>
+                <div class="flex items-center gap-2">
+                  <input type="color" id="flop-tint-picker" value="#4a030a" class="w-6 h-5 rounded cursor-pointer bg-transparent border-0">
+                  <span id="flop-tint-label" class="text-showroom-gold font-bold">#4A030A</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flop Falloff & Intensity Sliders -->
+            <div class="space-y-2 pt-1 border-t border-white/5">
+              <div>
+                <div class="flex justify-between text-slate-400 mb-0.5">
+                  <span>Flop Falloff Curve (전이 곡선)</span>
+                  <span id="flop-falloff-val" class="text-showroom-gold font-bold">2.5</span>
+                </div>
+                <input type="range" id="flop-falloff-slider" min="1.0" max="5.0" step="0.1" value="2.5" class="w-full accent-showroom-gold h-1 bg-white/10 rounded cursor-pointer">
+              </div>
+
+              <div>
+                <div class="flex justify-between text-slate-400 mb-0.5">
+                  <span>Flop Glancing Boost (반사 강도)</span>
+                  <span id="flop-intensity-val" class="text-showroom-gold font-bold">2.2</span>
+                </div>
+                <input type="range" id="flop-intensity-slider" min="0.5" max="5.0" step="0.1" value="2.2" class="w-full accent-showroom-gold h-1 bg-white/10 rounded cursor-pointer">
+              </div>
+            </div>
+
+            <!-- Clearcoat Sliders -->
+            <div class="space-y-2 pt-1 border-t border-white/5">
+              <div>
+                <div class="flex justify-between text-slate-400 mb-0.5">
+                  <span>Clearcoat Layer (투명 탑코트)</span>
+                  <span id="clearcoat-val" class="text-white font-bold">0.95</span>
+                </div>
+                <input type="range" id="clearcoat-slider" min="0.0" max="1.0" step="0.02" value="0.95" class="w-full accent-showroom-gold h-1 bg-white/10 rounded cursor-pointer">
+              </div>
+
+              <div>
+                <div class="flex justify-between text-slate-400 mb-0.5">
+                  <span>Clearcoat Roughness (거칠기)</span>
+                  <span id="clearcoat-rough-val" class="text-white font-bold">0.05</span>
+                </div>
+                <input type="range" id="clearcoat-rough-slider" min="0.0" max="0.5" step="0.01" value="0.05" class="w-full accent-showroom-gold h-1 bg-white/10 rounded cursor-pointer">
+              </div>
+            </div>
+
+            <!-- Metallic & Roughness Base Sliders -->
+            <div class="space-y-2 pt-1 border-t border-white/5">
+              <div>
+                <div class="flex justify-between text-slate-400 mb-0.5">
+                  <span>Base Metalness (금속성)</span>
+                  <span id="metalness-val" class="text-white font-bold">0.88</span>
+                </div>
+                <input type="range" id="metalness-slider" min="0.0" max="1.0" step="0.02" value="0.88" class="w-full accent-showroom-gold h-1 bg-white/10 rounded cursor-pointer">
+              </div>
+
+              <div>
+                <div class="flex justify-between text-slate-400 mb-0.5">
+                  <span>Base Roughness (표면 거칠기)</span>
+                  <span id="roughness-val" class="text-white font-bold">0.16</span>
+                </div>
+                <input type="range" id="roughness-slider" min="0.0" max="1.0" step="0.02" value="0.16" class="w-full accent-showroom-gold h-1 bg-white/10 rounded cursor-pointer">
+              </div>
+            </div>
+
+            <!-- Preset Save & Export Box -->
+            <div class="pt-2 border-t border-white/10 space-y-2">
+              <span class="text-slate-300 font-bold block">💾 커스텀 프리셋 저장 & 코드 내보내기</span>
+              <div class="flex gap-1.5">
+                <input type="text" id="custom-preset-input" placeholder="새 프리셋 이름 입력 (예: Titanium Blue)" class="flex-1 bg-black/60 border border-white/20 focus:border-showroom-gold rounded px-2 py-1 text-white text-[10px] font-mono focus:outline-none">
+                <button id="btn-save-custom-preset" class="px-2.5 py-1 rounded bg-showroom-gold text-black font-bold hover:bg-amber-400 transition-colors whitespace-nowrap">
+                  저장
+                </button>
+              </div>
+
+              <div class="flex gap-1.5 pt-1">
+                <button id="btn-copy-preset-json" class="flex-1 flex items-center justify-center gap-1 py-1 rounded bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors" title="현재 파라미터를 app.js에 복사 가능한 JSON 코드로 클립보드에 복사">
+                  <i data-lucide="copy" class="w-3 h-3"></i>
+                  <span>JSON 코드 복사</span>
+                </button>
+                <button id="btn-reset-preset" class="px-2 py-1 rounded bg-red-900/30 hover:bg-red-900/50 text-red-300 transition-colors" title="기본 Candy Red로 리셋">
+                  리셋
+                </button>
+              </div>
+              <div id="preset-feedback" class="hidden text-[9px] text-emerald-400 font-mono text-center pt-0.5"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <!-- 2. Studio Lighting Mode -->
+        <div class="mb-5">
+          <label class="text-[11px] font-mono uppercase text-slate-400 block mb-2 tracking-wider">Studio Lighting Environment</label>
+          <div class="grid grid-cols-3 gap-1.5 font-mono text-[10px]">
+            <button class="light-btn px-2.5 py-1.5 rounded-lg border border-showroom-gold bg-showroom-gold/15 text-showroom-gold text-center transition-all" data-light="studio">
+              IRAY STUDIO
+            </button>
+            <button class="light-btn px-2.5 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:border-white/20 text-slate-300 text-center transition-all" data-light="cyber">
+              CYBER
+            </button>
+            <button class="light-btn px-2.5 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:border-white/20 text-slate-300 text-center transition-all" data-light="sunset">
+              SUNSET
+            </button>
+          </div>
+
+          <!-- Studio Exposure / Brightness Slider -->
+          <div class="mt-2.5 bg-black/40 rounded-xl p-2.5 border border-white/5">
+            <div class="flex justify-between items-center text-[10px] font-mono text-slate-400 mb-1">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="sun" class="w-3.5 h-3.5 text-showroom-gold"></i>
+                <span>스튜디오 밝기 / 노출 (Exposure)</span>
+              </span>
+              <span id="exposure-val" class="text-showroom-gold font-bold">0.78</span>
+            </div>
+            <input type="range" id="exposure-slider" min="0.30" max="1.40" step="0.02" value="0.78" class="w-full accent-showroom-gold h-1 bg-white/10 rounded cursor-pointer">
+          </div>
+        </div>
+
+        <!-- 3. Camera View Angles -->
+        <div class="mb-5">
+          <label class="text-[11px] font-mono uppercase text-slate-400 block mb-2 tracking-wider">Camera Angles</label>
+          <div class="grid grid-cols-4 gap-1 font-mono text-[10px]">
+            <button class="cam-btn px-2 py-1.5 rounded border border-white/10 hover:border-showroom-gold bg-white/5 text-slate-300 hover:text-showroom-gold transition-all" data-cam="hero">
+              HERO
+            </button>
+            <button class="cam-btn px-2 py-1.5 rounded border border-white/10 hover:border-showroom-gold bg-white/5 text-slate-300 hover:text-showroom-gold transition-all" data-cam="side">
+              SIDE
+            </button>
+            <button class="cam-btn px-2 py-1.5 rounded border border-white/10 hover:border-showroom-gold bg-white/5 text-slate-300 hover:text-showroom-gold transition-all" data-cam="wheel">
+              WHEEL
+            </button>
+            <button class="cam-btn px-2 py-1.5 rounded border border-white/10 hover:border-showroom-gold bg-white/5 text-slate-300 hover:text-showroom-gold transition-all" data-cam="top">
+              TOP
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. Interactive Toggles -->
+        <div class="space-y-2 border-t border-white/10 pt-4">
+          <div class="flex items-center justify-between text-xs font-mono">
+            <span class="text-slate-300 flex items-center gap-2">
+              <i data-lucide="rotate-cw" class="w-3.5 h-3.5 text-showroom-gold"></i>
+              360° 턴테이블 자동회전
+            </span>
+            <input type="checkbox" id="toggle-autorotate" checked class="w-4 h-4 accent-showroom-gold cursor-pointer">
+          </div>
+
+          <div class="flex items-center justify-between text-xs font-mono">
+            <span class="text-slate-300 flex items-center gap-2">
+              <i data-lucide="grid" class="w-3.5 h-3.5 text-showroom-neon"></i>
+              와이어프레임 (Topology)
+            </span>
+            <input type="checkbox" id="toggle-wireframe" class="w-4 h-4 accent-showroom-neon cursor-pointer">
+          </div>
+
+          <div class="flex items-center justify-between text-xs font-mono">
+            <span class="text-slate-300 flex items-center gap-2">
+              <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i>
+              LED 헤드라이트 글로우
+            </span>
+            <input type="checkbox" id="toggle-lights" checked class="w-4 h-4 accent-amber-400 cursor-pointer">
+          </div>
+        </div>
+
+        <!-- 5. Custom 3D Model Drag & Drop Zone -->
+        <div class="mt-4 border-t border-white/10 pt-3">
+          <label for="model-file-input" class="group flex items-center justify-center gap-2 p-2.5 rounded-xl border border-dashed border-white/20 hover:border-showroom-gold/60 bg-white/5 hover:bg-showroom-gold/10 cursor-pointer transition-all">
+            <i data-lucide="upload" class="w-4 h-4 text-slate-400 group-hover:text-showroom-gold transition-colors"></i>
+            <span class="text-[11px] font-mono text-slate-400 group-hover:text-showroom-gold transition-colors">
+              내 3D 모델 업로드 (.glb / .gltf / .fbx)
+            </span>
+          </label>
+          <input type="file" id="model-file-input" accept=".glb,.gltf,.fbx" class="hidden">
+        </div>
+      </aside>
+
+      <!-- Bottom Status Bar -->
+      <div class="relative z-10 p-6 md:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-gradient-to-t from-showroom-950 via-showroom-950/80 to-transparent">
+        <div class="flex items-center gap-4 text-xs font-mono text-slate-400">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            <span class="text-slate-300 font-semibold">WEBGL ACCELERATED</span>
+          </div>
+          <span class="hidden sm:inline text-white/20">|</span>
+          <span class="hidden sm:inline">좌클릭: 회전 / 우클릭: 이동 / 휠: 줌</span>
+        </div>
+
+      </div>
+    </section>      </div>
+    </section>
+
+    <!-- 02 WORK -->
+    <section id="projects" class="max-w-[1400px] mx-auto px-5 md:px-10 py-24 md:py-32">
+      <div class="reveal flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+        <div>
+          <div class="eyebrow mb-5">02 — Selected Work</div>
+          <h2 class="section-title">Projects</h2>
+        </div>
+        <p class="max-w-sm text-sm text-slate-400 leading-relaxed">
+          C# 게임 로직, 로우폴 모델링, 2K PBR 텍스처링, 생성형 AI 에이전트 파이프라인까지. 실제로 만든 결과물입니다.
+        </p>
+      </div>
+
+      <div class="reveal flex flex-wrap gap-2 mb-8 font-mono text-[11px] uppercase tracking-[0.12em]" id="project-filters">
+        <button class="filter-btn active px-4 py-2 border border-white/15 bg-showroom-gold text-black font-semibold transition-colors" data-filter="all">All</button>
+        <button class="filter-btn px-4 py-2 border border-white/15 bg-showroom-800/80 hover:border-showroom-gold text-slate-300 transition-colors" data-filter="racing-game">Racing Game</button>
+        <button class="filter-btn px-4 py-2 border border-white/15 bg-showroom-800/80 hover:border-showroom-gold text-slate-300 transition-colors" data-filter="ai-tech">AI / Tech R&amp;D</button>
+        <button class="filter-btn px-4 py-2 border border-white/15 bg-showroom-800/80 hover:border-showroom-gold text-slate-300 transition-colors" data-filter="racing-fleet">3D Vehicles</button>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="projects-grid">
+        <!-- Project Cards will be dynamically injected by app.js -->
+      </div>
+    </section>
+
+    <!-- 03 PIPELINE -->
+    <section id="pipeline" class="border-y border-white/[0.08] bg-showroom-900/60">
+      <div class="max-w-[1400px] mx-auto px-5 md:px-10 py-24 md:py-32">
+        <div class="reveal flex flex-col md:flex-row md:items-end justify-between gap-8 mb-14">
+          <div>
+            <div class="eyebrow mb-5">03 — Pipeline</div>
+            <h2 class="section-title">3D Art<span class="text-showroom-gold">+</span><br>Engine<span class="text-showroom-gold">+</span><br>AI Agent</h2>
+          </div>
+          <p class="max-w-sm text-sm text-slate-400 leading-relaxed">
+            아이디어 구상부터 최종 실시간 렌더링까지, 한 사람이 이어서 수행하는 제작 파이프라인입니다.
+          </p>
+        </div>
+
+        <div class="border-t border-white/[0.08]">
+
+        <div class="reveal pipe-row group grid grid-cols-12 gap-x-4 md:gap-x-8 gap-y-4 py-8 border-b border-white/[0.08]">
+          <div class="col-span-2 md:col-span-1 font-mono text-xs text-slate-500 pt-2">01</div>
+          <div class="col-span-10 md:col-span-4 flex items-start gap-4">
+            <img src="assets/icons/maya.svg" alt="Autodesk Maya" class="tool-icon " />
+            <div>
+              <h3 class="font-display font-bold uppercase leading-none text-3xl md:text-4xl text-white group-hover:text-showroom-gold transition-colors">Maya &amp; SubD</h3>
+              <span class="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Autodesk</span>
+            </div>
+          </div>
+          <p class="col-span-12 md:col-span-4 text-sm text-slate-400 leading-relaxed">차량 외장 곡률 제어(SubD / NURBS), 정확한 토폴로지와 엣지 루프 설계로 고품질 리플렉션을 보장합니다. (기초 블록아웃 및 데시메이션 보조로 ZBrush 활용)</p>
+          <div class="col-span-12 md:col-span-3 flex flex-wrap content-start gap-1.5 md:justify-end"><span class="chip">Maya 2024</span><span class="chip">SubD Topology</span><span class="chip">UV Unwrapping</span><span class="chip">ZBrush (Aux)</span></div>
+        </div>
+
+        <div class="reveal pipe-row group grid grid-cols-12 gap-x-4 md:gap-x-8 gap-y-4 py-8 border-b border-white/[0.08]">
+          <div class="col-span-2 md:col-span-1 font-mono text-xs text-slate-500 pt-2">02</div>
+          <div class="col-span-10 md:col-span-4 flex items-start gap-4">
+            <img src="assets/icons/substance.svg" alt="Adobe Substance 3D Painter" class="tool-icon " />
+            <div>
+              <h3 class="font-display font-bold uppercase leading-none text-3xl md:text-4xl text-white group-hover:text-showroom-gold transition-colors">Substance 3D</h3>
+              <span class="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Adobe</span>
+            </div>
+          </div>
+          <p class="col-span-12 md:col-span-4 text-sm text-slate-400 leading-relaxed">정밀 카본 직조, 가죽 패턴 및 스티치, 브레이크 마모도 등 복잡한 표면 질감과 마이크로 디테일을 스마트 머티리얼과 프로시저럴 마스크로 섭스턴스 페인터 내에서 직접 정밀 완성합니다.</p>
+          <div class="col-span-12 md:col-span-3 flex flex-wrap content-start gap-1.5 md:justify-end"><span class="chip">Painter 2K/4K</span><span class="chip">Fabric &amp; Leather</span><span class="chip">Smart Materials</span><span class="chip">Micro Alphas</span></div>
+        </div>
+
+        <div class="reveal pipe-row group grid grid-cols-12 gap-x-4 md:gap-x-8 gap-y-4 py-8 border-b border-white/[0.08]">
+          <div class="col-span-2 md:col-span-1 font-mono text-xs text-slate-500 pt-2">03</div>
+          <div class="col-span-10 md:col-span-4 flex items-start gap-4">
+            <img src="assets/icons/unity.svg" alt="Unity 6 Engine" class="tool-icon " />
+            <div>
+              <h3 class="font-display font-bold uppercase leading-none text-3xl md:text-4xl text-white group-hover:text-showroom-gold transition-colors">Unity 6 Engine</h3>
+              <span class="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Runtime</span>
+            </div>
+          </div>
+          <p class="col-span-12 md:col-span-4 text-sm text-slate-400 leading-relaxed">URP/HDRP 기반 물리 기반 실시간 렌더링, C# 차량 동역학 물리 시뮬레이션, 커스텀 셰이더 및 포스트 프로세싱으로 완성도 높은 3D 인터랙티브 경험을 설계합니다.</p>
+          <div class="col-span-12 md:col-span-3 flex flex-wrap content-start gap-1.5 md:justify-end"><span class="chip">Unity 6 (6000.3)</span><span class="chip">URP 17.3</span><span class="chip">C# Dynamics</span><span class="chip">Shader Graph</span></div>
+        </div>
+
+        <div class="reveal pipe-row group grid grid-cols-12 gap-x-4 md:gap-x-8 gap-y-4 py-8 border-b border-white/[0.08]">
+          <div class="col-span-2 md:col-span-1 font-mono text-xs text-slate-500 pt-2">04</div>
+          <div class="col-span-10 md:col-span-4 flex items-start gap-4">
+            <img src="assets/icons/antigravity.png" alt="Google Antigravity &amp; AI Agent Stack" class="tool-icon " />
+            <div>
+              <h3 class="font-display font-bold uppercase leading-none text-3xl md:text-4xl text-white group-hover:text-showroom-gold transition-colors">AI Agent Stack</h3>
+              <span class="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Autonomous</span>
+            </div>
+          </div>
+          <p class="col-span-12 md:col-span-4 text-sm text-slate-400 leading-relaxed">중요 연산(정밀 차량 물리, 커스텀 그래픽스 세팅, 아키텍처 명세)을 담당하는 Codex 6.1 Sol과 실제 코드·파이프라인을 초고속 대량 작성하는 Gemini 3.8 Flash를 유기적으로 결합하여 1인 제작 속도를 극대화합니다.</p>
+          <div class="col-span-12 md:col-span-3 flex flex-wrap content-start gap-1.5 md:justify-end"><span class="chip">Antigravity</span><span class="chip">Codex 6.1 Sol</span><span class="chip">Gemini 3.8 Flash</span><span class="chip">Meshy AI</span></div>
+        </div>
+        </div>
+
+        <!-- AI agent &amp; tool ecosystem -->
+        <div class="reveal mt-16">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5">
+            <div class="eyebrow">Active AI Agent &amp; Tool Ecosystem</div>
+            <span class="font-mono text-[11px] text-slate-500">1인 풀사이클 제작 속도를 5~10배 가속하는 생성형 AI 툴셋</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-l border-t border-white/[0.08]">
+
+          <div class="tool-cell group p-5 border-r border-b border-white/[0.08]">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="assets/icons/antigravity.png" alt="Google Antigravity" class="tool-icon " />
+              <div class="min-w-0">
+                <div class="text-sm font-semibold text-white group-hover:text-showroom-gold transition-colors truncate">Antigravity</div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 truncate">Google DeepMind</div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">자율 코딩 에이전트·Three.js 셰이더 및 풀사이클 파이프라인 지휘</p>
+          </div>
+
+          <div class="tool-cell group p-5 border-r border-b border-white/[0.08]">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="assets/icons/gemini.svg" alt="Google Gemini" class="tool-icon " />
+              <div class="min-w-0">
+                <div class="text-sm font-semibold text-white group-hover:text-showroom-gold transition-colors truncate">Gemini 3.8 Flash</div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 truncate">Production Workhorse</div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">Sol의 README 명세 및 최적화 설계를 바탕으로 실제 코드와 시스템을 초고속·대량 생산</p>
+          </div>
+
+          <div class="tool-cell group p-5 border-r border-b border-white/[0.08]">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="assets/icons/openai.svg" alt="OpenAI Codex" class="tool-icon " />
+              <div class="min-w-0">
+                <div class="text-sm font-semibold text-white group-hover:text-showroom-gold transition-colors truncate">Codex 6.1 Sol</div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 truncate">Precision Compute Engine</div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">중요 연산(정밀 차량 물리, 동역학 수식, 커스텀 그래픽스 세팅) 및 최적화 아키텍처 명세 수립</p>
+          </div>
+
+          <div class="tool-cell group p-5 border-r border-b border-white/[0.08]">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="assets/icons/meshy.svg" alt="Meshy AI" class="tool-icon " />
+              <div class="min-w-0">
+                <div class="text-sm font-semibold text-white group-hover:text-showroom-gold transition-colors truncate">Meshy AI</div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 truncate">3D Gen AI</div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">차량 베이스 볼륨 및 3D 실루엣 고속 추출 후 Maya 하드서페이스 정밀화</p>
+          </div>
+
+          <div class="tool-cell group p-5 border-r border-b border-white/[0.08]">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="assets/icons/stitch.png" alt="Google Stitch" class="tool-icon tool-icon-photo" />
+              <div class="min-w-0">
+                <div class="text-sm font-semibold text-white group-hover:text-showroom-gold transition-colors truncate">Stitch</div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 truncate">Google Labs</div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">GREE WebView 연동 인게임 레이스 HUD &amp; 튜토리얼 UI 고속 설계</p>
+          </div>
+
+          <div class="tool-cell group p-5 border-r border-b border-white/[0.08]">
+            <div class="flex items-center gap-3 mb-3">
+              <img src="assets/icons/google-labs.svg" alt="Google Labs" class="tool-icon " />
+              <div class="min-w-0">
+                <div class="text-sm font-semibold text-white group-hover:text-showroom-gold transition-colors truncate">Google Labs</div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 truncate">GenAI Media</div>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">캘리퍼 30종 알파 텍스처, 카본 직조 패턴 및 실험적 생성형 프롬프트 파이프라인</p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 ABOUT -->
+    <section id="about" class="max-w-[1400px] mx-auto px-5 md:px-10 py-24 md:py-32">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-14">
+        <div class="reveal lg:col-span-7">
+          <div class="eyebrow mb-6">04 — About</div>
+          <h2 class="text-4xl md:text-6xl font-bold leading-[1.1] tracking-tight text-white">
+            1인 제작의 한계를 넘는<br>
+            <span class="text-showroom-gold">차세대 인터랙티브</span><br>
+            3D 크리에이터
+          </h2>
+          <div class="mt-10 space-y-5 text-slate-400 leading-relaxed max-w-2xl">
+            <p>Maya를 활용한 정교한 3D 하드서페이스 서브디비전 모델링과 Substance Painter의 텍스처링(직조, 가죽 패턴, PBR 스마트 머티리얼) 노하우를 바탕으로, Unity 엔진 및 웹 3D 환경에서 완벽히 구동되는 인터랙티브 경험을 설계합니다. (ZBrush는 기초 블록아웃 및 데시메이션 보조로 활용)</p>
+            <p>단순한 3D 모델링에 그치지 않고 최신 AI 에이전트 도구를 능동적으로 활용하여 프로토타이핑, 텍스처 생성, 쉐이더 코드 작성, 시스템 로직 구축까지 전 과정을 1인이 기민하고 신속하게 완성하는 하이브리드 워크플로우를 실천하고 있습니다.</p>
+          </div>
+        </div>
+
+        <div class="reveal lg:col-span-5 lg:pt-14">
+          <dl class="border-t border-white/[0.08] font-mono text-xs">
+            <div class="flex justify-between gap-6 py-4 border-b border-white/[0.08]"><dt class="text-slate-500 uppercase tracking-[0.14em]">Name</dt><dd class="text-white text-right">박경민 / PARK GYEONG MIN</dd></div>
+            <div class="flex justify-between gap-6 py-4 border-b border-white/[0.08]"><dt class="text-slate-500 uppercase tracking-[0.14em]">Role</dt><dd class="text-white text-right">Technical 3D Artist</dd></div>
+            <div class="flex justify-between gap-6 py-4 border-b border-white/[0.08]"><dt class="text-slate-500 uppercase tracking-[0.14em]">Focus</dt><dd class="text-white text-right">1인 개발 + AI Pipeline</dd></div>
+            <div class="flex justify-between gap-6 py-4 border-b border-white/[0.08]"><dt class="text-slate-500 uppercase tracking-[0.14em]">Contact</dt><dd class="text-right"><a href="mailto:parkkm1110@gmail.com" class="text-showroom-gold hover:underline">parkkm1110@gmail.com</a></dd></div>
+          </dl>
+          <div class="mt-10 grid grid-cols-3 gap-4">
+            <div><div class="font-display font-extrabold text-5xl leading-none text-white">100<span class="text-showroom-gold">%</span></div><div class="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-500">Full-cycle 1인 개발</div></div>
+            <div><div class="font-display font-extrabold text-5xl leading-none text-white">10</div><div class="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-500">Production cars</div></div>
+            <div><div class="font-display font-extrabold text-5xl leading-none text-white">1</div><div class="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-500">Playable game</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 CONTACT -->
+    <section id="contact" class="border-t border-white/[0.08] bg-showroom-900/60">
+      <div class="max-w-[1400px] mx-auto px-5 md:px-10 pt-24 md:pt-32 pb-10">
+        <div class="reveal">
+          <div class="eyebrow mb-6">05 — Contact</div>
+          <p class="max-w-md text-sm text-slate-400 leading-relaxed mb-8">3D 모델링, Unity 인터랙티브 애플리케이션 개발, AI 기반 제작 파이프라인 협업 제안을 언제든 환영합니다.</p>
+          <a href="mailto:parkkm1110@gmail.com" class="contact-mail group">
+            <span>parkkm1110@gmail.com</span>
+            <span class="contact-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <div class="reveal mt-16 border-t border-white/[0.08] font-mono text-xs uppercase tracking-[0.14em]">
+          <a href="https://github.com/parkkm1110-creator" target="_blank" rel="noopener noreferrer" class="link-row group">
+            <span class="text-slate-500 w-28">GitHub</span><span class="flex-1 text-slate-200 group-hover:text-showroom-gold transition-colors normal-case tracking-normal">github.com/parkkm1110-creator</span><span class="text-slate-500 group-hover:text-showroom-gold transition-colors">↗</span>
+          </a>
+          <a href="https://krissv9mm1.artstation.com" target="_blank" rel="noopener noreferrer" class="link-row group">
+            <span class="text-slate-500 w-28">ArtStation</span><span class="flex-1 text-slate-200 group-hover:text-showroom-gold transition-colors normal-case tracking-normal">krissv9mm1.artstation.com</span><span class="text-slate-500 group-hover:text-showroom-gold transition-colors">↗</span>
+          </a>
+        </div>
+
+        <div class="mt-20 pt-6 border-t border-white/[0.08] font-mono text-[11px] text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <span>&copy; 2026 박경민 (PARK GYEONG MIN). All rights reserved.</span>
+          <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="uppercase tracking-[0.16em] hover:text-showroom-gold transition-colors">Back to top ↑</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Project Detail Modal -->
+  <div id="project-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-lg hidden items-center justify-center p-4 md:p-8">
+    <div class="relative w-full max-w-4xl bg-showroom-900 border border-white/15 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between p-6 border-b border-white/10">
+        <div>
+          <span id="modal-category" class="text-xs font-mono text-showroom-gold tracking-widest uppercase"></span>
+          <h3 id="modal-title" class="text-2xl font-bold text-white uppercase mt-0.5"></h3>
+        </div>
+        <button id="modal-close-btn" class="p-2 rounded-full bg-white/5 hover:bg-white/15 text-slate-400 hover:text-white transition-all">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-6 overflow-y-auto space-y-6">
+        <!-- 4-View Switcher Header -->
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-1.5 font-mono text-xs bg-black/50 p-1 rounded-xl border border-white/10" id="modal-view-tabs">
+            <button class="modal-tab-btn active px-3 py-1.5 rounded-lg bg-showroom-gold text-black font-semibold transition-all" data-view="hero">
+              ① Hero Render
+            </button>
+            <button class="modal-tab-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all" data-view="wireframe">
+              ② Wireframe & Topology
+            </button>
+            <button class="modal-tab-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all" data-view="texture">
+              ③ 4K PBR Breakdown
+            </button>
+            <button class="modal-tab-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all" data-view="detail">
+              ④ Close-up Detail
+            </button>
+          </div>
+
+          <!-- Quick Replace File Hint -->
+          <span id="modal-file-hint" class="font-mono text-[10px] text-slate-400 bg-white/5 px-2.5 py-1 rounded-md border border-white/10">
+            Path: assets/projects/...
+          </span>
+        </div>
+
+        <div id="modal-media" class="w-full h-80 md:h-[420px] rounded-2xl bg-showroom-950 border border-white/10 overflow-hidden relative flex items-center justify-center">
+          <!-- Render viewport injected here -->
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="md:col-span-2 space-y-3">
+            <h4 class="font-mono text-xs uppercase tracking-wider text-slate-400">프로젝트 개요 & 워크플로우</h4>
+            <p id="modal-desc" class="text-sm text-slate-300 leading-relaxed"></p>
+            <div id="modal-highlights" class="space-y-1.5 pt-2 text-xs text-slate-400"></div>
+          </div>
+          <div class="space-y-4 bg-showroom-850/60 p-4 rounded-xl border border-white/5 font-mono text-xs">
+            <div>
+              <span class="text-slate-500 block text-[10px]">USED TOOLS</span>
+              <div id="modal-tools" class="flex flex-wrap gap-1.5 mt-1.5"></div>
+            </div>
+            <div>
+              <span class="text-slate-500 block text-[10px]">PRODUCTION SPEC</span>
+              <div id="modal-specs" class="space-y-1 mt-1 text-slate-300"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unity WebGL Live Play Demo Modal -->
+  <div id="demo-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl hidden items-center justify-center p-3 md:p-6">
+    <div class="relative w-full max-w-6xl h-[92vh] bg-showroom-900 border border-showroom-neon/40 rounded-3xl overflow-hidden shadow-2xl flex flex-col">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between p-4 md:px-6 border-b border-white/10 bg-showroom-950">
+        <div class="flex items-center gap-3">
+          <div class="w-3 h-3 rounded-full bg-showroom-neon animate-pulse"></div>
+          <div class="flex items-center gap-3">
+            <img src="assets/icons/nightro_logo.png" alt="NIGHTRO" class="h-7 max-w-[120px] object-contain shrink-0" />
+            <div>
+              <h3 class="font-mono text-sm md:text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <span>NIGHTRO : Drag Racing</span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-showroom-neon/15 text-showroom-neon border border-showroom-neon/30">FULLY PLAYABLE</span>
+              </h3>
+              <p class="text-[11px] font-mono text-slate-400">실제 작동 상용급 드래그 레이싱 · 종방향 물리 · 번아웃 · 7단 변속 · NOS · 14명 AI 캠페인</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button id="btn-connect-demo" class="px-3.5 py-1.5 rounded-lg bg-showroom-neon text-black font-mono font-bold text-xs uppercase hover:bg-cyan-300 transition-all">
+            게임 화면 연결
+          </button>
+          <a href="http://127.0.0.1:8090/" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg border border-white/20 hover:border-white text-slate-300 hover:text-white font-mono text-xs uppercase transition-all">
+            새 창으로 열기 ↗
+          </a>
+          <button id="demo-close-btn" class="p-2 rounded-full bg-white/5 hover:bg-white/15 text-slate-400 hover:text-white transition-all">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live WebGL Canvas / Iframe Viewport -->
+      <div class="relative flex-1 w-full bg-black flex items-center justify-center overflow-hidden">
+        <iframe id="demo-iframe" src="" class="w-full h-full border-0" allow="autoplay; fullscreen; gamepad"></iframe>
+
+        <!-- Fallback Connection Guide Overlay (Shown when server is not loaded) -->
+        <div id="demo-guide-overlay" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-showroom-950/95 pointer-events-none">
+          <img src="assets/icons/nightro_logo.png" alt="NIGHTRO" class="h-10 max-w-[190px] object-contain mb-3 drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]">
+          <h4 class="text-xl font-bold text-white uppercase font-mono mb-2">NIGHTRO : 실시간 1:1 드래그 레이싱 환경</h4>
+          <p class="text-xs text-slate-400 font-mono max-w-lg mb-6 leading-relaxed">
+            단순 기술 데모가 아닌 실제 작동하는 상용급 드래그 레이싱 게임 <strong class="text-white">NIGHTRO</strong>입니다. 로컬 시연 패키지(<code class="text-showroom-neon">B:\BUILD File\RaceDrag_Demo_20261021_Ready\START_DEMO.cmd</code>)가 실행되어 있다면 상단의 <strong>[게임 화면 연결]</strong>을 누르면 즉시 이 화면에서 실시간 플레이가 시작됩니다.
+          </p>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl w-full text-left font-mono text-[11px] mb-6">
+            <div class="bg-showroom-900 border border-white/10 p-3 rounded-xl">
+              <span class="text-showroom-gold block font-bold mb-1">Space</span>
+              <span class="text-slate-400">타이어 번아웃 예열 / 수동 RPM 준비</span>
+            </div>
+            <div class="bg-showroom-900 border border-white/10 p-3 rounded-xl">
+              <span class="text-showroom-neon block font-bold mb-1">L 키</span>
+              <span class="text-slate-400">녹색 신호등 순간 발진 (Launch)</span>
+            </div>
+            <div class="bg-showroom-900 border border-white/10 p-3 rounded-xl">
+              <span class="text-emerald-400 block font-bold mb-1">W / S (↑ / ↓)</span>
+              <span class="text-slate-400">패들 시프트 업 / 다운 변속</span>
+            </div>
+            <div class="bg-showroom-900 border border-white/10 p-3 rounded-xl">
+              <span class="text-purple-400 block font-bold mb-1">N 키 (홀드)</span>
+              <span class="text-slate-400">니트로(NOS) 부스트 분사</span>
+            </div>
+          </div>
+
+          <div class="pointer-events-auto">
+            <button onclick="document.getElementById('demo-iframe').src='http://127.0.0.1:8090/'; document.getElementById('demo-guide-overlay').style.display='none';" class="px-6 py-2.5 rounded-full bg-showroom-neon text-black font-mono font-bold text-xs uppercase hover:shadow-lg hover:shadow-showroom-neon/30 transition-all">
+              지금 연결하여 플레이하기
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls Cheat Sheet Footer -->
+      <div class="px-6 py-3 bg-showroom-950 border-t border-white/10 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400 gap-2">
+        <div class="flex items-center gap-4">
+          <span>🎮 조작: <strong>Space</strong> (번아웃) · <strong>L</strong> (발진) · <strong>W/S</strong> (변속) · <strong>N</strong> (NOS)</span>
+        </div>
+        <div class="text-slate-500">
+          Unity 6000.3.23f1 · URP 17.3.0 · WebGL Native Audio & DSP
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Reveal-on-scroll (progressive: content stays visible if IntersectionObserver is missing)
+    (function () {
+      const els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('is-in')); return; }
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
+      }, { threshold: 0.12 });
+      els.forEach(e => io.observe(e));
+    })();
+  </script>
+</body>
+</html>

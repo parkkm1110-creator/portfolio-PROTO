@@ -1,0 +1,608 @@
+{
+  "bentley": {
+    "slug": "bentley",
+    "fbx": "1991_Bentley_Turbo_R_Ver.2_LOW.fbx",
+    "glb": "bentley.glb",
+    "materials": {
+      "Mat_Body": {
+        "baseColor": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Body_BaseColor.png",
+        "emissive": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Body_Emissive.png",
+        "metallic": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Body_Metallic.png",
+        "normal": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Body_Normal.png",
+        "roughness": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Body_Roughness.png"
+      },
+      "Mat_Extra": {
+        "baseColor": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Extra_BaseColor.png",
+        "metallic": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Extra_Metallic.png",
+        "normal": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Extra_Normal.png",
+        "roughness": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Extra_Roughness.png"
+      },
+      "Mat_Wheel": {
+        "baseColor": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Wheel_BaseColor.png",
+        "metallic": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Wheel_Metallic.png",
+        "normal": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Wheel_Normal.png",
+        "roughness": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Wheel_Roughness.png"
+      },
+      "Mat_Rims": {
+        "baseColor": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Rims_BaseColor.png",
+        "metallic": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Rims_Metallic.png",
+        "normal": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Rims_Normal.png",
+        "opacity": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Rims_Opacity.png",
+        "roughness": "1991_Bentley_Turbo_R_Ver.2_LOW_Mat_Rims_Roughness.png"
+      }
+    }
+  },
+  "bugatti": {
+    "slug": "bugatti",
+    "fbx": "2015_Bugatti_Veyron_16.4_Low_Ver6.fbx",
+    "glb": null,
+    "materials": {
+      "Mat_Body": {
+        "baseColor": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Body_BaseColor.png",
+        "emissive": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Body_Emissive.png",
+        "metallic": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Body_Metallic.png",
+        "normal": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Body_Normal.png",
+        "roughness": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Body_Roughness.png"
+      },
+      "Mat_Extra_Engine": {
+        "baseColor": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Extra_Engine_BaseColor.png",
+        "metallic": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Extra_Engine_Metallic.png",
+        "normal": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Extra_Engine_Normal.png",
+        "roughness": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Extra_Engine_Roughness.png"
+      },
+      "Mat_Caliper_OP": {
+        "baseColor": "Converted_Brake/Mat_Caliper_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Caliper_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Caliper_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Caliper_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Caliper_OP_Normal.png"
+      },
+      "Mat_Disc_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_OP_Normal.png"
+      },
+      "Mat_Disc_Hot_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_Hot_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_Hot_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_Hot_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_Hot_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_Hot_OP_Normal.png",
+        "emissive": "Converted_Brake/Mat_Disc_Hot_OP_Emissive.png"
+      },
+      "Mat_Headlight_Cover_OP": {
+        "baseColor": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Headlight_Cover_OP_BaseColor.png",
+        "metallic": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Headlight_Cover_OP_Metallic.png",
+        "normal": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Headlight_Cover_OP_Normal.png",
+        "opacity": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Headlight_Cover_OP_Opacity.png",
+        "roughness": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Headlight_Cover_OP_Roughness.png"
+      },
+      "Mat_Extra_2": {
+        "baseColor": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Extra_2_BaseColor.png",
+        "metallic": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Extra_2_Metallic.png",
+        "normal": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Extra_2_Normal.png",
+        "roughness": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Extra_2_Roughness.png"
+      },
+      "Mat_Extra_1": {
+        "baseColor": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Extra_1_BaseColor.png",
+        "metallic": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Extra_1_Metallic.png",
+        "normal": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Extra_1_Normal.png",
+        "roughness": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Extra_1_Roughness.png"
+      },
+      "Mat_Tire": {
+        "baseColor": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Tire_BaseColor.png",
+        "metallic": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Tire_Metallic.png",
+        "normal": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Tire_Normal.png",
+        "roughness": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Tire_Roughness.png"
+      },
+      "Mat_Rims_OP": {
+        "baseColor": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Rims_OP_BaseColor.png",
+        "metallic": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Rims_OP_Metallic.png",
+        "normal": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Rims_OP_Normal.png",
+        "opacity": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Rims_OP_Opacity.png",
+        "roughness": "2015_Bugatti_Veyron_16.4_Low_Ver3_Mat_Rims_OP_Roughness.png"
+      }
+    }
+  },
+  "cobalt": {
+    "slug": "cobalt",
+    "fbx": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.2.fbx",
+    "glb": null,
+    "materials": {
+      "Mat_Extra": {
+        "baseColor": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Extra_BaseColor.png",
+        "emissive": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Extra_Emissive.png",
+        "metallic": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Extra_Metallic.png",
+        "normal": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Extra_Normal.png",
+        "roughness": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Extra_Roughness.png"
+      },
+      "Mat_Body": {
+        "baseColor": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Body_BaseColor.png",
+        "metallic": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Body_Metallic.png",
+        "normal": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Body_Normal.png",
+        "roughness": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Body_Roughness.png"
+      },
+      "Mat_Caliper_OP": {
+        "baseColor": "Converted_Brake/Mat_Caliper_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Caliper_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Caliper_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Caliper_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Caliper_OP_Normal.png"
+      },
+      "Mat_Disc_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_OP_Normal.png"
+      },
+      "Mat_Disc_Hot_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_Hot_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_Hot_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_Hot_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_Hot_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_Hot_OP_Normal.png",
+        "emissive": "Converted_Brake/Mat_Disc_Hot_OP_Emissive.png"
+      },
+      "Mat_Wheels": {
+        "baseColor": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Wheels_BaseColor.png",
+        "metallic": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Wheels_Metallic.png",
+        "normal": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Wheels_Normal.png",
+        "roughness": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Wheels_Roughness.png"
+      },
+      "Mat_Rims": {
+        "baseColor": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Rims_BaseColor.png",
+        "metallic": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Rims_Metallic.png",
+        "normal": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Rims_Normal.png",
+        "opacity": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Rims_Opacity.png",
+        "roughness": "2012_Chevy_Cobalt_FWD_Pro_Low Ver.1_Mat_Rims_Roughness.png"
+      }
+    }
+  },
+  "golf": {
+    "slug": "golf",
+    "fbx": "2012 Vw Golf GTi Low Ver.8.fbx",
+    "glb": null,
+    "materials": {
+      "Mat_Base": {
+        "baseColor": "2012 Vw Golf GTi Low Ver.6_Mat_Base_BaseColor.png",
+        "metallic": "2012 Vw Golf GTi Low Ver.6_Mat_Base_Metallic.png",
+        "normal": "2012 Vw Golf GTi Low Ver.6_Mat_Base_Normal.png",
+        "roughness": "2012 Vw Golf GTi Low Ver.6_Mat_Base_Roughness.png"
+      },
+      "Mat_Headlight_OP": {
+        "baseColor": "2012 Vw Golf GTi Low Ver.6_Mat_Headlight_OP_BaseColor.png",
+        "emissive": "2012 Vw Golf GTi Low Ver.6_Mat_Headlight_OP_Emissive.png",
+        "metallic": "2012 Vw Golf GTi Low Ver.6_Mat_Headlight_OP_Metallic.png",
+        "normal": "2012 Vw Golf GTi Low Ver.6_Mat_Headlight_OP_Normal.png",
+        "opacity": "2012 Vw Golf GTi Low Ver.6_Mat_Headlight_OP_Opacity.png",
+        "roughness": "2012 Vw Golf GTi Low Ver.6_Mat_Headlight_OP_Roughness.png"
+      },
+      "Mat_Emblem": {
+        "baseColor": "2012 Vw Golf GTi Low Ver.6_Mat_Emblem_BaseColor.png",
+        "metallic": "2012 Vw Golf GTi Low Ver.6_Mat_Emblem_Metallic.png",
+        "normal": "2012 Vw Golf GTi Low Ver.6_Mat_Emblem_Normal.png",
+        "roughness": "2012 Vw Golf GTi Low Ver.6_Mat_Emblem_Roughness.png"
+      },
+      "Mat_Extra": {
+        "baseColor": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_BaseColor.png",
+        "metallic": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Metallic.png",
+        "normal": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Normal.png",
+        "roughness": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Roughness.png"
+      },
+      "Mat_Extra_Lip": {
+        "baseColor": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Lip_BaseColor.png",
+        "metallic": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Lip_Metallic.png",
+        "normal": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Lip_Normal.png",
+        "roughness": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Lip_Roughness.png"
+      },
+      "Mat_Caliper_OP": {
+        "baseColor": "Converted_Brake/Mat_Caliper_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Caliper_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Caliper_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Caliper_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Caliper_OP_Normal.png"
+      },
+      "Mat_Disc_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_OP_Normal.png"
+      },
+      "Mat_Disc_Hot_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_Hot_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_Hot_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_Hot_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_Hot_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_Hot_OP_Normal.png",
+        "emissive": "Converted_Brake/Mat_Disc_Hot_OP_Emissive.png"
+      },
+      "Mat_Extra_Wheel": {
+        "baseColor": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Wheel_BaseColor.png",
+        "metallic": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Wheel_Metallic.png",
+        "normal": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Wheel_Normal.png",
+        "roughness": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Wheel_Roughness.png"
+      },
+      "Mat_Extra_Rims_Opacity": {
+        "baseColor": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Rims_Opacity_BaseColor.png",
+        "metallic": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Rims_Opacity_Metallic.png",
+        "normal": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Rims_Opacity_Normal.png",
+        "opacity": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Rims_Opacity_Opacity.png",
+        "roughness": "2012 Vw Golf GTi Low Ver.6_Mat_Extra_Rims_Opacity_Roughness.png"
+      }
+    }
+  },
+  "lambo": {
+    "slug": "lambo",
+    "fbx": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12.fbx",
+    "glb": null,
+    "materials": {
+      "Mat_Body1": {
+        "baseColor": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Body1_BaseColor.png",
+        "regionMask": "Aventador_RegionMask_2048.png",
+        "metallic": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Body1_Metallic.png",
+        "normal": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Body1_Normal.png",
+        "roughness": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Body1_Roughness.png"
+      },
+      "Mat_Body_2": {
+        "baseColor": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Body_2_BaseColor.png",
+        "emissive": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Body_2_Emissive.png",
+        "metallic": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Body_2_Metallic.png",
+        "normal": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Body_2_Normal.png",
+        "roughness": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Body_2_Roughness.png"
+      },
+      "Mat_Caliper_OP": {
+        "baseColor": "Converted_Brake/Mat_Caliper_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Caliper_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Caliper_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Caliper_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Caliper_OP_Normal.png"
+      },
+      "Mat_Disc_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_OP_Normal.png"
+      },
+      "Mat_Disc_Hot_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_Hot_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_Hot_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_Hot_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_Hot_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_Hot_OP_Normal.png",
+        "emissive": "Converted_Brake/Mat_Disc_Hot_OP_Emissive.png"
+      },
+      "Mat_Headlight_Cover_Opacity": {
+        "baseColor": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Headlight_Cover_Opacity_BaseColor.png",
+        "metallic": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Headlight_Cover_Opacity_Metallic.png",
+        "normal": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Headlight_Cover_Opacity_Normal.png",
+        "opacity": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Headlight_Cover_Opacity_Opacity.png",
+        "roughness": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Headlight_Cover_Opacity_Roughness.png"
+      },
+      "Mat_Louver_Opacity": {
+        "baseColor": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Louver_Opacity_BaseColor.png",
+        "metallic": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Louver_Opacity_Metallic.png",
+        "normal": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Louver_Opacity_Normal.png",
+        "opacity": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Louver_Opacity_Opacity.png",
+        "roughness": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Louver_Opacity_Roughness.png"
+      },
+      "Mat_Extra_Wheel": {
+        "baseColor": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Extra_Wheel_BaseColor.png",
+        "metallic": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Extra_Wheel_Metallic.png",
+        "normal": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Extra_Wheel_Normal.png",
+        "roughness": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Extra_Wheel_Roughness.png"
+      },
+      "Mat_Extra_Rims_Opacity": {
+        "baseColor": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Extra_Rims_Opacity_BaseColor.png",
+        "metallic": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Extra_Rims_Opacity_Metallic.png",
+        "normal": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Extra_Rims_Opacity_Normal.png",
+        "opacity": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Extra_Rims_Opacity_Opacity.png",
+        "roughness": "2012_Lamborghini_Aventador_LP700_4_Low_Ver12S_Mat_Extra_Rims_Opacity_Roughness.png"
+      }
+    }
+  },
+  "mustang": {
+    "slug": "mustang",
+    "fbx": "2013_Ford_Mustang_Shelby_GT500_Low_Ver5.fbx",
+    "glb": null,
+    "materials": {
+      "Mat_Body": {
+        "baseColor": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Body_BaseColor.png",
+        "emissive": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Body_Emissive.png",
+        "metallic": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Body_Metallic.png",
+        "normal": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Body_Normal.png",
+        "roughness": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Body_Roughness.png"
+      },
+      "Mat_Extra_1": {
+        "baseColor": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Extra_1_BaseColor.png",
+        "metallic": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Extra_1_Metallic.png",
+        "normal": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Extra_1_Normal.png",
+        "roughness": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Extra_1_Roughness.png"
+      },
+      "Mat_Caliper_OP": {
+        "baseColor": "Converted_Brake/Mat_Caliper_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Caliper_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Caliper_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Caliper_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Caliper_OP_Normal.png"
+      },
+      "Mat_Disc_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_OP_Normal.png"
+      },
+      "Mat_Disc_Hot_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_Hot_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_Hot_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_Hot_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_Hot_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_Hot_OP_Normal.png",
+        "emissive": "Converted_Brake/Mat_Disc_Hot_OP_Emissive.png"
+      },
+      "Mat_Extra_OP": {
+        "baseColor": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Extra_OP_BaseColor.png",
+        "metallic": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Extra_OP_Metallic.png",
+        "normal": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Extra_OP_Normal.png",
+        "opacity": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Extra_OP_Opacity.png",
+        "roughness": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Extra_OP_Roughness.png"
+      },
+      "Mat_Rims_OP": {
+        "baseColor": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Rims_OP_BaseColor.png",
+        "metallic": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Rims_OP_Metallic.png",
+        "normal": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Rims_OP_Normal.png",
+        "opacity": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Rims_OP_Opacity.png",
+        "roughness": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Rims_OP_Roughness.png"
+      },
+      "Mat_Wheel": {
+        "baseColor": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Wheel_BaseColor.png",
+        "metallic": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Wheel_Metallic.png",
+        "normal": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Wheel_Normal.png",
+        "roughness": "2013_Ford_Mustang_Shelby_GT500_Low_Ver4_Mat_Wheel_Roughness.png"
+      }
+    }
+  },
+  "spano": {
+    "slug": "spano",
+    "fbx": "GTA_Spano_2016_Low_Ver14_Final.fbx",
+    "glb": null,
+    "materials": {
+      "Mat_Body": {
+        "baseColor": "GTA_Spano_2016_Low_Ver13_Mat_Body_BaseColor.png",
+        "emissive": "GTA_Spano_2016_Low_Ver13_Mat_Body_Emissive.png",
+        "metallic": "GTA_Spano_2016_Low_Ver13_Mat_Body_Metallic.png",
+        "normal": "GTA_Spano_2016_Low_Ver13_Mat_Body_Normal.png",
+        "roughness": "GTA_Spano_2016_Low_Ver13_Mat_Body_Roughness.png"
+      },
+      "Mat_Opacity_1": {
+        "baseColor": "GTA_Spano_2016_Low_Ver13_Mat_Opacity_1_BaseColor.png",
+        "metallic": "GTA_Spano_2016_Low_Ver13_Mat_Opacity_1_Metallic.png",
+        "normal": "GTA_Spano_2016_Low_Ver13_Mat_Opacity_1_Normal.png",
+        "opacity": "GTA_Spano_2016_Low_Ver13_Mat_Opacity_1_Opacity.png",
+        "roughness": "GTA_Spano_2016_Low_Ver13_Mat_Opacity_1_Roughness.png"
+      },
+      "Mat_Extra_2": {
+        "baseColor": "Converted_Brake/Mat_Extra_2_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Extra_2_Opacity.png",
+        "metallic": "Converted_Brake/Mat_Extra_2_Metallic.png",
+        "roughness": "Converted_Brake/Mat_Extra_2_Roughness.png",
+        "normal": "Converted_Brake/Mat_Extra_2_Normal.png"
+      },
+      "Mat_Extra_Hot": {
+        "baseColor": "Converted_Brake/Mat_Extra_Hot_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Extra_Hot_Opacity.png",
+        "emissive": "Converted_Brake/Mat_Extra_Hot_Emissive.png"
+      },
+      "Mat_Extra": {
+        "baseColor": "GTA_Spano_2016_Low_Ver13_Mat_Extra_BaseColor.png",
+        "emissive": "GTA_Spano_2016_Low_Ver13_Mat_Extra_Emissive.png",
+        "metallic": "GTA_Spano_2016_Low_Ver13_Mat_Extra_Metallic.png",
+        "normal": "GTA_Spano_2016_Low_Ver13_Mat_Extra_Normal.png",
+        "roughness": "GTA_Spano_2016_Low_Ver13_Mat_Extra_Roughness.png"
+      },
+      "Mat_Opacity_2": {
+        "baseColor": "GTA_Spano_2016_Low_Ver13_Mat_Opacity_2_BaseColor.png",
+        "metallic": "GTA_Spano_2016_Low_Ver13_Mat_Opacity_2_Metallic.png",
+        "normal": "GTA_Spano_2016_Low_Ver13_Mat_Opacity_2_Normal.png",
+        "opacity": "GTA_Spano_2016_Low_Ver13_Mat_Opacity_2_Opacity.png",
+        "roughness": "GTA_Spano_2016_Low_Ver13_Mat_Opacity_2_Roughness.png"
+      },
+      "Mat_Extra_Wheelcap": {
+        "baseColor": "GTA_Spano_2016_Low_Ver13_Mat_Extra_Wheelcap_BaseColor.png",
+        "metallic": "GTA_Spano_2016_Low_Ver13_Mat_Extra_Wheelcap_Metallic.png",
+        "normal": "GTA_Spano_2016_Low_Ver13_Mat_Extra_Wheelcap_Normal.png",
+        "roughness": "GTA_Spano_2016_Low_Ver13_Mat_Extra_Wheelcap_Roughness.png"
+      }
+    }
+  },
+  "spark": {
+    "slug": "spark",
+    "fbx": "Chevy_Spark_Low_Ver5.fbx",
+    "glb": null,
+    "materials": {
+      "Mat_Extra": {
+        "baseColor": "Chevy_Spark_Low_Ver4_Mat_Extra_BaseColor.png",
+        "metallic": "Chevy_Spark_Low_Ver4_Mat_Extra_Metallic.png",
+        "normal": "Chevy_Spark_Low_Ver4_Mat_Extra_Normal.png",
+        "roughness": "Chevy_Spark_Low_Ver4_Mat_Extra_Roughness.png"
+      },
+      "Mat_Body": {
+        "baseColor": "Chevy_Spark_Low_Ver4_Mat_Body_BaseColor.png",
+        "emissive": "Chevy_Spark_Low_Ver4_Mat_Body_Emissive.png",
+        "metallic": "Chevy_Spark_Low_Ver4_Mat_Body_Metallic.png",
+        "normal": "Chevy_Spark_Low_Ver4_Mat_Body_Normal.png",
+        "roughness": "Chevy_Spark_Low_Ver4_Mat_Body_Roughness.png"
+      },
+      "Mat_Caliper_OP": {
+        "baseColor": "Converted_Brake/Mat_Caliper_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Caliper_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Caliper_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Caliper_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Caliper_OP_Normal.png"
+      },
+      "Mat_Disc_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_OP_Normal.png"
+      },
+      "Mat_Disc_Hot_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_Hot_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_Hot_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_Hot_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_Hot_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_Hot_OP_Normal.png",
+        "emissive": "Converted_Brake/Mat_Disc_Hot_OP_Emissive.png"
+      },
+      "Mat_Rims_Inner": {
+        "baseColor": "Chevy_Spark_Low_Ver4_Mat_Rims_Inner_BaseColor.png",
+        "metallic": "Chevy_Spark_Low_Ver4_Mat_Rims_Inner_Metallic.png",
+        "normal": "Chevy_Spark_Low_Ver4_Mat_Rims_Inner_Normal.png",
+        "roughness": "Chevy_Spark_Low_Ver4_Mat_Rims_Inner_Roughness.png"
+      },
+      "Mat_Rims_OP": {
+        "baseColor": "Chevy_Spark_Low_Ver4_Mat_Rims_OP_BaseColor.png",
+        "metallic": "Chevy_Spark_Low_Ver4_Mat_Rims_OP_Metallic.png",
+        "normal": "Chevy_Spark_Low_Ver4_Mat_Rims_OP_Normal.png",
+        "opacity": "Chevy_Spark_Low_Ver4_Mat_Rims_OP_Opacity.png",
+        "roughness": "Chevy_Spark_Low_Ver4_Mat_Rims_OP_Roughness.png"
+      },
+      "Mat_Tires": {
+        "baseColor": "Chevy_Spark_Low_Ver4_Mat_Tires_BaseColor.png",
+        "metallic": "Chevy_Spark_Low_Ver4_Mat_Tires_Metallic.png",
+        "normal": "Chevy_Spark_Low_Ver4_Mat_Tires_Normal.png",
+        "roughness": "Chevy_Spark_Low_Ver4_Mat_Tires_Roughness.png"
+      },
+      "Mat_Extra_OP": {
+        "baseColor": "Chevy_Spark_Low_Ver4_Mat_Extra_OP_BaseColor.png",
+        "metallic": "Chevy_Spark_Low_Ver4_Mat_Extra_OP_Metallic.png",
+        "normal": "Chevy_Spark_Low_Ver4_Mat_Extra_OP_Normal.png",
+        "opacity": "Chevy_Spark_Low_Ver4_Mat_Extra_OP_Opacity.png",
+        "roughness": "Chevy_Spark_Low_Ver4_Mat_Extra_OP_Roughness.png"
+      }
+    }
+  },
+  "stinger": {
+    "slug": "stinger",
+    "fbx": "2020_Kia_Stinger_GT_Ver.7_LOW.fbx",
+    "glb": null,
+    "materials": {
+      "Mat_Body": {
+        "baseColor": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Body_BaseColor.png",
+        "emissive": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Body_Emissive.png",
+        "metallic": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Body_Metallic.png",
+        "normal": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Body_Normal.png",
+        "roughness": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Body_Roughness.png"
+      },
+      "Mat_Extra": {
+        "baseColor": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Extra_BaseColor.png",
+        "metallic": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Extra_Metallic.png",
+        "normal": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Extra_Normal.png",
+        "roughness": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Extra_Roughness.png"
+      },
+      "Mat_Caliper_OP": {
+        "baseColor": "Converted_Brake/Mat_Caliper_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Caliper_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Caliper_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Caliper_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Caliper_OP_Normal.png"
+      },
+      "Mat_Disc_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_OP_Normal.png"
+      },
+      "Mat_Disc_Hot_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_Hot_OP_BaseColor.png",
+        "opacity": "Converted_Brake/Mat_Disc_Hot_OP_Opacity.png",
+        "specular": "Converted_Brake/Mat_Disc_Hot_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_Hot_OP_Roughness.png",
+        "normal": "Converted_Brake/Mat_Disc_Hot_OP_Normal.png",
+        "emissive": "Converted_Brake/Mat_Disc_Hot_OP_Emissive.png"
+      },
+      "Mat_Headlight_Cover_OP": {
+        "baseColor": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Headlight_Cover_OP_BaseColor.png",
+        "metallic": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Headlight_Cover_OP_Metallic.png",
+        "normal": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Headlight_Cover_OP_Normal.png",
+        "opacity": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Headlight_Cover_OP_Opacity.png",
+        "roughness": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Headlight_Cover_OP_Roughness.png"
+      },
+      "Mat_Wheel": {
+        "baseColor": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Wheel_BaseColor.png",
+        "metallic": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Wheel_Metallic.png",
+        "normal": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Wheel_Normal.png",
+        "roughness": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Wheel_Roughness.png"
+      },
+      "Mat_Rims_OP": {
+        "baseColor": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Rims_OP_BaseColor.png",
+        "metallic": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Rims_OP_Metallic.png",
+        "normal": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Rims_OP_Normal.png",
+        "opacity": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Rims_OP_Opacity.png",
+        "roughness": "2020_Kia_Stinger_GT_Ver.6_LOW_Mat_Rims_OP_Roughness.png"
+      }
+    }
+  },
+  "svr": {
+    "slug": "svr",
+    "fbx": "2020_Land_Rover_Range_Rover_SVR Ver6.fbx",
+    "glb": null,
+    "materials": {
+      "Mat_Body__": {
+        "baseColor": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Body___BaseColor.png",
+        "metallic": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Body___Metallic.png",
+        "roughness": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Body___Roughness.png",
+        "emissive": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Body___Emissive.png",
+        "normal": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Body___Normal.png"
+      },
+      "Mat_Extract": {
+        "baseColor": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Extract_BaseColor.png",
+        "metallic": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Extract_Metallic.png",
+        "roughness": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Extract_Roughness.png",
+        "normal": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Extract_Normal.png"
+      },
+      "Mat_Caliper_OP": {
+        "baseColor": "Converted_Brake/Mat_Caliper_OP_BaseColor.png",
+        "specular": "Converted_Brake/Mat_Caliper_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Caliper_OP_Roughness.png",
+        "opacity": "Converted_Brake/Mat_Caliper_OP_Opacity.png",
+        "normal": "Converted_Brake/Mat_Caliper_OP_Normal_OpenGL.png"
+      },
+      "Mat_Disc_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_OP_BaseColor.png",
+        "specular": "Converted_Brake/Mat_Disc_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_OP_Roughness.png",
+        "opacity": "Converted_Brake/Mat_Disc_OP_Opacity.png",
+        "normal": "Converted_Brake/Mat_Disc_OP_Normal_OpenGL.png"
+      },
+      "Mat_Disc_Hot_OP": {
+        "baseColor": "Converted_Brake/Mat_Disc_Hot_OP_BaseColor.png",
+        "specular": "Converted_Brake/Mat_Disc_Hot_OP_Specular.png",
+        "roughness": "Converted_Brake/Mat_Disc_Hot_OP_Roughness.png",
+        "opacity": "Converted_Brake/Mat_Disc_Hot_OP_Opacity.png",
+        "normal": "Converted_Brake/Mat_Disc_Hot_OP_Normal_OpenGL.png",
+        "emissive": "Converted_Brake/Mat_Disc_Hot_OP_Emission.png"
+      },
+      "Mat_Wheel": {
+        "baseColor": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Wheel_BaseColor.png",
+        "metallic": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Wheel_Metallic.png",
+        "roughness": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Wheel_Roughness.png",
+        "normal": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Wheel_Normal.png"
+      },
+      "Mat_Rims": {
+        "baseColor": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Rims_BaseColor.png",
+        "metallic": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Rims_Metallic.png",
+        "roughness": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Rims_Roughness.png",
+        "normal": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Rims_Normal.png",
+        "opacity": "2020_Land_Rover_Range_Rover_SVR Ver5_Mat_Rims_Opacity.png"
+      }
+    }
+  }
+}
