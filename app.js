@@ -2341,11 +2341,11 @@ function initProjectsGrid() {
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => {
-        b.classList.remove('bg-showroom-gold', 'text-black', 'font-semibold');
-        b.classList.add('bg-showroom-800/80', 'text-slate-300');
+        b.classList.remove('active', 'bg-[#0E0E10]', 'border-[#0E0E10]', 'text-white', 'font-semibold');
+        b.classList.add('bg-white', 'border-[#D8D8D4]', 'text-[#5A5A60]');
       });
-      btn.classList.add('bg-showroom-gold', 'text-black', 'font-semibold');
-      btn.classList.remove('bg-showroom-800/80', 'text-slate-300');
+      btn.classList.add('active', 'bg-[#0E0E10]', 'border-[#0E0E10]', 'text-white', 'font-semibold');
+      btn.classList.remove('bg-white', 'border-[#D8D8D4]', 'text-[#5A5A60]');
 
       renderProjects(btn.dataset.filter);
     });
@@ -2369,30 +2369,31 @@ function renderProjects(filter) {
     const featured = !!p.featured;
 
     const card = document.createElement('article');
-    card.className = 'project-card group relative cursor-pointer flex flex-col bg-showroom-900 border border-white/[0.08] ' +
+    card.className = 'project-card group relative cursor-pointer flex flex-col bg-white border border-[#E5E5E2] ' +
       (featured ? 'md:col-span-2 lg:flex-row' : '');
     card.onclick = () => openProjectModal(p);
 
-    const tools = p.tools.slice(0, 6).map(t => `<span class="chip">${t}</span>`).join('');
+    const topTools = p.tools.slice(0, 3).map(t => `<span class="chip-light">${t}</span>`).join('');
+    const shortLead = (p.highlights && p.highlights[0]) ? p.highlights[0] : p.description;
 
     card.innerHTML = `
-      <div class="card-media relative overflow-hidden bg-black ${featured ? 'lg:w-[56%] aspect-[16/10] lg:aspect-auto lg:min-h-[400px]' : 'aspect-[16/10]'}">
+      <div class="card-media relative overflow-hidden bg-[#0B0B0D] ${featured ? 'lg:w-[58%] aspect-[16/10] lg:aspect-auto lg:min-h-[430px]' : 'aspect-[16/10]'}">
         <img src="${p.thumbnail}" alt="${p.title}"
-          class="absolute inset-0 w-full h-full ${contain ? 'object-contain p-8 md:p-14' : 'object-cover'}"
+          class="absolute inset-0 w-full h-full ${contain ? 'object-contain p-10 md:p-16' : 'object-cover'}"
           onerror="this.onerror=null; this.style.display='none';">
-        <span class="absolute top-4 left-4 font-mono text-[11px] tracking-[0.16em] text-white/90">[ ${num} ]</span>
-        ${p.badge ? `<span class="absolute top-4 right-4 px-2.5 py-1.5 bg-showroom-gold text-black font-mono text-[10px] font-bold uppercase tracking-[0.12em]">${p.badge}</span>` : ''}
+        <span class="absolute top-5 left-5 font-mono text-[11px] tracking-[0.16em] text-white/85 bg-black/55 px-2.5 py-1 rounded-[2px] backdrop-blur-sm">${num}</span>
+        ${p.badge ? `<span class="absolute top-5 right-5 px-3 py-1 rounded-[2px] bg-[#111113]/90 text-[#C6FF32] border border-[#C6FF32]/35 font-mono text-[10px] font-semibold uppercase tracking-[0.12em]">${p.badge}</span>` : ''}
       </div>
-      <div class="flex flex-col justify-between flex-1 p-6 md:p-8 gap-8">
+      <div class="flex flex-col justify-between flex-1 p-7 md:p-10 gap-8">
         <div>
-          <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-showroom-gold mb-3">${p.categoryName}</div>
-          <h3 class="font-display font-bold uppercase leading-[1.06] tracking-tight text-white ${featured ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl'}">${p.title}</h3>
-          <p class="mt-4 text-sm text-slate-400 leading-relaxed ${featured ? 'line-clamp-5' : 'line-clamp-3'}">${p.description}</p>
+          <div class="font-mono text-[10.5px] font-medium uppercase tracking-[0.18em] text-[#63636A] mb-3">${p.categoryName}</div>
+          <h3 class="font-display font-medium leading-[1.18] tracking-[-0.02em] text-[#111113] ${featured ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl'}">${p.title}</h3>
+          <p class="mt-4 text-sm text-[#63636A] leading-relaxed line-clamp-2">${shortLead}</p>
         </div>
-        <div>
-          <div class="flex flex-wrap gap-1.5 mb-6">${tools}</div>
-          <div class="card-cta inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-white">
-            <span>View case</span><span aria-hidden="true">→</span>
+        <div class="flex items-end justify-between gap-4 pt-5 border-t border-[#ECECE8]">
+          <div class="flex flex-wrap gap-1.5">${topTools}</div>
+          <div class="card-cta inline-flex items-center gap-2 font-sans text-xs font-semibold text-[#111113] shrink-0">
+            <span>자세히 보기</span><span aria-hidden="true">→</span>
           </div>
         </div>
       </div>
@@ -2446,10 +2447,15 @@ function openProjectModal(project) {
   }
   document.getElementById('modal-desc').textContent = project.description;
 
-  // Reset Tab Buttons
+  // Reset Tab Buttons (labels/visibility follow project.viewTabs when provided)
   const viewTabBtns = document.querySelectorAll('.modal-tab-btn');
   viewTabBtns.forEach(b => {
-    if (b.dataset.view === 'hero') {
+    const v = b.dataset.view;
+    if (!b.dataset.defaultLabel) b.dataset.defaultLabel = b.textContent.trim();
+    const custom = project.viewTabs ? project.viewTabs[v] : null;
+    b.textContent = (custom && custom.tab) || b.dataset.defaultLabel;
+    b.classList.toggle('hidden', !!project.viewTabs && !custom);
+    if (v === 'hero') {
       b.classList.add('active', 'bg-showroom-gold', 'text-black', 'font-semibold');
       b.classList.remove('text-slate-300');
     } else {
@@ -2478,9 +2484,9 @@ function openProjectModal(project) {
   // Specs
   const specsContainer = document.getElementById('modal-specs');
   specsContainer.innerHTML = Object.entries(project.specs).map(([key, val]) => `
-    <div class="flex justify-between py-1 border-b border-white/5">
-      <span class="text-slate-400">${key}:</span>
-      <span class="text-showroom-gold font-bold">${val}</span>
+    <div class="spec-row">
+      <span class="k">${key}</span>
+      <span class="v">${val}</span>
     </div>
   `).join('');
 
@@ -2496,9 +2502,12 @@ function updateModalMediaView() {
   const fileHint = document.getElementById('modal-file-hint');
   const p = activeModalProject;
 
-  // Expected standard file path for this view
-  const expectedPath = `assets/projects/${p.id}/${activeModalView}.png`;
-  if (fileHint) fileHint.textContent = `Target File: ${expectedPath}`;
+  // Per-project tab override (data.js viewTabs) or the standard 4-View file path
+  const customTab = p.viewTabs ? p.viewTabs[activeModalView] : null;
+  const expectedPath = (customTab && customTab.src) || `assets/projects/${p.id}/${activeModalView}.png`;
+  const viewOrder = p.viewTabs ? Object.keys(p.viewTabs) : ['hero', 'wireframe', 'texture', 'detail'];
+  const viewIdx = Math.max(0, viewOrder.indexOf(activeModalView)) + 1;
+  if (fileHint) fileHint.textContent = `VIEW ${String(viewIdx).padStart(2, '0')} / ${String(viewOrder.length).padStart(2, '0')}`;
 
   // View specific title & info
   const viewLabels = {
@@ -2508,30 +2517,31 @@ function updateModalMediaView() {
     detail: { title: "④ Mechanical Macro Close-up Detail", desc: "브레이크 캘리퍼, 그릴 메시, 휠 림 등 초근접 하드서페이스 디테일" }
   };
 
-  const currentInfo = viewLabels[activeModalView] || viewLabels.hero;
+  const baseInfo = viewLabels[activeModalView] || viewLabels.hero;
+  const currentInfo = customTab
+    ? { title: customTab.title || customTab.tab || baseInfo.title, desc: customTab.desc || '' }
+    : baseInfo;
   const fallbackImg = p.thumbnail;
 
   mediaContainer.innerHTML = `
     <div class="relative w-full h-full flex flex-col justify-between p-4 bg-gradient-to-b from-showroom-900/90 to-showroom-950">
-      <div class="flex items-center justify-between text-xs font-mono z-10">
-        <span class="text-showroom-gold font-bold flex items-center gap-2">
-          <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+      <div class="flex items-center justify-between gap-3 text-xs font-mono z-10">
+        <span class="text-showroom-gold font-bold flex items-center gap-2 min-w-0 truncate">
+          <i data-lucide="eye" class="w-3.5 h-3.5 shrink-0"></i>
           ${currentInfo.title}
         </span>
-        <span class="text-[10px] text-slate-400 bg-white/5 px-2 py-0.5 rounded border border-white/10">
-          Ready for Artist Replacement
-        </span>
+        <span class="text-[10px] text-slate-400 tnum shrink-0">${String(viewIdx).padStart(2, '0')} / ${String(viewOrder.length).padStart(2, '0')}</span>
       </div>
 
       <!-- Main Media Center -->
-      <div class="relative flex-1 w-full my-3 flex items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-black/60 group">
+      <div class="corners relative flex-1 w-full my-3 flex items-center justify-center overflow-hidden border border-white/10 bg-black/60 group">
         <img id="active-view-img" src="${expectedPath}" alt="${currentInfo.title}" class="max-w-full max-h-full object-contain" onerror="handleMissingViewImage(this, '${fallbackImg}', '${currentInfo.title}', '${p.title}')">
       </div>
 
       <!-- Bottom Status & Description -->
-      <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 border-t border-white/10 pt-2 z-10">
+      <div class="flex items-center justify-between gap-3 text-[11px] font-mono text-slate-400 border-t border-white/10 pt-2 z-10">
         <span>${currentInfo.desc}</span>
-        <span class="text-showroom-gold">규격: 1920x1080 (16:9 PNG)</span>
+        <span class="text-slate-500 uppercase tracking-[0.14em] shrink-0">${p.categoryName}</span>
       </div>
     </div>
   `;
@@ -2574,10 +2584,7 @@ function initDemoModal() {
   const startServerBtn = document.getElementById('btn-connect-demo');
   if (startServerBtn) {
     startServerBtn.addEventListener('click', () => {
-      const iframe = document.getElementById('demo-iframe');
-      if (iframe) {
-        iframe.src = 'http://127.0.0.1:8090/';
-      }
+      window.open('https://parkkm1110-creator.github.io/NIGHTRO-WebGL/', '_blank', 'noopener,noreferrer');
     });
   }
 }

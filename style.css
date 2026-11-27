@@ -1,132 +1,334 @@
 /* =========================================================
-   PARK GYEONG MIN — portfolio
-   Direction: modern editorial grid, hard edges, one accent
-   (signal lime), underground notes kept to grain / marquee /
-   mono telemetry labels. Colour tokens live in the Tailwind
-   config in index.html; this file holds what utilities can't.
+   PARK GYEONG MIN — portfolio (v4: True Porsche Architecture)
+   - Wide sculpted sans-serif typography (Outfit + Plus Jakarta Sans)
+   - Centered wordmark header + slide-out navigation drawer
+   - Full-bleed 100svh cinema hero
+   - Horizontal snap Model Lineup showcase (click -> 3D Showroom)
+   - Dual-canvas Porcelain (#F6F6F4) / Pure White (#FFFFFF) / Obsidian (#0B0B0D)
    ========================================================= */
 
 :root {
   color-scheme: dark;
-  --accent: #c6ff32;
-  --ink: #09090a;
-  --line: rgba(255, 255, 255, 0.08);
+  --accent: #c0fa2b;        /* API-tuned NIGHTRO Electric Lime (single accent) */
+  --ink: #0b0b0d;           /* Deep obsidian cinema */
+  --line: rgba(255, 255, 255, 0.11);
+
+  --porcelain: #f2f1ee;     /* Porsche Chalk light canvas */
+  --pure: #ffffff;          /* Pure architectural studio */
+  --ink-light: #111113;     /* Primary obsidian ink on light */
+  --muted-light: #626262;   /* API Granite Gray */
+  --line-light: #dcdad4;    /* API Warm Titanium 1px hairline */
 }
 
 html { scroll-behavior: smooth; }
-body { word-break: keep-all; }
-section[id] { scroll-margin-top: 4rem; }
+body {
+  word-break: keep-all;
+  background: var(--ink);
+  font-family: 'Satoshi', 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+section[id] { scroll-margin-top: 4.5rem; }
 ::selection { background: var(--accent); color: #000; }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar { width: 7px; height: 7px; }
 ::-webkit-scrollbar-track { background: var(--ink); }
-::-webkit-scrollbar-thumb { background: #27272b; }
+::-webkit-scrollbar-thumb { background: #2c2c32; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-/* Film grain (underground note) — fixed, never intercepts input */
-.grain {
-  position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: 0.07;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-}
+.grain { display: none; }
 
-/* 3D canvas (JS mounts into #canvas-container) */
+/* 3D canvas */
 #canvas-container { width: 100%; height: 100%; position: absolute; inset: 0; z-index: 0; }
 #canvas-container canvas { width: 100% !important; height: 100% !important; outline: none; display: block; }
 
-/* ---------- Type helpers ---------- */
+/* ---------- Dual-Canvas Surfaces ---------- */
+.surface-porcelain { background-color: var(--porcelain); color: var(--ink-light); }
+.surface-white { background-color: var(--pure); color: var(--ink-light); }
+.surface-obsidian { background-color: var(--ink); color: #f5f5f3; }
+
+/* ---------- Porsche Sculpted Typography ---------- */
+.tnum { font-variant-numeric: tabular-nums; }
+.sr-off { display: none !important; }
+
+.wordmark {
+  font-family: 'General Sans', sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.82rem, 1.35vw, 1.05rem);
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  padding-left: 0.36em;
+  color: #fff;
+  transition: opacity 0.25s;
+}
+.wordmark:hover { opacity: 0.78; }
+
 .eyebrow {
   font: 500 11px/1 'JetBrains Mono', monospace;
-  letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent);
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
 }
-.section-title {
-  font-family: 'Barlow Condensed', sans-serif; font-weight: 800; text-transform: uppercase;
-  letter-spacing: -0.01em; line-height: 0.88; color: #fff;
-  font-size: clamp(3.5rem, 9vw, 8rem);
+.eyebrow-light {
+  font: 600 11px/1 'JetBrains Mono', monospace;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted-light);
+  display: inline-flex; align-items: center; gap: 0.7rem;
+}
+.eyebrow-light::before {
+  content: ''; width: 20px; height: 1.5px; background: var(--ink-light); display: inline-block;
+}
+
+.p-display {
+  font-family: 'General Sans', 'Pretendard Variable', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
 }
 .hero-title {
-  font-size: clamp(3.6rem, 10.5vw, 9.25rem);
-  line-height: 0.85; letter-spacing: -0.02em;
+  font-family: 'General Sans', 'Pretendard Variable', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.8rem, 6.8vw, 6.2rem);
+  line-height: 1.04;
+  letter-spacing: -0.032em;
+}
+.section-title {
+  font-family: 'General Sans', 'Pretendard Variable', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  color: #fff;
+  font-size: clamp(2.2rem, 4.8vw, 4.2rem);
+}
+.section-title-light {
+  font-family: 'General Sans', 'Pretendard Variable', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  color: var(--ink-light);
+  font-size: clamp(2.2rem, 4.8vw, 4.2rem);
 }
 
-/* ---------- Header ---------- */
-.nav-link { display: inline-flex; gap: 0.5rem; padding: 0.25rem 0; transition: color 0.2s; }
-.nav-link span { color: var(--accent); opacity: 0.7; }
-.nav-link:hover { color: #fff; }
-.nav-link:hover span { opacity: 1; }
-
-/* ---------- Buttons (sharp, mono) ---------- */
-.btn-lime, .btn-ghost {
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
-  padding: 0.95rem 1.4rem; font: 600 12px/1 'JetBrains Mono', monospace;
-  letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer;
-  border: 1px solid var(--accent); transition: background 0.2s, color 0.2s, border-color 0.2s;
+/* ---------- Scroll-Adaptive Centered Header ---------- */
+.p-header {
+  position: fixed; top: 0; inset-inline: 0; z-index: 50;
+  height: 4.5rem;
+  background: linear-gradient(180deg, rgba(11,11,13,0.72) 0%, rgba(11,11,13,0) 100%);
+  transition: background-color 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
+  border-bottom: 1px solid transparent;
 }
-.btn-lime { background: var(--accent); color: #0a0a0a; }
-.btn-lime:hover { background: transparent; color: var(--accent); }
-.btn-ghost { border-color: rgba(255, 255, 255, 0.28); color: #fff; background: transparent; }
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-.btn-sm { padding: 0.62rem 0.95rem; font-size: 11px; }
-.live-dot { width: 6px; height: 6px; background: #0a0a0a; border-radius: 9999px; animation: blink 1.4s steps(2, jump-none) infinite; }
-.btn-lime:hover .live-dot { background: var(--accent); }
+.p-header.is-scrolled {
+  background: rgba(11, 11, 13, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom-color: rgba(255, 255, 255, 0.09);
+}
+
+/* Slide-out Porsche Menu Drawer */
+.p-drawer-backdrop {
+  position: fixed; inset: 0; z-index: 70;
+  background: rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.p-drawer-backdrop.is-open { opacity: 1; pointer-events: auto; }
+.p-drawer {
+  position: fixed; top: 0; bottom: 0; left: 0; z-index: 80;
+  width: min(400px, 88vw);
+  background: #ffffff; color: var(--ink-light);
+  transform: translateX(-100%);
+  transition: transform 0.42s cubic-bezier(.16, 1, .3, 1);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 2rem 2.25rem;
+  box-shadow: 24px 0 60px rgba(0, 0, 0, 0.35);
+}
+.p-drawer.is-open { transform: translateX(0); }
+.p-drawer-link {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 1rem 0; border-bottom: 1px solid var(--line-light);
+  font-family: 'General Sans', 'Pretendard Variable', sans-serif; font-size: 1.35rem; font-weight: 500;
+  color: var(--ink-light); transition: color 0.2s, padding-left 0.2s;
+}
+.p-drawer-link:hover { color: var(--muted-light); padding-left: 8px; }
+.p-drawer-link span.idx { font: 500 11px/1 'JetBrains Mono', monospace; color: var(--muted-light); }
+
+/* ---------- Buttons (Porsche Tactile Minimalism) ---------- */
+.btn-white, .btn-lime, .btn-ghost, .btn-obsidian, .btn-light-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.65rem;
+  padding: 0.95rem 1.75rem;
+  border-radius: 3px;
+  font: 500 13px/1 'General Sans', 'Pretendard Variable', sans-serif;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 0.24s, color 0.24s, border-color 0.24s, transform 0.24s;
+}
+.btn-white { background: #ffffff; color: #0e0e10; border: 1px solid #ffffff; font-weight: 600; }
+.btn-white:hover { background: var(--accent); border-color: var(--accent); color: #0a0a0a; }
+
+.btn-lime { background: var(--accent); color: #0a0a0a; border: 1px solid var(--accent); font-weight: 600; }
+.btn-lime:hover { background: #ffffff; border-color: #ffffff; color: #0a0a0a; }
+
+.btn-ghost { border: 1px solid rgba(255, 255, 255, 0.38); color: #fff; background: rgba(11, 11, 13, 0.28); backdrop-filter: blur(10px); }
+.btn-ghost:hover { border-color: #fff; background: rgba(255, 255, 255, 0.14); }
+
+.btn-obsidian { background: var(--ink-light); color: #fff; border: 1px solid var(--ink-light); font-weight: 500; }
+.btn-obsidian:hover { background: var(--accent); border-color: var(--accent); color: #0b0b0d; font-weight: 600; }
+
+.btn-light-ghost { background: transparent; color: var(--ink-light); border: 1px solid #c9c9c4; }
+.btn-light-ghost:hover { border-color: var(--ink-light); background: var(--ink-light); color: #fff; }
+
+.btn-sm { padding: 0.65rem 1.15rem; font-size: 12px; }
+.live-dot { width: 6px; height: 6px; background: #0a0a0a; border-radius: 9999px; animation: blink 1.5s steps(2, jump-none) infinite; }
+.btn-obsidian .live-dot { background: var(--accent); }
+.btn-obsidian:hover .live-dot { background: #0b0b0d; }
+.btn-white .live-dot { background: #4d7c0f; }
 @keyframes blink { 50% { opacity: 0.2; } }
 
-/* ---------- Hero ---------- */
-.hero-grid {
-  position: absolute; inset: 0; pointer-events: none;
-  background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: calc(100% / 12) 100%;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
-          mask-image: linear-gradient(to bottom, #000 0%, transparent 85%);
+/* ---------- Full-Bleed Cinema Hero ---------- */
+.hero-backdrop { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.hero-backdrop img,
+.hero-backdrop video {
+  width: 100%; height: 100%; object-fit: cover; object-position: 56% 52%;
+  opacity: 0.88;
 }
-.marquee { overflow: hidden; }
-.marquee-track { display: flex; width: max-content; animation: marquee 38s linear infinite; }
-.marquee-track span { white-space: nowrap; padding-right: 2.2rem; }
-.marquee-track i { font-style: normal; color: var(--accent); margin: 0 1.1rem; }
-@keyframes marquee { to { transform: translateX(-50%); } }
+.hero-backdrop img {
+  transform: scale(1.03);
+  animation: heroDrift 26s ease-in-out infinite alternate;
+}
+.hero-backdrop::after {
+  content: ''; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(11,11,13,0.52) 0%, rgba(11,11,13,0.12) 38%, rgba(11,11,13,0.86) 88%, rgba(11,11,13,0.96) 100%),
+    linear-gradient(90deg, rgba(11,11,13,0.68) 0%, rgba(11,11,13,0.18) 55%, rgba(11,11,13,0) 100%);
+}
+@keyframes heroDrift {
+  from { transform: scale(1.03) translate3d(0, 0, 0); }
+  to   { transform: scale(1.09) translate3d(-1%, -0.8%, 0); }
+}
 
-/* ---------- Reveal (only when JS is running) ---------- */
-.js .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1); }
+/* ---------- Porsche Horizontal Fleet Carousel ---------- */
+.fleet-track {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1.25rem;
+  padding-bottom: 1.25rem;
+  scrollbar-width: none;
+}
+.fleet-track::-webkit-scrollbar { display: none; }
+.fleet-card {
+  flex: 0 0 min(82vw, 440px);
+  scroll-snap-align: start;
+  background: var(--porcelain);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--line-light);
+  transition: transform 0.35s cubic-bezier(.16,1,.3,1), box-shadow 0.35s, border-color 0.35s;
+  cursor: pointer;
+}
+.fleet-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--ink-light);
+  box-shadow: 0 28px 60px -24px rgba(14, 14, 16, 0.22);
+}
+.fleet-card .fleet-img img { transition: transform 0.8s cubic-bezier(.16,1,.3,1); }
+.fleet-card:hover .fleet-img img { transform: scale(1.06); }
+
+/* ---------- Reveal ---------- */
+.js .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1); }
 .js .reveal.is-in { opacity: 1; transform: none; }
 
-/* ---------- Project cards ---------- */
+/* ---------- Spec Strips ---------- */
+.spec-strip-light {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  background: var(--pure); border-radius: 4px; overflow: hidden;
+  border: 1px solid var(--line-light);
+}
+@media (min-width: 768px) { .spec-strip-light { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.spec-strip-light > div { padding: 1.2rem 1.4rem; border-right: 1px solid var(--line-light); border-bottom: 1px solid var(--line-light); min-width: 0; }
+.spec-strip-light dt { font: 500 10.5px/1 'JetBrains Mono', monospace; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-light); }
+.spec-strip-light dd { margin-top: 0.55rem; font: 600 14.5px/1.3 'General Sans', 'Pretendard Variable', sans-serif; color: var(--ink-light); font-variant-numeric: tabular-nums; }
+
+.spec-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+.spec-row .k { flex-shrink: 0; max-width: 42%; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #737373; }
+.spec-row .v { text-align: right; color: #fff; }
+
+/* ---------- Minimalist Porsche Project Cards ---------- */
 .project-card {
-  transition: border-color 0.25s, background-color 0.25s;
+  border-radius: 6px; overflow: hidden;
+  transition: transform 0.35s cubic-bezier(.16,1,.3,1), box-shadow 0.35s, border-color 0.35s;
   animation: rise 0.6s cubic-bezier(.16,1,.3,1) both;
 }
-.project-card:nth-child(2) { animation-delay: 0.05s; }
-.project-card:nth-child(3) { animation-delay: 0.1s; }
-.project-card:nth-child(4) { animation-delay: 0.15s; }
-.project-card:nth-child(5) { animation-delay: 0.2s; }
-.project-card:hover { border-color: var(--accent); background-color: #131315; }
-.project-card .card-media img { transition: transform 0.7s cubic-bezier(.16,1,.3,1); }
-.project-card:hover .card-media img { transform: scale(1.04); }
+.project-card:hover { transform: translateY(-4px); border-color: var(--ink-light); box-shadow: 0 28px 60px -24px rgba(14, 14, 16, 0.20); }
+.project-card .card-media img { transition: transform 0.8s cubic-bezier(.16,1,.3,1); }
+.project-card:hover .card-media img { transform: scale(1.045); }
 .project-card .card-cta { transition: gap 0.25s, color 0.25s; }
-.project-card:hover .card-cta { gap: 0.9rem; color: var(--accent); }
+.project-card:hover .card-cta { gap: 0.85rem; color: var(--ink-light); }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 
-/* ---------- Pipeline ---------- */
-.tool-icon { width: 36px; height: 36px; object-fit: contain; flex-shrink: 0; filter: grayscale(1) brightness(1.25); opacity: 0.8; transition: filter 0.3s, opacity 0.3s; }
-.tool-icon-photo { object-fit: cover; }
-.group:hover .tool-icon { filter: none; opacity: 1; }
-.tool-cell { transition: background-color 0.25s; }
-.tool-cell:hover { background-color: #131315; }
-.chip {
-  font: 500 10px/1 'JetBrains Mono', monospace; letter-spacing: 0.04em; padding: 0.4rem 0.55rem;
-  border: 1px solid rgba(255, 255, 255, 0.14); color: #d4d4d4;
+/* ---------- Pipeline Architectural Cards ---------- */
+.tool-badge-dark {
+  width: 44px; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  background: var(--ink-light); border-radius: 4px; padding: 9px;
+  transition: background-color 0.25s, box-shadow 0.25s;
 }
-.pipe-row:hover .chip { border-color: rgba(198, 255, 50, 0.4); }
+.group:hover .tool-badge-dark { background: #1a1a1d; box-shadow: inset 0 0 0 1.5px var(--accent); }
+.tool-icon { width: 100%; height: 100%; object-fit: contain; display: block; }
+.tool-icon-photo { object-fit: cover; border-radius: 2px; }
+
+.chip {
+  font: 500 10px/1 'JetBrains Mono', monospace; letter-spacing: 0.04em; padding: 0.42rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.16); color: #d4d4d4; border-radius: 2px;
+}
+.chip-accent { border-color: rgba(198, 255, 50, 0.45); color: var(--accent); }
+.chip-light {
+  font: 500 10.5px/1 'JetBrains Mono', 'Pretendard Variable', monospace; letter-spacing: 0.03em; padding: 0.45rem 0.65rem;
+  border: 1px solid var(--line-light); color: #44444c; background: var(--pure); border-radius: 2px;
+}
+
+/* ---------- Showroom Controller Tabs & Clean View ---------- */
+.sr-tabs { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; margin-bottom: 1rem; }
+.sr-tab {
+  display: flex; align-items: center; justify-content: center; gap: 0.35rem; padding: 0.65rem 0.4rem;
+  font: 600 10.5px/1 'JetBrains Mono', 'Pretendard Variable', monospace; letter-spacing: 0.03em; color: #a3a3a3;
+  transition: color 0.2s, background-color 0.2s;
+}
+.sr-tab + .sr-tab { border-left: 1px solid var(--line); }
+.sr-tab span { color: #525252; transition: color 0.2s; }
+.sr-tab:hover { color: #fff; }
+.sr-tab.is-active { color: #0a0a0a; background: var(--accent); }
+.sr-tab.is-active span { color: rgba(0, 0, 0, 0.55); }
+.sr-collapse { display: none; }
+
+#showroom .sr-panel, #showroom .sr-caption, #showroom .sr-hud-info {
+  transition: opacity 0.45s cubic-bezier(.16,1,.3,1), transform 0.45s cubic-bezier(.16,1,.3,1);
+}
+#showroom.is-clean .sr-panel { opacity: 0; transform: translateX(16px); pointer-events: none; }
+#showroom.is-clean .sr-caption, #showroom.is-clean .sr-hud-info { opacity: 0; transform: translateY(8px); }
+
+@media (max-width: 767px) {
+  #showroom .sr-panel {
+    top: auto; bottom: 0; left: 0; right: 0; width: 100%; max-width: none; max-height: 52vh;
+    border-left: 0; border-right: 0; border-bottom: 0; border-radius: 0; padding: 1rem 1rem 1.25rem;
+  }
+  #showroom .sr-panel.is-collapsed { overflow: hidden; }
+  #showroom .sr-panel.is-collapsed > :not(.sr-head):not(.sr-tabs) { display: none !important; }
+  #showroom .sr-panel.is-collapsed .sr-tabs { margin-bottom: 0; }
+  #showroom .sr-hud { padding-bottom: 8.75rem; }
+  #showroom.is-clean .sr-panel { transform: translateY(16px); }
+  .sr-collapse { display: inline-flex; }
+  .sr-tab, .sr-collapse { min-height: 44px; }
+}
 
 /* ---------- Contact ---------- */
 .contact-mail {
   display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem;
-  font-family: 'Barlow Condensed', sans-serif; font-weight: 800; letter-spacing: -0.01em; line-height: 0.95;
-  font-size: clamp(2.6rem, 8.2vw, 8.5rem); color: #fff; word-break: break-all; transition: color 0.25s;
+  font-family: 'General Sans', sans-serif; font-weight: 400; letter-spacing: -0.03em; line-height: 1.05;
+  font-size: clamp(2rem, 6vw, 5.2rem); color: #fff; word-break: break-all; transition: color 0.25s;
 }
 .contact-mail:hover { color: var(--accent); }
-.contact-arrow { font-weight: 500; transition: transform 0.3s cubic-bezier(.16,1,.3,1); }
+.contact-arrow { font-weight: 300; transition: transform 0.3s cubic-bezier(.16,1,.3,1); }
 .contact-mail:hover .contact-arrow { transform: translate(6px, -6px); }
-.link-row { display: flex; align-items: center; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+.link-row { display: flex; align-items: center; gap: 1rem; padding: 1.35rem 0; border-bottom: 1px solid var(--line); }
 
 /* ---------- Legacy hooks used by app.js ---------- */
 .color-btn.active { outline: 2px solid var(--accent); outline-offset: 2px; transform: scale(1.08); }
@@ -137,6 +339,217 @@ section[id] { scroll-margin-top: 4rem; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .marquee-track, .live-dot, .project-card { animation: none; }
+  .live-dot, .project-card, .hero-backdrop img { animation: none; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
+  #showroom .sr-panel, #showroom .sr-caption, #showroom .sr-hud-info { transition: none; }
+}
+
+/* =========================================================
+   v5 — Sensory Motion & Awwwards Micro-Interaction Layer
+   Opening curtain, scroll progress bar, adaptive chapter rail,
+   contextual follower cursor, magnetic buttons, specular card
+   glare + 3D tilt, teaser cinema scale-in, drag carousel bar.
+   ========================================================= */
+
+/* Top 2px scroll progress bar */
+.p-scroll-bar {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 95;
+  transform-origin: left center; transform: scaleX(0);
+  background: linear-gradient(90deg, rgba(192, 250, 43, 0.35) 0%, var(--accent) 100%);
+  pointer-events: none; will-change: transform;
+}
+
+/* Opening curtain preloader */
+.p-curtain {
+  position: fixed; inset: 0; z-index: 120;
+  background: #0b0b0d; color: #fff;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.4rem;
+  pointer-events: auto;
+}
+.p-curtain-bar {
+  width: min(240px, 60vw); height: 1px; background: rgba(255, 255, 255, 0.14); overflow: hidden;
+}
+.p-curtain-fill {
+  width: 100%; height: 100%; background: var(--accent);
+  transform-origin: left center; transform: scaleX(0);
+}
+
+/* Right floating chapter navigation rail (auto-inverts dark/light) */
+.p-rail {
+  position: fixed; right: 1.5rem; top: 50%; transform: translateY(-50%);
+  z-index: 45; display: none; flex-direction: column; align-items: flex-end; gap: 0.65rem;
+}
+@media (min-width: 1280px) { .p-rail { display: flex; } }
+.p-rail-item {
+  display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.2rem 0;
+  font: 500 10px/1 'JetBrains Mono', monospace; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35); transition: color 0.25s;
+}
+.p-rail-item .lbl { opacity: 0; transform: translateX(6px); transition: opacity 0.25s, transform 0.25s; }
+.p-rail-item:hover .lbl, .p-rail-item.is-active .lbl { opacity: 1; transform: none; }
+.p-rail-item .dot {
+  width: 5px; height: 5px; border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.28);
+  transition: height 0.3s cubic-bezier(.16,1,.3,1), background-color 0.25s;
+}
+.p-rail-item.is-active { color: #fff; }
+.p-rail-item.is-active .dot { height: 22px; background: var(--accent); }
+.p-rail.is-light .p-rail-item { color: rgba(17, 17, 19, 0.35); }
+.p-rail.is-light .p-rail-item .dot { background: rgba(17, 17, 19, 0.22); }
+.p-rail.is-light .p-rail-item.is-active { color: var(--ink-light); }
+.p-rail.is-light .p-rail-item.is-active .dot { background: var(--ink-light); }
+
+/* Contextual follower cursor (fine pointer desktop only) */
+.p-cursor {
+  position: fixed; top: 0; left: 0; z-index: 110; pointer-events: none;
+  display: none; align-items: center; justify-content: center;
+  width: 12px; height: 12px; border-radius: 9999px;
+  background: rgba(198, 255, 50, 0.85);
+  color: #0b0b0d;
+  font: 600 10px/1 'JetBrains Mono', monospace; letter-spacing: 0.14em; text-transform: uppercase;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  transition: width 0.28s cubic-bezier(.16,1,.3,1), height 0.28s cubic-bezier(.16,1,.3,1),
+              background-color 0.25s, color 0.25s, opacity 0.25s, border-color 0.25s;
+  white-space: nowrap; will-change: transform;
+}
+@media (hover: hover) and (pointer: fine) {
+  .p-cursor.is-ready { display: flex; }
+}
+.p-cursor.is-pill {
+  width: auto; height: 32px; padding: 0 14px;
+  background: rgba(11, 11, 13, 0.92); color: var(--accent);
+  border: 1px solid rgba(198, 255, 50, 0.55);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Specular glare + smooth 3D tilt on Fleet & Project cards */
+.fleet-card, .project-card {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.fleet-card::before, .project-card::before {
+  content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  opacity: 0; transition: opacity 0.35s ease;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.24), transparent 55%);
+}
+.fleet-card:hover::before, .project-card:hover::before { opacity: 1; }
+
+/* Fleet drag-to-scroll & progress track */
+.fleet-track { cursor: grab; }
+.fleet-track.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.fleet-progress {
+  margin-top: 1.5rem; height: 2px; background: var(--line-light); position: relative; overflow: hidden;
+}
+.fleet-progress-fill {
+  position: absolute; top: 0; left: 0; bottom: 0; width: 28%;
+  background: var(--ink-light);
+  transition: transform 0.18s ease-out;
+}
+
+/* Teaser cinema scale-in */
+.teaser-stage {
+  transform: scale(0.955); opacity: 0.82;
+  transition: transform 0.95s cubic-bezier(.16,1,.3,1), opacity 0.85s ease;
+}
+.teaser-stage.is-in { transform: scale(1); opacity: 1; }
+
+/* Magnetic button transition */
+.magnetic { will-change: transform; }
+
+/* Copy email toast */
+.p-toast {
+  position: fixed; bottom: 2rem; left: 50%; z-index: 115;
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  background: #111113; color: #fff; border: 1px solid rgba(198, 255, 50, 0.45);
+  padding: 0.75rem 1.25rem; border-radius: 4px;
+  font: 500 12px/1 'JetBrains Mono', 'Pretendard Variable', monospace;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  transition: opacity 0.28s, transform 0.28s cubic-bezier(.16,1,.3,1);
+}
+.p-toast.is-show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .p-curtain, .p-cursor { display: none !important; }
+  .teaser-stage { transform: none; opacity: 1; transition: none; }
+}
+
+/* =========================================================
+   v7 — Kinetic Typography, Scroll-Velocity Skew & Shutter
+   Inspired by Obys Agency, Locomotive, Studio Freight.
+   ========================================================= */
+.kt-word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.kt-word {
+  display: inline-block;
+  will-change: transform, opacity;
+  transform-origin: left bottom;
+}
+.kt-skew {
+  will-change: transform;
+  transform-origin: center center;
+}
+
+/* Section jump shutter wipe */
+.p-shutter {
+  position: fixed; inset: 0; z-index: 108; pointer-events: none;
+  background: #0b0b0d;
+  border-bottom: 2px solid var(--accent);
+  transform-origin: top center;
+  transform: scaleY(0);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-shutter { display: none !important; }
+  .kt-word, .kt-skew { transform: none !important; opacity: 1 !important; }
+}
+
+/* =========================================================
+   v13 — Sticky Sheet Peel & Page-Turn Scroll Transitions
+   Hero pins in place and recedes in depth while #teaser
+   and subsequent canvas-flip sections glide over like pages.
+   ========================================================= */
+html, body { overflow-x: clip; }
+
+#hero {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  will-change: transform;
+}
+.hero-dim {
+  position: absolute; inset: 0; z-index: 15; pointer-events: none;
+  background: #0b0b0d; opacity: 0; will-change: opacity;
+}
+
+main > section:not(#hero) {
+  position: relative;
+  z-index: 2;
+}
+.page-sheet {
+  box-shadow: 0 -26px 76px rgba(0, 0, 0, 0.38);
+  will-change: border-radius;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #hero { position: relative; transform: none !important; }
+  .hero-dim { display: none; }
+  .page-sheet { border-radius: 0 !important; }
+}
+
+/* v14 — Showroom & About exit recede polish */
+#showroom, #about { will-change: transform; transform-origin: center bottom; }
+.sheet-dim {
+  position: absolute; inset: 0; z-index: 35; pointer-events: none;
+  background: #0b0b0d; opacity: 0; will-change: opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  #showroom, #about { transform: none !important; }
+  .sheet-dim { display: none; }
 }

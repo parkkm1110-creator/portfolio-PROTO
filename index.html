@@ -4,17 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>박경민 (PARK GYEONG MIN) | 3D Technical Artist &amp; Game Developer</title>
-  <meta name="description" content="Maya 하드서페이스 모델링, Substance Painter 4K PBR, Unity 6 실시간 엔진 및 AI 에이전트 파이프라인을 융합한 1인 인터랙티브 3D & 게임 개발자 포트폴리오">
+  <meta name="description" content="Maya 하드서페이스 모델링, Substance Painter 2K PBR, Unity 6 실시간 엔진 및 AI 에이전트 파이프라인을 결합한 1인 인터랙티브 3D & 게임 개발자 포트폴리오">
 
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏎️</text></svg>">
 
   <script>document.documentElement.classList.add('js');</script>
 
-  <!-- Fonts: Barlow Condensed (display) / Space Grotesk (UI) / JetBrains Mono (telemetry) / Noto Sans KR (Korean) -->
+  <!-- Fonts: General Sans (Display) + Satoshi (UI) via Fontshare / Pretendard Variable (Korean) / JetBrains Mono (Telemetry) -->
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700;1,800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN. Token names (showroom-*) are kept on purpose: app.js builds class strings with them. -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -40,11 +44,11 @@
               500: '#737373', 600: '#525252', 700: '#404040', 800: '#262626', 900: '#171717', 950: '#0a0a0a'
             }
           },
-          borderRadius: { lg: '2px', xl: '3px', '2xl': '4px', '3xl': '4px' },
+          borderRadius: { lg: '4px', xl: '6px', '2xl': '6px', '3xl': '8px' },
           fontFamily: {
-            sans: ['"Space Grotesk"', '"Noto Sans KR"', 'sans-serif'],
-            display: ['"Barlow Condensed"', '"Noto Sans KR"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', '"Noto Sans KR"', 'monospace']
+            sans: ['"Satoshi"', '"Pretendard Variable"', 'Pretendard', '-apple-system', 'sans-serif'],
+            display: ['"General Sans"', '"Pretendard Variable"', 'Pretendard', 'sans-serif'],
+            mono: ['"JetBrains Mono"', '"Pretendard Variable"', 'monospace']
           }
         }
       }
@@ -96,100 +100,384 @@
   <!-- GSAP (Local) -->
   <script src="libs/gsap.min.js"></script>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=19">
 </head>
-<body class="bg-showroom-950 text-slate-200 font-sans antialiased selection:bg-showroom-gold selection:text-black overflow-x-hidden">
+<body class="bg-showroom-950 text-slate-200 font-sans antialiased selection:bg-showroom-gold selection:text-black overflow-x-clip">
+
+  <!-- Top 2px Scroll Progress Bar -->
+  <div id="p-scroll-bar" class="p-scroll-bar" aria-hidden="true"></div>
+
+  <!-- Opening Curtain Reveal -->
+  <div id="p-curtain" class="p-curtain" aria-hidden="true">
+    <div class="wordmark">Park Gyeong Min</div>
+    <div class="p-curtain-bar"><div id="p-curtain-fill" class="p-curtain-fill"></div></div>
+    <div id="p-curtain-pct" class="font-mono text-[11px] tracking-[0.22em] text-white/50 tnum">00%</div>
+  </div>
+
+  <!-- Contextual Follower Cursor (Desktop) -->
+  <div id="p-cursor" class="p-cursor" aria-hidden="true"></div>
+
+  <!-- Right Floating Chapter Rail (Auto-inverts Dark/Light) -->
+  <nav id="p-rail" class="p-rail" aria-label="섹션 챕터">
+    <a href="#hero" class="p-rail-item is-active" data-rail="hero"><span class="lbl">Top</span><span class="dot"></span></a>
+    <a href="#teaser" class="p-rail-item" data-rail="teaser"><span class="lbl">00 Teaser</span><span class="dot"></span></a>
+    <a href="#fleet" class="p-rail-item" data-rail="fleet"><span class="lbl">01 Lineup</span><span class="dot"></span></a>
+    <a href="#showroom" class="p-rail-item" data-rail="showroom"><span class="lbl">02 Showroom</span><span class="dot"></span></a>
+    <a href="#projects" class="p-rail-item" data-rail="projects"><span class="lbl">03 Work</span><span class="dot"></span></a>
+    <a href="#pipeline" class="p-rail-item" data-rail="pipeline"><span class="lbl">04 Pipeline</span><span class="dot"></span></a>
+    <a href="#about" class="p-rail-item" data-rail="about"><span class="lbl">05 About</span><span class="dot"></span></a>
+    <a href="#contact" class="p-rail-item" data-rail="contact"><span class="lbl">06 Contact</span><span class="dot"></span></a>
+  </nav>
+
+  <!-- Floating Toast -->
+  <div id="p-toast" class="p-toast" role="status" aria-live="polite"></div>
+
+  <!-- Section Jump Shutter Wipe -->
+  <div id="p-shutter" class="p-shutter" aria-hidden="true"></div>
 
   <div class="grain" aria-hidden="true"></div>
 
-  <!-- Header -->
-  <header class="fixed top-0 inset-x-0 z-50 bg-showroom-950/85 backdrop-blur-md border-b border-white/[0.08]">
-    <div class="max-w-[1400px] mx-auto px-5 md:px-10 h-16 flex items-center justify-between gap-6">
-      <a href="#hero" class="flex items-baseline gap-3 group min-w-0">
-        <span class="font-display font-extrabold text-[22px] leading-none tracking-tight uppercase text-white group-hover:text-showroom-gold transition-colors whitespace-nowrap">Park Gyeong Min</span>
-        <span class="hidden lg:inline font-mono text-[10px] text-slate-500 uppercase tracking-[0.18em] whitespace-nowrap">박경민 / 3D Artist &amp; Game Dev</span>
-      </a>
+  <!-- Porsche-Style Centered Wordmark Header -->
+  <header id="p-header" class="p-header">
+    <div class="max-w-[1440px] mx-auto px-5 md:px-10 h-full grid grid-cols-3 items-center">
+      <!-- Left: Minimal Menu Trigger -->
+      <div class="flex items-center gap-3">
+        <button type="button" id="btn-menu-open" class="inline-flex items-center gap-2.5 text-white/90 hover:text-showroom-gold transition-colors py-2 pr-3" aria-label="메뉴 열기" aria-expanded="false">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+          <span class="hidden sm:inline font-sans text-xs font-medium tracking-[0.14em] uppercase">Menu</span>
+        </button>
+      </div>
 
-      <nav class="hidden md:flex items-center gap-7 font-mono text-[11px] uppercase tracking-[0.14em] text-slate-400">
-        <a href="#showroom" class="nav-link"><span>01</span>Showroom</a>
-        <a href="#projects" class="nav-link"><span>02</span>Work</a>
-        <a href="#pipeline" class="nav-link"><span>03</span>Pipeline</a>
-        <a href="#about" class="nav-link"><span>04</span>About</a>
-        <a href="#contact" class="nav-link"><span>05</span>Contact</a>
-      </nav>
+      <!-- Center: Sculpted Wordmark -->
+      <div class="flex justify-center">
+        <a href="#hero" class="wordmark whitespace-nowrap">Park Gyeong Min</a>
+      </div>
 
-      <div class="flex items-center gap-2 shrink-0">
-        <button id="btn-audio-toggle" class="w-9 h-9 flex items-center justify-center border border-white/15 hover:border-showroom-gold text-slate-400 hover:text-showroom-gold transition-colors" title="엔진 앰비언스 사운드">
+      <!-- Right: Sound + Single Primary CTA -->
+      <div class="flex items-center justify-end gap-2.5">
+        <button id="btn-audio-toggle" class="w-9 h-9 rounded flex items-center justify-center border border-white/20 hover:border-showroom-gold text-white/75 hover:text-showroom-gold transition-colors" title="엔진 앰비언스 사운드">
           <i data-lucide="volume-x" class="w-4 h-4"></i>
         </button>
-        <button class="btn-launch-demo btn-lime btn-sm">
-          <span class="live-dot"></span>
-          <span>Play NIGHTRO</span>
-        </button>
+        <a href="https://parkkm1110-creator.github.io/NIGHTRO-WebGL/" target="_blank" rel="noopener noreferrer" class="btn-white btn-sm hidden sm:inline-flex">
+          <span class="live-dot"></span><span>Play NIGHTRO</span>
+        </a>
       </div>
     </div>
   </header>
 
-  <main class="relative z-10 pt-16">
+  <!-- Slide-out Porsche Navigation Drawer -->
+  <div id="p-drawer-backdrop" class="p-drawer-backdrop" aria-hidden="true"></div>
+  <aside id="p-drawer" class="p-drawer" aria-label="사이트 내비게이션">
+    <div>
+      <div class="flex items-center justify-between pb-6 border-b border-[#E5E5E2]">
+        <span class="font-display font-semibold tracking-[0.26em] text-xs uppercase text-[#111113]">Navigation</span>
+        <button type="button" id="btn-menu-close" class="p-2 -mr-2 text-[#63636A] hover:text-[#111113] transition-colors" aria-label="메뉴 닫기">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <nav class="mt-4">
+        <a href="#teaser" class="p-drawer-link"><span>Official Teaser</span><span class="idx">00</span></a>
+        <a href="#fleet" class="p-drawer-link"><span>Vehicle Lineup</span><span class="idx">01</span></a>
+        <a href="#showroom" class="p-drawer-link"><span>3D Studio Showroom</span><span class="idx">02</span></a>
+        <a href="#projects" class="p-drawer-link"><span>Selected Work</span><span class="idx">03</span></a>
+        <a href="#pipeline" class="p-drawer-link"><span>Production Pipeline</span><span class="idx">04</span></a>
+        <a href="#about" class="p-drawer-link"><span>About Creator</span><span class="idx">05</span></a>
+        <a href="#contact" class="p-drawer-link"><span>Contact</span><span class="idx">06</span></a>
+      </nav>
+    </div>
+    <div class="pt-6 border-t border-[#E5E5E2] space-y-3">
+      <a href="https://parkkm1110-creator.github.io/NIGHTRO-WebGL/" target="_blank" rel="noopener noreferrer" class="btn-obsidian w-full">
+        <span class="live-dot"></span><span>Play NIGHTRO WebGL</span><span aria-hidden="true">↗</span>
+      </a>
+      <div class="flex items-center justify-between text-xs text-[#63636A] font-mono pt-1">
+        <a href="https://github.com/parkkm1110-creator" target="_blank" rel="noopener noreferrer" class="hover:text-[#111113]">GitHub ↗</a>
+        <a href="https://krissv9mm1.artstation.com" target="_blank" rel="noopener noreferrer" class="hover:text-[#111113]">ArtStation ↗</a>
+      </div>
+    </div>
+  </aside>
 
-    <!-- HERO -->
-    <section id="hero" class="relative flex flex-col justify-between border-b border-white/[0.08] overflow-hidden" style="min-height:min(calc(100svh - 4rem), 920px)">
-      <div class="hero-grid" aria-hidden="true"></div>
+  <main class="relative z-10">
 
-      <div class="relative max-w-[1400px] w-full mx-auto px-5 md:px-10 pt-5 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.18em] text-slate-500">
-        <span>Portfolio — 2026</span>
-        <span class="hidden sm:inline">Technical 3D Artist / Game Developer</span>
-        <span class="text-showroom-gold">● Online</span>
+    <!-- HERO (FULL-BLEED 100SVH PORSCHE CINEMA) -->
+    <section id="hero" class="surface-obsidian relative h-[100svh] min-h-[680px] flex flex-col justify-end overflow-hidden">
+      <div id="hero-dim" class="hero-dim" aria-hidden="true"></div>
+      <div class="hero-backdrop" aria-hidden="true">
+        <video id="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/screenshots/RenderShot_20261019_023950_2x.png">
+          <source src="assets/videos/hero_loop.mp4" type="video/mp4">
+        </video>
       </div>
 
-      <div class="relative max-w-[1400px] w-full mx-auto px-5 md:px-10 py-6 md:py-9">
-        <h1 class="hero-title font-display font-extrabold uppercase text-white">
-          <span class="block">3D Art<span class="text-showroom-gold">+</span></span>
-          <span class="block">Engine<span class="text-showroom-gold">+</span></span>
-          <span class="block">AI Agent</span>
-        </h1>
-
-        <div class="mt-7 md:mt-10 grid md:grid-cols-12 gap-6 items-end">
-          <p class="md:col-span-6 text-lg md:text-2xl text-slate-200 leading-[1.35] font-medium tracking-tight">
-            아이디어 구상부터 실시간 렌더링, 플레이 가능한 게임까지.<br>
-            <span class="text-slate-500">한 사람이 끝까지 만듭니다.</span>
+      <div class="relative z-10 max-w-[1440px] w-full mx-auto px-6 md:px-14 pb-12 md:pb-20">
+        <div class="max-w-3xl">
+          <div class="eyebrow mb-5">3D Technical Artist · Game Developer</div>
+          <h1 class="hero-title text-white">
+            <span class="block">Built in 3D.</span>
+            <span class="block text-white/90">Driven in Real Time.</span>
+          </h1>
+          <p class="mt-6 text-base md:text-xl text-white/75 font-light leading-relaxed max-w-xl">
+            차량 10종 하드서페이스 모델링부터 Unity 6 물리 엔진, 플레이 가능한 드래그 레이싱 <strong class="text-white font-medium">NIGHTRO</strong>까지 — 1인 풀사이클 제작.
           </p>
-          <div class="md:col-span-6 flex flex-wrap gap-3 md:justify-end">
-            <button class="btn-launch-demo btn-lime">
-              <span>Play NIGHTRO</span><span aria-hidden="true">↗</span>
+
+          <div class="mt-9 flex flex-wrap items-center gap-3.5">
+            <a href="https://parkkm1110-creator.github.io/NIGHTRO-WebGL/" target="_blank" rel="noopener noreferrer" class="btn-white magnetic" data-cursor="PLAY ↗">
+              <span class="live-dot"></span><span>Play NIGHTRO</span><span aria-hidden="true">↗</span>
+            </a>
+            <a href="#teaser" class="btn-ghost magnetic"><span>Watch Final Trailer</span><span aria-hidden="true">↓</span></a>
+            <a href="#showroom" class="btn-ghost magnetic"><span>Enter 3D Showroom</span></a>
+          </div>
+        </div>
+
+        <div class="mt-12 md:mt-16 pt-6 border-t border-white/15 flex flex-wrap items-center justify-between gap-4 text-xs text-white/55 font-mono tracking-[0.14em] uppercase">
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <span><strong class="text-white font-medium tnum" data-count="10">10</strong> Production Vehicles</span>
+            <span><strong class="text-white font-medium">Unity 6</strong> URP &amp; HDRP</span>
+            <span><strong class="text-showroom-gold font-medium">NIGHTRO</strong> Live Beta V1</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <button type="button" id="btn-hero-video" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[2px] border border-white/25 hover:border-white text-white/80 hover:text-white transition-colors" aria-pressed="false" title="배경 영상 일시정지/재생">
+              <span id="hero-video-label">Pause Reel</span>
             </button>
-            <a href="#showroom" class="btn-ghost"><span>Enter Showroom</span><span aria-hidden="true">↓</span></a>
+            <a href="#teaser" class="hidden sm:inline-flex items-center gap-2 hover:text-white transition-colors">
+              <span>Scroll to explore</span><span aria-hidden="true">↓</span>
+            </a>
           </div>
-        </div>
-      </div>
-
-      <div class="relative border-t border-white/[0.08]">
-        <div class="max-w-[1400px] mx-auto px-5 md:px-10 grid grid-cols-3 divide-x divide-white/[0.08]">
-          <div class="py-4 pr-4 md:pr-8">
-            <div class="font-display font-extrabold text-3xl md:text-5xl leading-none text-white">10</div>
-            <div class="mt-1.5 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.14em] text-slate-500">Production vehicles</div>
-          </div>
-          <div class="py-4 px-4 md:px-8">
-            <div class="font-display font-extrabold text-3xl md:text-5xl leading-none text-white">1</div>
-            <div class="mt-1.5 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.14em] text-slate-500">Playable game / NIGHTRO</div>
-          </div>
-          <div class="py-4 pl-4 md:pl-8">
-            <div class="font-display font-extrabold text-3xl md:text-5xl leading-none text-showroom-gold">1</div>
-            <div class="mt-1.5 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.14em] text-slate-500">Creator, full cycle</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="marquee relative border-t border-white/[0.08] py-2.5" aria-hidden="true">
-        <div class="marquee-track font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500">
-          <span>Maya<i>/</i>Substance Painter<i>/</i>Unity 6<i>/</i>URP<i>/</i>C# Vehicle Dynamics<i>/</i>Three.js<i>/</i>WebGL<i>/</i>Antigravity<i>/</i>Codex<i>/</i>Gemini<i>/</i>Meshy<i>/</i></span>
-          <span>Maya<i>/</i>Substance Painter<i>/</i>Unity 6<i>/</i>URP<i>/</i>C# Vehicle Dynamics<i>/</i>Three.js<i>/</i>WebGL<i>/</i>Antigravity<i>/</i>Codex<i>/</i>Gemini<i>/</i>Meshy<i>/</i></span>
         </div>
       </div>
     </section>
 
-    <!-- 01 SHOWROOM -->
-    <section id="showroom" class="relative h-[88svh] min-h-[640px] max-h-[960px] flex flex-col justify-between overflow-hidden border-b border-white/5">
+    <!-- 00 OFFICIAL TEASER (LIGHT PORCELAIN GALLERY) -->
+    <section id="teaser" class="surface-porcelain page-sheet">
+      <div class="max-w-[1360px] mx-auto px-6 md:px-14 py-24 md:py-32">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+          <div>
+            <div class="eyebrow-light mb-4">00 — Official Teaser</div>
+            <div class="flex flex-wrap items-center gap-4">
+              <span class="inline-flex items-center px-3.5 py-2 rounded-[4px] bg-[#111113] shrink-0">
+                <img src="assets/icons/nightro_logo_white.png" alt="NIGHTRO" class="h-5 md:h-6 w-auto object-contain" />
+              </span>
+              <h2 class="section-title-light">Final Trailer</h2>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <a href="https://drive.google.com/file/d/1E0k13s-5tCQQNuqo3VaFSesjxzx__wPj/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="btn-light-ghost btn-sm">
+              <span>새 탭에서 보기</span><span aria-hidden="true">↗</span>
+            </a>
+            <a href="https://parkkm1110-creator.github.io/NIGHTRO-WebGL/" target="_blank" rel="noopener noreferrer" class="btn-obsidian btn-sm">
+              <span class="live-dot"></span><span>Play NIGHTRO</span><span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="teaser-stage reveal relative w-full aspect-video bg-black rounded-[6px] overflow-hidden shadow-[0_36px_90px_-28px_rgba(14,14,16,0.35)]">
+          <iframe
+            src="https://drive.google.com/file/d/1E0k13s-5tCQQNuqo3VaFSesjxzx__wPj/preview"
+            title="NIGHTRO : Drag Racing — Final Teaser Trailer"
+            class="w-full h-full border-0"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+            loading="lazy">
+          </iframe>
+        </div>
+
+        <dl class="spec-strip-light mt-7">
+          <div><dt>Title</dt><dd>NIGHTRO : Drag Racing</dd></div>
+          <div><dt>Teaser Pipeline</dt><dd>Unity HDRP Cinematic</dd></div>
+          <div><dt>Master Cut</dt><dd class="tnum">1080p · 60 fps</dd></div>
+          <div><dt>Playable Build</dt><dd>WebGL · URP 17.3</dd></div>
+        </dl>
+
+        <div class="mt-4 rounded-[4px] border border-[#E5E5E2] bg-white px-5 py-4 space-y-2.5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-start sm:items-center gap-3 text-xs text-[#44444C] leading-relaxed">
+              <span class="font-mono text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-[2px] bg-[#111113] text-[#C6FF32] shrink-0">HDRP Notice</span>
+              <span>본 티저 영상은 시네마틱 연출을 위해 <strong class="text-[#111113]">Unity HDRP (High Definition Render Pipeline)</strong> 환경에서 제작되었습니다. 브라우저 즉시 실행용 <strong class="text-[#111113]">NIGHTRO WebGL 라이브 데모 (URP 17.3 경량화 빌드)</strong>와는 조명·볼류메트릭·포스트 프로세싱 등 그래픽 표현에 차이가 있습니다.</span>
+            </div>
+            <span class="font-mono text-[11px] text-[#63636A] shrink-0">재생 지연 시 [새 탭에서 보기 ↗]</span>
+          </div>
+          <div class="pt-2.5 border-t border-[#ECECE8] flex items-start sm:items-center gap-3 text-xs text-[#44444C] leading-relaxed">
+            <span class="font-mono text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-[2px] bg-[#F2F1EE] text-[#111113] border border-[#DCDAD4] shrink-0">Beta V1</span>
+            <span>현재 공개된 <strong class="text-[#111113]">NIGHTRO WebGL</strong>은 베타(BETA V1) 빌드 특성상 일부 브라우저·기기 환경에서 간헐적으로 불안정할 수 있습니다. 모바일 기준 <strong class="text-[#111113]">Galaxy S23 FE (Exynos 2200 · RAM 8GB)</strong> 급 환경에서 실제 플레이 검증을 완료했습니다.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 VEHICLE LINEUP (PORSCHE HORIZONTAL MODEL SHOWCASE) -->
+    <section id="fleet" class="surface-white page-sheet border-y border-[#E5E5E2]">
+      <div class="max-w-[1440px] mx-auto px-6 md:px-14 py-24 md:py-32">
+        <div class="reveal flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <div class="eyebrow-light mb-4">01 — Vehicle Lineup</div>
+            <h2 class="section-title-light">Your 10-Car Garage.</h2>
+            <p class="mt-3 text-sm md:text-base text-[#63636A] max-w-xl">
+              Maya 하드서페이스 모델링과 Substance Painter 2K PBR로 완성한 전 차종 라인업. 카드를 클릭하면 아래 실시간 3D 쇼룸에서 해당 차량을 바로 로드합니다.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" id="btn-fleet-prev" class="magnetic w-11 h-11 rounded-full border border-[#D4D4CE] hover:border-[#111113] text-[#111113] flex items-center justify-center transition-colors" aria-label="이전 차량">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            </button>
+            <button type="button" id="btn-fleet-next" class="magnetic w-11 h-11 rounded-full border border-[#D4D4CE] hover:border-[#111113] text-[#111113] flex items-center justify-center transition-colors" aria-label="다음 차량">
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="fleet-track" class="fleet-track">
+          <article class="fleet-card" data-jump-car="bentley">
+            <div class="fleet-img relative aspect-[16/10] bg-[#0B0B0D] overflow-hidden">
+              <img src="assets/fleet/bentley.jpg" alt="1993 Bentley Turbo R" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-[2px] bg-[#111113]/85 text-[#C6FF32] font-mono text-[10px] backdrop-blur-sm">인게임 베타 탑재됨</span>
+            </div>
+            <div class="p-6 flex items-end justify-between gap-4">
+              <div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">Luxury Saloon · 2K GLB</div>
+                <h3 class="mt-1.5 font-display text-2xl font-medium text-[#111113]">1993 Bentley Turbo R</h3>
+              </div>
+              <span class="font-mono text-xs text-[#111113] shrink-0">3D 보기 →</span>
+            </div>
+          </article>
+
+          <article class="fleet-card" data-jump-car="lambo">
+            <div class="fleet-img relative aspect-[16/10] bg-[#0B0B0D] overflow-hidden">
+              <img src="assets/fleet/lambo.jpg" alt="2012 Lamborghini LP700-4" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-[2px] bg-[#111113]/85 text-[#C6FF32] font-mono text-[10px] backdrop-blur-sm">인게임 베타 탑재됨</span>
+            </div>
+            <div class="p-6 flex items-end justify-between gap-4">
+              <div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">V12 Supercar · 2K PBR</div>
+                <h3 class="mt-1.5 font-display text-2xl font-medium text-[#111113]">Lamborghini LP700-4</h3>
+              </div>
+              <span class="font-mono text-xs text-[#111113] shrink-0">3D 보기 →</span>
+            </div>
+          </article>
+
+          <article class="fleet-card" data-jump-car="bugatti">
+            <div class="fleet-img relative aspect-[16/10] bg-[#0B0B0D] overflow-hidden">
+              <img src="assets/fleet/bugatti.jpg" alt="2015 Bugatti Veyron 16.4" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-[2px] bg-[#111113]/85 text-[#C6FF32] font-mono text-[10px] backdrop-blur-sm">인게임 베타 탑재됨</span>
+            </div>
+            <div class="p-6 flex items-end justify-between gap-4">
+              <div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">W16 Hypercar · 2K PBR</div>
+                <h3 class="mt-1.5 font-display text-2xl font-medium text-[#111113]">Bugatti Veyron 16.4</h3>
+              </div>
+              <span class="font-mono text-xs text-[#111113] shrink-0">3D 보기 →</span>
+            </div>
+          </article>
+
+          <article class="fleet-card" data-jump-car="mustang">
+            <div class="fleet-img relative aspect-[16/10] bg-[#0B0B0D] overflow-hidden">
+              <img src="assets/fleet/mustang.jpg" alt="2013 Ford Mustang Shelby GT500" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-[2px] bg-[#111113]/85 text-[#C6FF32] font-mono text-[10px] backdrop-blur-sm">인게임 베타 탑재됨</span>
+            </div>
+            <div class="p-6 flex items-end justify-between gap-4">
+              <div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">Muscle · 2K PBR</div>
+                <h3 class="mt-1.5 font-display text-2xl font-medium text-[#111113]">Shelby GT500</h3>
+              </div>
+              <span class="font-mono text-xs text-[#111113] shrink-0">3D 보기 →</span>
+            </div>
+          </article>
+
+          <article class="fleet-card" data-jump-car="spano">
+            <div class="fleet-img relative aspect-[16/10] bg-[#0B0B0D] overflow-hidden">
+              <img src="assets/fleet/spano.jpg" alt="2016 GTA Spano" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-[2px] bg-[#111113]/85 text-[#C6FF32] font-mono text-[10px] backdrop-blur-sm">인게임 베타 탑재됨</span>
+            </div>
+            <div class="p-6 flex items-end justify-between gap-4">
+              <div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">Exotic · 2K PBR</div>
+                <h3 class="mt-1.5 font-display text-2xl font-medium text-[#111113]">2016 GTA Spano</h3>
+              </div>
+              <span class="font-mono text-xs text-[#111113] shrink-0">3D 보기 →</span>
+            </div>
+          </article>
+
+          <article class="fleet-card" data-jump-car="stinger">
+            <div class="fleet-img relative aspect-[16/10] bg-[#0B0B0D] overflow-hidden">
+              <img src="assets/fleet/stinger.jpg" alt="2018 Kia Stinger GT" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-[2px] bg-[#111113]/85 text-[#C6FF32] font-mono text-[10px] backdrop-blur-sm">인게임 베타 탑재됨</span>
+            </div>
+            <div class="p-6 flex items-end justify-between gap-4">
+              <div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">Sport Fastback · 2K PBR</div>
+                <h3 class="mt-1.5 font-display text-2xl font-medium text-[#111113]">Kia Stinger GT 3.3T</h3>
+              </div>
+              <span class="font-mono text-xs text-[#111113] shrink-0">3D 보기 →</span>
+            </div>
+          </article>
+
+          <article class="fleet-card" data-jump-car="svr">
+            <div class="fleet-img relative aspect-[16/10] bg-[#0B0B0D] overflow-hidden">
+              <img src="assets/fleet/svr.jpg" alt="2020 Range Rover Sport SVR" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-[2px] bg-[#111113]/85 text-[#C6FF32] font-mono text-[10px] backdrop-blur-sm">인게임 베타 탑재됨</span>
+            </div>
+            <div class="p-6 flex items-end justify-between gap-4">
+              <div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">Performance SUV · 2K PBR</div>
+                <h3 class="mt-1.5 font-display text-2xl font-medium text-[#111113]">Range Rover Sport SVR</h3>
+              </div>
+              <span class="font-mono text-xs text-[#111113] shrink-0">3D 보기 →</span>
+            </div>
+          </article>
+
+          <article class="fleet-card" data-jump-car="cobalt">
+            <div class="fleet-img relative aspect-[16/10] bg-[#0B0B0D] overflow-hidden">
+              <img src="assets/fleet/cobalt.jpg" alt="2012 Chevy Cobalt SS Pro" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-[2px] bg-[#111113]/85 text-[#C6FF32] font-mono text-[10px] backdrop-blur-sm">인게임 베타 탑재됨</span>
+            </div>
+            <div class="p-6 flex items-end justify-between gap-4">
+              <div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">Pro FWD Drag · 2K PBR</div>
+                <h3 class="mt-1.5 font-display text-2xl font-medium text-[#111113]">Chevy Cobalt SS Pro</h3>
+              </div>
+              <span class="font-mono text-xs text-[#111113] shrink-0">3D 보기 →</span>
+            </div>
+          </article>
+
+          <article class="fleet-card" data-jump-car="spark">
+            <div class="fleet-img relative aspect-[16/10] bg-[#0B0B0D] overflow-hidden">
+              <img src="assets/fleet/spark.jpg" alt="2010 Chevy Spark M300" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-[2px] bg-[#111113]/85 text-[#C6FF32] font-mono text-[10px] backdrop-blur-sm">인게임 베타 탑재됨</span>
+            </div>
+            <div class="p-6 flex items-end justify-between gap-4">
+              <div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">Compact Hatch · 2K PBR</div>
+                <h3 class="mt-1.5 font-display text-2xl font-medium text-[#111113]">Chevy Spark M300</h3>
+              </div>
+              <span class="font-mono text-xs text-[#111113] shrink-0">3D 보기 →</span>
+            </div>
+          </article>
+
+          <article class="fleet-card" data-jump-car="golf">
+            <div class="fleet-img relative aspect-[16/10] bg-[#0B0B0D] overflow-hidden">
+              <img src="assets/fleet/golf.jpg" alt="2012 VW Golf GTi" class="w-full h-full object-cover" loading="lazy" />
+              <span class="absolute top-4 left-4 px-2.5 py-1 rounded-[2px] bg-[#111113]/85 text-[#C6FF32] font-mono text-[10px] backdrop-blur-sm">인게임 베타 탑재됨</span>
+            </div>
+            <div class="p-6 flex items-end justify-between gap-4">
+              <div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">Hot Hatch · 2K PBR</div>
+                <h3 class="mt-1.5 font-display text-2xl font-medium text-[#111113]">VW Golf GTi</h3>
+              </div>
+              <span class="font-mono text-xs text-[#111113] shrink-0">3D 보기 →</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="fleet-progress" aria-hidden="true">
+          <div id="fleet-progress-fill" class="fleet-progress-fill"></div>
+        </div>
+        <div class="mt-3 flex items-center justify-between font-mono text-[10.5px] uppercase tracking-[0.16em] text-[#63636A]">
+          <span>Drag or use arrows to explore all 10 models</span>
+          <span class="tnum">10 / 10 In-Game Beta</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 3D STUDIO SHOWROOM -->
+    <section id="showroom" class="surface-obsidian page-sheet relative h-[92svh] min-h-[660px] max-h-[980px] flex flex-col justify-between overflow-hidden border-b border-white/10">
+      <div id="showroom-dim" class="sheet-dim" aria-hidden="true"></div>
       
       <!-- 3D Canvas Container -->
       <div id="canvas-container" class="absolute inset-0 z-0 cursor-grab active:cursor-grabbing">
@@ -197,21 +485,22 @@
       </div>
 
       <!-- Showroom caption (non-interactive) -->
-      <div class="pointer-events-none relative z-10 p-6 md:p-10 max-w-md">
-        <div class="eyebrow mb-4">01 — Showroom</div>
-        <h2 class="font-display font-extrabold uppercase leading-[0.86] tracking-tight text-6xl md:text-8xl text-white [text-shadow:0_2px_30px_rgba(0,0,0,0.45)]">Studio<br>Showroom</h2>
-        <p class="mt-5 text-sm text-slate-300 max-w-xs leading-relaxed [text-shadow:0_1px_12px_rgba(0,0,0,0.6)]">
-          Maya · Substance Painter 2K PBR로 만든 차량 10종. 우측 컨트롤러에서 차량, 조명, 각도, 머티리얼을 바꿔볼 수 있습니다.
+      <div class="sr-caption pointer-events-none relative z-10 p-6 md:p-12 max-w-lg">
+        <div class="eyebrow mb-3">02 — Interactive Configurator</div>
+        <h2 class="font-display font-medium leading-[1.04] tracking-[-0.03em] text-4xl md:text-6xl text-white [text-shadow:0_4px_30px_rgba(0,0,0,0.5)]">3D Studio Showroom</h2>
+        <p class="mt-4 text-sm text-white/70 max-w-sm leading-relaxed [text-shadow:0_1px_12px_rgba(0,0,0,0.6)]">
+          실시간 WebGL 3D 뷰어. 우측 컨트롤러에서 차량, 조명, 카메라 앵글, Flop 페인트 및 머티리얼 투명도를 직접 조작해 보세요.
         </p>
       </div>
 
       <!-- Controls Overlay: Floating Right Panel (Car Customizer) -->
-      <aside class="absolute top-8 right-6 md:right-10 z-20 w-80 max-w-[calc(100vw-3rem)] max-h-[calc(100vh-4rem)] overflow-y-auto bg-showroom-900/85 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl transition-all duration-300">
-        <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+      <aside class="sr-panel absolute top-8 right-6 md:right-10 z-20 w-80 max-w-[calc(100vw-3rem)] max-h-[calc(100vh-4rem)] overflow-y-auto bg-showroom-900/85 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl transition-all duration-300">
+        <div class="sr-head flex items-center justify-between border-b border-white/10 pb-3 mb-4">
           <div class="flex items-center gap-2">
             <i data-lucide="sliders" class="w-4 h-4 text-showroom-gold"></i>
             <span class="font-mono text-xs uppercase tracking-wider font-semibold text-white">SHOWROOM CONTROLLER</span>
           </div>
+          <button type="button" id="btn-sr-collapse" class="sr-collapse items-center px-2 font-mono text-[10px] text-slate-400 hover:text-showroom-gold" aria-expanded="true">접기 ▼</button>
           <!-- Dev Mode Lock/Unlock Toggle -->
           <button id="btn-dev-toggle" class="flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono border border-white/10 bg-white/5 hover:border-showroom-gold/50 hover:bg-showroom-gold/10 text-slate-400 hover:text-showroom-gold transition-all" title="개발자 정밀 디버그 튜너 모드 토글 (단축키: Alt + D)">
             <i data-lucide="lock" id="dev-lock-icon" class="w-3 h-3 text-slate-400"></i>
@@ -219,34 +508,41 @@
           </button>
         </div>
 
+        <!-- Controller tabs (progressive disclosure) -->
+        <div class="sr-tabs" role="tablist" aria-label="Showroom controller">
+          <button type="button" class="sr-tab is-active" role="tab" aria-selected="true" data-sr-tab="view"><span>01</span>차량 / 뷰</button>
+          <button type="button" class="sr-tab" role="tab" aria-selected="false" data-sr-tab="paint"><span>02</span>페인트</button>
+          <button type="button" class="sr-tab" role="tab" aria-selected="false" data-sr-tab="mat"><span>03</span>재질 튜너</button>
+        </div>
+
         <!-- 0. Live Vehicle Model Switcher -->
-        <div class="mb-5 pb-4 border-b border-white/10">
-          <label class="text-[11px] font-mono uppercase text-slate-400 block mb-2 tracking-wider flex justify-between">
+        <div class="mb-5">
+          <label data-sr-pane="view" class="text-[11px] font-mono uppercase text-slate-400 block mb-2 tracking-wider flex justify-between">
             <span class="flex items-center gap-1.5">
               <i data-lucide="car" class="w-3.5 h-3.5 text-showroom-gold"></i>
               <span>전시장 전시 차량 선택</span>
             </span>
             <span class="text-showroom-gold font-bold">1차 완성 3D 모델</span>
           </label>
-          <select id="vehicle-select" class="w-full bg-showroom-950 border border-showroom-gold/40 hover:border-showroom-gold text-white text-xs font-mono rounded-xl p-2.5 focus:outline-none focus:ring-1 focus:ring-showroom-gold cursor-pointer transition-all">
+          <select id="vehicle-select" data-sr-pane="view" class="w-full bg-showroom-950 border border-showroom-gold/40 hover:border-showroom-gold text-white text-xs font-mono rounded-xl p-2.5 focus:outline-none focus:ring-1 focus:ring-showroom-gold cursor-pointer transition-all">
             <option value="concept">Concept GT (Unity Flop Paint Lab 프로토타입)</option>
-            <option value="bentley" selected>1993 Bentley Turbo R (2K GLB)</option>
-            <option value="lambo">2012 Lamborghini LP700-4 (2K PBR)</option>
-            <option value="bugatti">2015 Bugatti Veyron 16.4 (2K PBR)</option>
-            <option value="mustang">2013 Ford Mustang Shelby GT500 (2K PBR)</option>
-            <option value="spano">2016 GTA Spano (2K PBR)</option>
-            <option value="stinger">2018 Kia Stinger GT 3.3T (2K PBR)</option>
-            <option value="svr">2020 Range Rover Sport SVR (2K PBR)</option>
-            <option value="cobalt">2012 Chevy Cobalt SS Pro (2K PBR)</option>
-            <option value="spark">2010 Chevy Spark M300 (2K PBR)</option>
-            <option value="golf">2012 VW Golf GTi (2K PBR)</option>
+            <option value="bentley" selected>1993 Bentley Turbo R (2K GLB) (인게임 베타 탑재됨)</option>
+            <option value="lambo">2012 Lamborghini LP700-4 (2K PBR) (인게임 베타 탑재됨)</option>
+            <option value="bugatti">2015 Bugatti Veyron 16.4 (2K PBR) (인게임 베타 탑재됨)</option>
+            <option value="mustang">2013 Ford Mustang Shelby GT500 (2K PBR) (인게임 베타 탑재됨)</option>
+            <option value="spano">2016 GTA Spano (2K PBR) (인게임 베타 탑재됨)</option>
+            <option value="stinger">2018 Kia Stinger GT 3.3T (2K PBR) (인게임 베타 탑재됨)</option>
+            <option value="svr">2020 Range Rover Sport SVR (2K PBR) (인게임 베타 탑재됨)</option>
+            <option value="cobalt">2012 Chevy Cobalt SS Pro (2K PBR) (인게임 베타 탑재됨)</option>
+            <option value="spark">2010 Chevy Spark M300 (2K PBR) (인게임 베타 탑재됨)</option>
+            <option value="golf">2012 VW Golf GTi (2K PBR) (인게임 베타 탑재됨)</option>
           </select>
-          <div id="vehicle-fixed-hint" class="hidden mt-2 text-[10px] font-mono text-amber-300/80 bg-amber-500/10 border border-amber-500/20 rounded-lg p-2">
+          <div id="vehicle-fixed-hint" data-sr-pane="view" class="hidden mt-2 text-[10px] font-mono text-amber-300/80 bg-amber-500/10 border border-amber-500/20 rounded-lg p-2">
             제작자 안내: 이 차량은 원본 4K→2K URP 베이크 텍스처(고정 컬러)로 렌더링되며, 턴테이블 회전·라이팅·와이어프레임 토폴로지 검증이 지원됩니다.
           </div>
 
           <!-- Material Transparency & PBR Live Tuner Studio -->
-          <div class="mt-3 pt-3 border-t border-white/10" id="mat-inspector-section">
+          <div data-sr-pane="mat" id="mat-inspector-section">
             <div class="flex items-center justify-between mb-1.5">
               <label class="text-[11px] font-mono uppercase text-slate-300 tracking-wider flex items-center gap-1.5 font-bold">
                 <i data-lucide="layers" class="w-3.5 h-3.5 text-showroom-gold"></i>
@@ -289,7 +585,7 @@
         </div>
 
         <!-- 1. Paint Color Switcher & Unity Flop Engine -->
-        <div class="mb-5" id="flop-paint-section">
+        <div class="mb-5" data-sr-pane="paint" id="flop-paint-section">
           <!-- All Vehicles Flop Disabled Notice Banner -->
           <div id="flop-disabled-banner" class="mb-3 text-[10px] font-mono text-amber-300/90 bg-amber-500/10 border border-amber-500/25 rounded-xl p-2.5 flex items-start gap-2 transition-all">
             <i data-lucide="info" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
@@ -436,7 +732,7 @@
       </div>
 
         <!-- 2. Studio Lighting Mode -->
-        <div class="mb-5">
+        <div class="mb-5" data-sr-pane="view">
           <label class="text-[11px] font-mono uppercase text-slate-400 block mb-2 tracking-wider">Studio Lighting Environment</label>
           <div class="grid grid-cols-3 gap-1.5 font-mono text-[10px]">
             <button class="light-btn px-2.5 py-1.5 rounded-lg border border-showroom-gold bg-showroom-gold/15 text-showroom-gold text-center transition-all" data-light="studio">
@@ -464,7 +760,7 @@
         </div>
 
         <!-- 3. Camera View Angles -->
-        <div class="mb-5">
+        <div class="mb-5" data-sr-pane="view">
           <label class="text-[11px] font-mono uppercase text-slate-400 block mb-2 tracking-wider">Camera Angles</label>
           <div class="grid grid-cols-4 gap-1 font-mono text-[10px]">
             <button class="cam-btn px-2 py-1.5 rounded border border-white/10 hover:border-showroom-gold bg-white/5 text-slate-300 hover:text-showroom-gold transition-all" data-cam="hero">
@@ -483,7 +779,7 @@
         </div>
 
         <!-- 4. Interactive Toggles -->
-        <div class="space-y-2 border-t border-white/10 pt-4">
+        <div class="space-y-2 border-t border-white/10 pt-4" data-sr-pane="view">
           <div class="flex items-center justify-between text-xs font-mono">
             <span class="text-slate-300 flex items-center gap-2">
               <i data-lucide="rotate-cw" class="w-3.5 h-3.5 text-showroom-gold"></i>
@@ -510,7 +806,7 @@
         </div>
 
         <!-- 5. Custom 3D Model Drag & Drop Zone -->
-        <div class="mt-4 border-t border-white/10 pt-3">
+        <div class="mt-4 border-t border-white/10 pt-3" data-sr-pane="view">
           <label for="model-file-input" class="group flex items-center justify-center gap-2 p-2.5 rounded-xl border border-dashed border-white/20 hover:border-showroom-gold/60 bg-white/5 hover:bg-showroom-gold/10 cursor-pointer transition-all">
             <i data-lucide="upload" class="w-4 h-4 text-slate-400 group-hover:text-showroom-gold transition-colors"></i>
             <span class="text-[11px] font-mono text-slate-400 group-hover:text-showroom-gold transition-colors">
@@ -521,234 +817,252 @@
         </div>
       </aside>
 
-      <!-- Bottom Status Bar -->
-      <div class="relative z-10 p-6 md:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-gradient-to-t from-showroom-950 via-showroom-950/80 to-transparent">
-        <div class="flex items-center gap-4 text-xs font-mono text-slate-400">
-          <div class="flex items-center gap-2">
+      <!-- Bottom telemetry HUD -->
+      <div class="sr-hud relative z-10 p-5 md:p-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 bg-gradient-to-t from-showroom-950 via-showroom-950/80 to-transparent">
+        <div class="sr-hud-info min-w-0">
+          <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-showroom-gold mb-2">Now Showing</div>
+          <div id="sr-hud-name" class="font-display font-extrabold uppercase text-2xl md:text-4xl leading-none text-white truncate">—</div>
+          <div id="sr-hud-tags" class="mt-2.5 flex flex-wrap gap-1.5"></div>
+        </div>
+        <div class="flex items-center gap-4 text-xs font-mono text-slate-400 shrink-0">
+          <div class="sr-hud-info hidden lg:flex items-center gap-3">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
             <span class="text-slate-300 font-semibold">WEBGL ACCELERATED</span>
+            <span class="text-white/20">|</span>
+            <span>좌클릭: 회전 / 우클릭: 이동 / 휠: 줌</span>
           </div>
-          <span class="hidden sm:inline text-white/20">|</span>
-          <span class="hidden sm:inline">좌클릭: 회전 / 우클릭: 이동 / 휠: 줌</span>
+          <button type="button" id="btn-clean-view" class="btn-ghost btn-sm" aria-pressed="false"><span id="clean-view-label">Clean View</span></button>
         </div>
-
-      </div>
-    </section>      </div>
-    </section>
-
-    <!-- 02 WORK -->
-    <section id="projects" class="max-w-[1400px] mx-auto px-5 md:px-10 py-24 md:py-32">
-      <div class="reveal flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-        <div>
-          <div class="eyebrow mb-5">02 — Selected Work</div>
-          <h2 class="section-title">Projects</h2>
-        </div>
-        <p class="max-w-sm text-sm text-slate-400 leading-relaxed">
-          C# 게임 로직, 로우폴 모델링, 2K PBR 텍스처링, 생성형 AI 에이전트 파이프라인까지. 실제로 만든 결과물입니다.
-        </p>
-      </div>
-
-      <div class="reveal flex flex-wrap gap-2 mb-8 font-mono text-[11px] uppercase tracking-[0.12em]" id="project-filters">
-        <button class="filter-btn active px-4 py-2 border border-white/15 bg-showroom-gold text-black font-semibold transition-colors" data-filter="all">All</button>
-        <button class="filter-btn px-4 py-2 border border-white/15 bg-showroom-800/80 hover:border-showroom-gold text-slate-300 transition-colors" data-filter="racing-game">Racing Game</button>
-        <button class="filter-btn px-4 py-2 border border-white/15 bg-showroom-800/80 hover:border-showroom-gold text-slate-300 transition-colors" data-filter="ai-tech">AI / Tech R&amp;D</button>
-        <button class="filter-btn px-4 py-2 border border-white/15 bg-showroom-800/80 hover:border-showroom-gold text-slate-300 transition-colors" data-filter="racing-fleet">3D Vehicles</button>
-      </div>
-
-      <!-- Projects Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="projects-grid">
-        <!-- Project Cards will be dynamically injected by app.js -->
       </div>
     </section>
 
-    <!-- 03 PIPELINE -->
-    <section id="pipeline" class="border-y border-white/[0.08] bg-showroom-900/60">
+    <!-- 02 WORK (LIGHT PORCELAIN GALLERY) -->
+    <section id="projects" class="surface-porcelain page-sheet border-b border-[#E2E2DE]">
       <div class="max-w-[1400px] mx-auto px-5 md:px-10 py-24 md:py-32">
-        <div class="reveal flex flex-col md:flex-row md:items-end justify-between gap-8 mb-14">
+        <div class="reveal flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
           <div>
-            <div class="eyebrow mb-5">03 — Pipeline</div>
-            <h2 class="section-title">3D Art<span class="text-showroom-gold">+</span><br>Engine<span class="text-showroom-gold">+</span><br>AI Agent</h2>
+            <div class="eyebrow-light mb-5">03 — Selected Work</div>
+            <h2 class="section-title-light">Selected Work</h2>
           </div>
-          <p class="max-w-sm text-sm text-slate-400 leading-relaxed">
-            아이디어 구상부터 최종 실시간 렌더링까지, 한 사람이 이어서 수행하는 제작 파이프라인입니다.
+          <p class="max-w-sm text-sm text-[#5A5A60] leading-relaxed">
+            C# 게임 로직, 로우폴 모델링, 2K PBR 텍스처링, 생성형 AI 에이전트 파이프라인까지. 실제로 만든 결과물입니다.
           </p>
         </div>
 
-        <div class="border-t border-white/[0.08]">
+        <div class="reveal flex flex-wrap gap-2 mb-10 font-mono text-[11px] uppercase tracking-[0.12em]" id="project-filters">
+          <button class="filter-btn active px-4 py-2.5 border border-[#0E0E10] bg-[#0E0E10] text-white font-semibold transition-colors" data-filter="all">All</button>
+          <button class="filter-btn px-4 py-2.5 border border-[#D8D8D4] bg-white hover:border-[#0E0E10] text-[#5A5A60] hover:text-[#0E0E10] transition-colors" data-filter="racing-game">Racing Game</button>
+          <button class="filter-btn px-4 py-2.5 border border-[#D8D8D4] bg-white hover:border-[#0E0E10] text-[#5A5A60] hover:text-[#0E0E10] transition-colors" data-filter="ai-tech">AI / Tech R&amp;D</button>
+          <button class="filter-btn px-4 py-2.5 border border-[#D8D8D4] bg-white hover:border-[#0E0E10] text-[#5A5A60] hover:text-[#0E0E10] transition-colors" data-filter="racing-fleet">3D Vehicles</button>
+        </div>
 
-        <div class="reveal pipe-row group grid grid-cols-12 gap-x-4 md:gap-x-8 gap-y-4 py-8 border-b border-white/[0.08]">
-          <div class="col-span-2 md:col-span-1 font-mono text-xs text-slate-500 pt-2">01</div>
-          <div class="col-span-10 md:col-span-4 flex items-start gap-4">
-            <img src="assets/icons/maya.svg" alt="Autodesk Maya" class="tool-icon " />
+        <!-- Projects Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="projects-grid">
+          <!-- Project Cards will be dynamically injected by app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 PIPELINE (PORSCHE 2x2 ARCHITECTURAL SPEC GRID) -->
+    <section id="pipeline" class="surface-white page-sheet border-b border-[#E5E5E2]">
+      <div class="max-w-[1360px] mx-auto px-6 md:px-14 py-24 md:py-32">
+        <div class="reveal flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+          <div>
+            <div class="eyebrow-light mb-4">04 — Production Pipeline</div>
+            <h2 class="section-title-light">From Concept to Real-Time.</h2>
+          </div>
+          <p class="max-w-sm text-sm text-[#63636A] leading-relaxed">
+            아이디어 구상부터 3D 모델링, 물리 엔진, AI 자동화까지 한 사람이 이어서 수행하는 제작 공정입니다.
+          </p>
+        </div>
+
+        <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="pipe-row group p-8 rounded-[6px] bg-[#F5F5F3] border border-[#E5E5E2] hover:border-[#111113] transition-colors flex flex-col justify-between gap-6">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="tool-badge-dark"><img src="assets/icons/maya.svg" alt="Autodesk Maya" class="tool-icon" /></div>
+                <div>
+                  <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">01 · Autodesk</span>
+                  <h3 class="font-display font-medium text-2xl text-[#111113] mt-0.5">Maya &amp; SubD</h3>
+                </div>
+              </div>
+            </div>
+            <p class="text-sm text-[#4A4A52] leading-relaxed">차량 외장 곡률 제어(SubD / NURBS)와 정확한 엣지 루프 설계로 고품질 리플렉션을 구현합니다. (ZBrush 보조)</p>
+            <div class="flex flex-wrap gap-1.5"><span class="chip-light">Maya 2024</span><span class="chip-light">SubD Topology</span><span class="chip-light">UV Unwrapping</span></div>
+          </div>
+
+          <div class="pipe-row group p-8 rounded-[6px] bg-[#F5F5F3] border border-[#E5E5E2] hover:border-[#111113] transition-colors flex flex-col justify-between gap-6">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="tool-badge-dark"><img src="assets/icons/substance.svg" alt="Adobe Substance 3D Painter" class="tool-icon" /></div>
+                <div>
+                  <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">02 · Adobe</span>
+                  <h3 class="font-display font-medium text-2xl text-[#111113] mt-0.5">Substance 3D Painter</h3>
+                </div>
+              </div>
+            </div>
+            <p class="text-sm text-[#4A4A52] leading-relaxed">카본 직조, 가죽 스티치, 브레이크 마모도 등 표면 마이크로 디테일을 2K/4K PBR 스마트 머티리얼로 제작합니다.</p>
+            <div class="flex flex-wrap gap-1.5"><span class="chip-light">2K / 4K PBR</span><span class="chip-light">Smart Materials</span><span class="chip-light">Micro Alphas</span></div>
+          </div>
+
+          <div class="pipe-row group p-8 rounded-[6px] bg-[#F5F5F3] border border-[#E5E5E2] hover:border-[#111113] transition-colors flex flex-col justify-between gap-6">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="tool-badge-dark"><img src="assets/icons/unity.svg" alt="Unity 6 Engine" class="tool-icon" /></div>
+                <div>
+                  <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">03 · Runtime</span>
+                  <h3 class="font-display font-medium text-2xl text-[#111113] mt-0.5">Unity 6 Engine</h3>
+                </div>
+              </div>
+            </div>
+            <p class="text-sm text-[#4A4A52] leading-relaxed">URP/HDRP 물리 기반 렌더링, C# 종방향 차량 동역학, 커스텀 셰이더 및 포스트 프로세싱을 통합 구축합니다.</p>
+            <div class="flex flex-wrap gap-1.5"><span class="chip-light">Unity 6000.3</span><span class="chip-light">URP 17.3 / HDRP</span><span class="chip-light">C# Dynamics</span></div>
+          </div>
+
+          <div class="pipe-row group p-8 rounded-[6px] bg-[#F5F5F3] border border-[#E5E5E2] hover:border-[#111113] transition-colors flex flex-col justify-between gap-6">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="tool-badge-dark"><img src="assets/icons/antigravity.png" alt="Google Antigravity &amp; AI Agent Stack" class="tool-icon" /></div>
+                <div>
+                  <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-[#63636A]">04 · Autonomous</span>
+                  <h3 class="font-display font-medium text-2xl text-[#111113] mt-0.5">AI Agent Stack</h3>
+                </div>
+              </div>
+            </div>
+            <p class="text-sm text-[#4A4A52] leading-relaxed">Codex 6.1 Sol의 정밀 설계와 Gemini 3.8 Flash의 초고속 구현을 결합해 1인 풀사이클 제작 속도를 5~10배 가속합니다.</p>
+            <div class="flex flex-wrap gap-1.5"><span class="chip-light">Antigravity</span><span class="chip-light">Codex 6.1 Sol</span><span class="chip-light">Gemini 3.8 Flash</span><span class="chip-light">Meshy AI</span></div>
+          </div>
+        </div>
+
+        <!-- Active AI Agent & Tool Ecosystem (Restored 3x2 Porsche Architectural Grid) -->
+        <div class="reveal mt-16 pt-12 border-t border-[#E5E5E2]">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 mb-8">
             <div>
-              <h3 class="font-display font-bold uppercase leading-none text-3xl md:text-4xl text-white group-hover:text-showroom-gold transition-colors">Maya &amp; SubD</h3>
-              <span class="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Autodesk</span>
+              <div class="eyebrow-light mb-2">Active AI Agent &amp; Tool Ecosystem</div>
+              <h3 class="font-display font-medium text-2xl md:text-3xl tracking-[-0.02em] text-[#111113]">5~10x Solo Production Stack</h3>
             </div>
+            <span class="font-mono text-[11px] text-[#63636A]">1인 풀사이클 제작 속도를 가속하는 생성형 AI 툴셋</span>
           </div>
-          <p class="col-span-12 md:col-span-4 text-sm text-slate-400 leading-relaxed">차량 외장 곡률 제어(SubD / NURBS), 정확한 토폴로지와 엣지 루프 설계로 고품질 리플렉션을 보장합니다. (기초 블록아웃 및 데시메이션 보조로 ZBrush 활용)</p>
-          <div class="col-span-12 md:col-span-3 flex flex-wrap content-start gap-1.5 md:justify-end"><span class="chip">Maya 2024</span><span class="chip">SubD Topology</span><span class="chip">UV Unwrapping</span><span class="chip">ZBrush (Aux)</span></div>
-        </div>
 
-        <div class="reveal pipe-row group grid grid-cols-12 gap-x-4 md:gap-x-8 gap-y-4 py-8 border-b border-white/[0.08]">
-          <div class="col-span-2 md:col-span-1 font-mono text-xs text-slate-500 pt-2">02</div>
-          <div class="col-span-10 md:col-span-4 flex items-start gap-4">
-            <img src="assets/icons/substance.svg" alt="Adobe Substance 3D Painter" class="tool-icon " />
-            <div>
-              <h3 class="font-display font-bold uppercase leading-none text-3xl md:text-4xl text-white group-hover:text-showroom-gold transition-colors">Substance 3D</h3>
-              <span class="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Adobe</span>
-            </div>
-          </div>
-          <p class="col-span-12 md:col-span-4 text-sm text-slate-400 leading-relaxed">정밀 카본 직조, 가죽 패턴 및 스티치, 브레이크 마모도 등 복잡한 표면 질감과 마이크로 디테일을 스마트 머티리얼과 프로시저럴 마스크로 섭스턴스 페인터 내에서 직접 정밀 완성합니다.</p>
-          <div class="col-span-12 md:col-span-3 flex flex-wrap content-start gap-1.5 md:justify-end"><span class="chip">Painter 2K/4K</span><span class="chip">Fabric &amp; Leather</span><span class="chip">Smart Materials</span><span class="chip">Micro Alphas</span></div>
-        </div>
-
-        <div class="reveal pipe-row group grid grid-cols-12 gap-x-4 md:gap-x-8 gap-y-4 py-8 border-b border-white/[0.08]">
-          <div class="col-span-2 md:col-span-1 font-mono text-xs text-slate-500 pt-2">03</div>
-          <div class="col-span-10 md:col-span-4 flex items-start gap-4">
-            <img src="assets/icons/unity.svg" alt="Unity 6 Engine" class="tool-icon " />
-            <div>
-              <h3 class="font-display font-bold uppercase leading-none text-3xl md:text-4xl text-white group-hover:text-showroom-gold transition-colors">Unity 6 Engine</h3>
-              <span class="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Runtime</span>
-            </div>
-          </div>
-          <p class="col-span-12 md:col-span-4 text-sm text-slate-400 leading-relaxed">URP/HDRP 기반 물리 기반 실시간 렌더링, C# 차량 동역학 물리 시뮬레이션, 커스텀 셰이더 및 포스트 프로세싱으로 완성도 높은 3D 인터랙티브 경험을 설계합니다.</p>
-          <div class="col-span-12 md:col-span-3 flex flex-wrap content-start gap-1.5 md:justify-end"><span class="chip">Unity 6 (6000.3)</span><span class="chip">URP 17.3</span><span class="chip">C# Dynamics</span><span class="chip">Shader Graph</span></div>
-        </div>
-
-        <div class="reveal pipe-row group grid grid-cols-12 gap-x-4 md:gap-x-8 gap-y-4 py-8 border-b border-white/[0.08]">
-          <div class="col-span-2 md:col-span-1 font-mono text-xs text-slate-500 pt-2">04</div>
-          <div class="col-span-10 md:col-span-4 flex items-start gap-4">
-            <img src="assets/icons/antigravity.png" alt="Google Antigravity &amp; AI Agent Stack" class="tool-icon " />
-            <div>
-              <h3 class="font-display font-bold uppercase leading-none text-3xl md:text-4xl text-white group-hover:text-showroom-gold transition-colors">AI Agent Stack</h3>
-              <span class="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.18em] text-slate-500">Autonomous</span>
-            </div>
-          </div>
-          <p class="col-span-12 md:col-span-4 text-sm text-slate-400 leading-relaxed">중요 연산(정밀 차량 물리, 커스텀 그래픽스 세팅, 아키텍처 명세)을 담당하는 Codex 6.1 Sol과 실제 코드·파이프라인을 초고속 대량 작성하는 Gemini 3.8 Flash를 유기적으로 결합하여 1인 제작 속도를 극대화합니다.</p>
-          <div class="col-span-12 md:col-span-3 flex flex-wrap content-start gap-1.5 md:justify-end"><span class="chip">Antigravity</span><span class="chip">Codex 6.1 Sol</span><span class="chip">Gemini 3.8 Flash</span><span class="chip">Meshy AI</span></div>
-        </div>
-        </div>
-
-        <!-- AI agent &amp; tool ecosystem -->
-        <div class="reveal mt-16">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5">
-            <div class="eyebrow">Active AI Agent &amp; Tool Ecosystem</div>
-            <span class="font-mono text-[11px] text-slate-500">1인 풀사이클 제작 속도를 5~10배 가속하는 생성형 AI 툴셋</span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-l border-t border-white/[0.08]">
-
-          <div class="tool-cell group p-5 border-r border-b border-white/[0.08]">
-            <div class="flex items-center gap-3 mb-3">
-              <img src="assets/icons/antigravity.png" alt="Google Antigravity" class="tool-icon " />
-              <div class="min-w-0">
-                <div class="text-sm font-semibold text-white group-hover:text-showroom-gold transition-colors truncate">Antigravity</div>
-                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 truncate">Google DeepMind</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="group p-6 rounded-[6px] bg-[#F5F5F3] border border-[#E5E5E2] hover:border-[#111113] transition-colors">
+              <div class="flex items-center gap-3.5 mb-3.5">
+                <div class="tool-badge-dark"><img src="assets/icons/antigravity.png" alt="Google Antigravity" class="tool-icon" /></div>
+                <div class="min-w-0">
+                  <div class="font-display text-base font-medium text-[#111113] group-hover:text-[#0B0B0D] transition-colors truncate">Antigravity</div>
+                  <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#63636A] truncate">Google DeepMind</div>
+                </div>
               </div>
+              <p class="text-xs text-[#4A4A52] leading-relaxed">자율 코딩 에이전트·Three.js 셰이더 및 풀사이클 파이프라인 지휘</p>
             </div>
-            <p class="text-xs text-slate-400 leading-relaxed">자율 코딩 에이전트·Three.js 셰이더 및 풀사이클 파이프라인 지휘</p>
-          </div>
 
-          <div class="tool-cell group p-5 border-r border-b border-white/[0.08]">
-            <div class="flex items-center gap-3 mb-3">
-              <img src="assets/icons/gemini.svg" alt="Google Gemini" class="tool-icon " />
-              <div class="min-w-0">
-                <div class="text-sm font-semibold text-white group-hover:text-showroom-gold transition-colors truncate">Gemini 3.8 Flash</div>
-                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 truncate">Production Workhorse</div>
+            <div class="group p-6 rounded-[6px] bg-[#F5F5F3] border border-[#E5E5E2] hover:border-[#111113] transition-colors">
+              <div class="flex items-center gap-3.5 mb-3.5">
+                <div class="tool-badge-dark"><img src="assets/icons/gemini.svg" alt="Google Gemini" class="tool-icon" /></div>
+                <div class="min-w-0">
+                  <div class="font-display text-base font-medium text-[#111113] group-hover:text-[#0B0B0D] transition-colors truncate">Gemini 3.8 Flash</div>
+                  <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#63636A] truncate">Production Workhorse</div>
+                </div>
               </div>
+              <p class="text-xs text-[#4A4A52] leading-relaxed">Sol의 README 명세 및 최적화 설계를 바탕으로 실제 코드와 시스템을 초고속·대량 생산</p>
             </div>
-            <p class="text-xs text-slate-400 leading-relaxed">Sol의 README 명세 및 최적화 설계를 바탕으로 실제 코드와 시스템을 초고속·대량 생산</p>
-          </div>
 
-          <div class="tool-cell group p-5 border-r border-b border-white/[0.08]">
-            <div class="flex items-center gap-3 mb-3">
-              <img src="assets/icons/openai.svg" alt="OpenAI Codex" class="tool-icon " />
-              <div class="min-w-0">
-                <div class="text-sm font-semibold text-white group-hover:text-showroom-gold transition-colors truncate">Codex 6.1 Sol</div>
-                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 truncate">Precision Compute Engine</div>
+            <div class="group p-6 rounded-[6px] bg-[#F5F5F3] border border-[#E5E5E2] hover:border-[#111113] transition-colors">
+              <div class="flex items-center gap-3.5 mb-3.5">
+                <div class="tool-badge-dark"><img src="assets/icons/openai.svg" alt="OpenAI Codex" class="tool-icon" /></div>
+                <div class="min-w-0">
+                  <div class="font-display text-base font-medium text-[#111113] group-hover:text-[#0B0B0D] transition-colors truncate">Codex 6.1 Sol</div>
+                  <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#63636A] truncate">Precision Compute Engine</div>
+                </div>
               </div>
+              <p class="text-xs text-[#4A4A52] leading-relaxed">중요 연산(정밀 차량 물리, 동역학 수식, 커스텀 그래픽스 세팅) 및 최적화 아키텍처 명세 수립</p>
             </div>
-            <p class="text-xs text-slate-400 leading-relaxed">중요 연산(정밀 차량 물리, 동역학 수식, 커스텀 그래픽스 세팅) 및 최적화 아키텍처 명세 수립</p>
-          </div>
 
-          <div class="tool-cell group p-5 border-r border-b border-white/[0.08]">
-            <div class="flex items-center gap-3 mb-3">
-              <img src="assets/icons/meshy.svg" alt="Meshy AI" class="tool-icon " />
-              <div class="min-w-0">
-                <div class="text-sm font-semibold text-white group-hover:text-showroom-gold transition-colors truncate">Meshy AI</div>
-                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 truncate">3D Gen AI</div>
+            <div class="group p-6 rounded-[6px] bg-[#F5F5F3] border border-[#E5E5E2] hover:border-[#111113] transition-colors">
+              <div class="flex items-center gap-3.5 mb-3.5">
+                <div class="tool-badge-dark"><img src="assets/icons/meshy.svg" alt="Meshy AI" class="tool-icon" /></div>
+                <div class="min-w-0">
+                  <div class="font-display text-base font-medium text-[#111113] group-hover:text-[#0B0B0D] transition-colors truncate">Meshy AI</div>
+                  <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#63636A] truncate">3D Gen AI</div>
+                </div>
               </div>
+              <p class="text-xs text-[#4A4A52] leading-relaxed">차량 베이스 볼륨 및 3D 실루엣 고속 추출 후 Maya 하드서페이스 정밀화</p>
             </div>
-            <p class="text-xs text-slate-400 leading-relaxed">차량 베이스 볼륨 및 3D 실루엣 고속 추출 후 Maya 하드서페이스 정밀화</p>
-          </div>
 
-          <div class="tool-cell group p-5 border-r border-b border-white/[0.08]">
-            <div class="flex items-center gap-3 mb-3">
-              <img src="assets/icons/stitch.png" alt="Google Stitch" class="tool-icon tool-icon-photo" />
-              <div class="min-w-0">
-                <div class="text-sm font-semibold text-white group-hover:text-showroom-gold transition-colors truncate">Stitch</div>
-                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 truncate">Google Labs</div>
+            <div class="group p-6 rounded-[6px] bg-[#F5F5F3] border border-[#E5E5E2] hover:border-[#111113] transition-colors">
+              <div class="flex items-center gap-3.5 mb-3.5">
+                <div class="tool-badge-dark"><img src="assets/icons/stitch.png" alt="Google Stitch" class="tool-icon tool-icon-photo" /></div>
+                <div class="min-w-0">
+                  <div class="font-display text-base font-medium text-[#111113] group-hover:text-[#0B0B0D] transition-colors truncate">Stitch</div>
+                  <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#63636A] truncate">Google Labs</div>
+                </div>
               </div>
+              <p class="text-xs text-[#4A4A52] leading-relaxed">GREE WebView 연동 인게임 레이스 HUD &amp; 튜토리얼 UI 고속 설계</p>
             </div>
-            <p class="text-xs text-slate-400 leading-relaxed">GREE WebView 연동 인게임 레이스 HUD &amp; 튜토리얼 UI 고속 설계</p>
-          </div>
 
-          <div class="tool-cell group p-5 border-r border-b border-white/[0.08]">
-            <div class="flex items-center gap-3 mb-3">
-              <img src="assets/icons/google-labs.svg" alt="Google Labs" class="tool-icon " />
-              <div class="min-w-0">
-                <div class="text-sm font-semibold text-white group-hover:text-showroom-gold transition-colors truncate">Google Labs</div>
-                <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 truncate">GenAI Media</div>
+            <div class="group p-6 rounded-[6px] bg-[#F5F5F3] border border-[#E5E5E2] hover:border-[#111113] transition-colors">
+              <div class="flex items-center gap-3.5 mb-3.5">
+                <div class="tool-badge-dark"><img src="assets/icons/google-labs.svg" alt="Google Labs" class="tool-icon" /></div>
+                <div class="min-w-0">
+                  <div class="font-display text-base font-medium text-[#111113] group-hover:text-[#0B0B0D] transition-colors truncate">Google Labs</div>
+                  <div class="font-mono text-[10px] uppercase tracking-[0.14em] text-[#63636A] truncate">GenAI Media</div>
+                </div>
               </div>
+              <p class="text-xs text-[#4A4A52] leading-relaxed">캘리퍼 30종 알파 텍스처, 카본 직조 패턴 및 실험적 생성형 프롬프트 파이프라인</p>
             </div>
-            <p class="text-xs text-slate-400 leading-relaxed">캘리퍼 30종 알파 텍스처, 카본 직조 패턴 및 실험적 생성형 프롬프트 파이프라인</p>
-          </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 04 ABOUT -->
-    <section id="about" class="max-w-[1400px] mx-auto px-5 md:px-10 py-24 md:py-32">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-14">
-        <div class="reveal lg:col-span-7">
-          <div class="eyebrow mb-6">04 — About</div>
-          <h2 class="text-4xl md:text-6xl font-bold leading-[1.1] tracking-tight text-white">
-            1인 제작의 한계를 넘는<br>
-            <span class="text-showroom-gold">차세대 인터랙티브</span><br>
-            3D 크리에이터
-          </h2>
-          <div class="mt-10 space-y-5 text-slate-400 leading-relaxed max-w-2xl">
-            <p>Maya를 활용한 정교한 3D 하드서페이스 서브디비전 모델링과 Substance Painter의 텍스처링(직조, 가죽 패턴, PBR 스마트 머티리얼) 노하우를 바탕으로, Unity 엔진 및 웹 3D 환경에서 완벽히 구동되는 인터랙티브 경험을 설계합니다. (ZBrush는 기초 블록아웃 및 데시메이션 보조로 활용)</p>
-            <p>단순한 3D 모델링에 그치지 않고 최신 AI 에이전트 도구를 능동적으로 활용하여 프로토타이핑, 텍스처 생성, 쉐이더 코드 작성, 시스템 로직 구축까지 전 과정을 1인이 기민하고 신속하게 완성하는 하이브리드 워크플로우를 실천하고 있습니다.</p>
+    <!-- 04 ABOUT (LIGHT PORCELAIN EDITORIAL) -->
+    <section id="about" class="surface-porcelain page-sheet relative">
+      <div id="about-dim" class="sheet-dim" aria-hidden="true"></div>
+      <div class="max-w-[1400px] mx-auto px-5 md:px-10 py-24 md:py-32">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-14">
+          <div class="reveal lg:col-span-7">
+            <div class="eyebrow-light mb-6">05 — About</div>
+            <h2 class="section-title-light">
+              1인 제작의 한계를 넘는<br>
+              <span class="text-[#626262]">차세대 인터랙티브</span><br>
+              3D 크리에이터
+            </h2>
+            <div class="mt-10 space-y-5 text-[#4A4A50] leading-relaxed max-w-2xl">
+              <p>Maya 하드서페이스 서브디비전 모델링과 Substance Painter의 2K PBR 텍스처링(카본 직조, 가죽 스티치, 스마트 머티리얼)을 기반으로, Unity 6와 웹 3D 환경에서 바로 동작하는 실시간 인터랙티브 결과물을 제작합니다. (ZBrush는 기초 블록아웃 및 데시메이션 보조로 활용)</p>
+              <p>단순한 3D 에셋 제작을 넘어 생성형 AI 에이전트를 개발 파이프라인에 통합해 프로토타이핑, 텍스처 제작, 커스텀 셰이더, C# 게임 로직까지 전 과정을 1인이 완주하는 하이브리드 워크플로우를 구축하고 있습니다.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="reveal lg:col-span-5 lg:pt-14">
-          <dl class="border-t border-white/[0.08] font-mono text-xs">
-            <div class="flex justify-between gap-6 py-4 border-b border-white/[0.08]"><dt class="text-slate-500 uppercase tracking-[0.14em]">Name</dt><dd class="text-white text-right">박경민 / PARK GYEONG MIN</dd></div>
-            <div class="flex justify-between gap-6 py-4 border-b border-white/[0.08]"><dt class="text-slate-500 uppercase tracking-[0.14em]">Role</dt><dd class="text-white text-right">Technical 3D Artist</dd></div>
-            <div class="flex justify-between gap-6 py-4 border-b border-white/[0.08]"><dt class="text-slate-500 uppercase tracking-[0.14em]">Focus</dt><dd class="text-white text-right">1인 개발 + AI Pipeline</dd></div>
-            <div class="flex justify-between gap-6 py-4 border-b border-white/[0.08]"><dt class="text-slate-500 uppercase tracking-[0.14em]">Contact</dt><dd class="text-right"><a href="mailto:parkkm1110@gmail.com" class="text-showroom-gold hover:underline">parkkm1110@gmail.com</a></dd></div>
-          </dl>
-          <div class="mt-10 grid grid-cols-3 gap-4">
-            <div><div class="font-display font-extrabold text-5xl leading-none text-white">100<span class="text-showroom-gold">%</span></div><div class="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-500">Full-cycle 1인 개발</div></div>
-            <div><div class="font-display font-extrabold text-5xl leading-none text-white">10</div><div class="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-500">Production cars</div></div>
-            <div><div class="font-display font-extrabold text-5xl leading-none text-white">1</div><div class="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-slate-500">Playable game</div></div>
+          <div class="reveal lg:col-span-5 lg:pt-14">
+            <dl class="border-t border-[#D8D8D4] font-mono text-xs bg-white px-6 py-2 border-x border-b">
+              <div class="flex justify-between gap-6 py-4 border-b border-[#E2E2DE]"><dt class="text-[#5A5A60] uppercase tracking-[0.14em]">Name</dt><dd class="text-[#0E0E10] font-semibold text-right">박경민 / PARK GYEONG MIN</dd></div>
+              <div class="flex justify-between gap-6 py-4 border-b border-[#E2E2DE]"><dt class="text-[#5A5A60] uppercase tracking-[0.14em]">Role</dt><dd class="text-[#0E0E10] font-semibold text-right">Technical 3D Artist</dd></div>
+              <div class="flex justify-between gap-6 py-4 border-b border-[#E2E2DE]"><dt class="text-[#5A5A60] uppercase tracking-[0.14em]">Focus</dt><dd class="text-[#0E0E10] font-semibold text-right">1인 개발 + AI Pipeline</dd></div>
+              <div class="flex justify-between gap-6 py-4"><dt class="text-[#626262] uppercase tracking-[0.14em]">Contact</dt><dd class="text-right"><a href="mailto:parkkm1110@gmail.com" class="text-[#111113] font-semibold underline decoration-[#C0FA2B] decoration-2 underline-offset-4 hover:bg-[#111113] hover:text-[#C0FA2B] px-1 transition-colors">parkkm1110@gmail.com</a></dd></div>
+            </dl>
+            <div class="mt-8 grid grid-cols-3 gap-4 border-t border-[#DCDAD4] pt-7">
+              <div><div class="font-display font-extrabold text-5xl leading-none text-[#111113] tnum"><span data-count="100">100</span><span class="text-[#626262]">%</span></div><div class="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-[#626262]">Full-cycle 1인 개발</div></div>
+              <div><div class="font-display font-extrabold text-5xl leading-none text-[#0E0E10] tnum" data-count="10">10</div><div class="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-[#5A5A60]">Production cars</div></div>
+              <div><div class="font-display font-extrabold text-5xl leading-none text-[#0E0E10] tnum">1</div><div class="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-[#5A5A60]">Playable game</div></div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 05 CONTACT -->
-    <section id="contact" class="border-t border-white/[0.08] bg-showroom-900/60">
+    <!-- 05 CONTACT (DARK OBSIDIAN FINALE) -->
+    <section id="contact" class="surface-obsidian page-sheet border-t border-white/[0.10]">
       <div class="max-w-[1400px] mx-auto px-5 md:px-10 pt-24 md:pt-32 pb-10">
         <div class="reveal">
-          <div class="eyebrow mb-6">05 — Contact</div>
+          <div class="eyebrow mb-6">06 — Contact</div>
           <p class="max-w-md text-sm text-slate-400 leading-relaxed mb-8">3D 모델링, Unity 인터랙티브 애플리케이션 개발, AI 기반 제작 파이프라인 협업 제안을 언제든 환영합니다.</p>
-          <a href="mailto:parkkm1110@gmail.com" class="contact-mail group">
-            <span>parkkm1110@gmail.com</span>
-            <span class="contact-arrow" aria-hidden="true">↗</span>
-          </a>
+          <div class="flex flex-wrap items-center gap-4">
+            <a href="mailto:parkkm1110@gmail.com" class="contact-mail group flex-1">
+              <span>parkkm1110@gmail.com</span>
+              <span class="contact-arrow" aria-hidden="true">↗</span>
+            </a>
+            <button type="button" id="btn-copy-email" class="btn-ghost btn-sm magnetic shrink-0">이메일 복사</button>
+          </div>
         </div>
 
         <div class="reveal mt-16 border-t border-white/[0.08] font-mono text-xs uppercase tracking-[0.14em]">
@@ -841,13 +1155,13 @@
         <div class="flex items-center gap-3">
           <div class="w-3 h-3 rounded-full bg-showroom-neon animate-pulse"></div>
           <div class="flex items-center gap-3">
-            <img src="assets/icons/nightro_logo.png" alt="NIGHTRO" class="h-7 max-w-[120px] object-contain shrink-0" />
+            <img src="assets/icons/nightro_logo_white.png" alt="NIGHTRO" class="h-7 max-w-[120px] object-contain shrink-0" />
             <div>
               <h3 class="font-mono text-sm md:text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
                 <span>NIGHTRO : Drag Racing</span>
                 <span class="text-[10px] px-2 py-0.5 rounded bg-showroom-neon/15 text-showroom-neon border border-showroom-neon/30">FULLY PLAYABLE</span>
               </h3>
-              <p class="text-[11px] font-mono text-slate-400">실제 작동 상용급 드래그 레이싱 · 종방향 물리 · 번아웃 · 7단 변속 · NOS · 14명 AI 캠페인</p>
+              <p class="text-[11px] font-mono text-slate-400">실시간 1:1 드래그 레이싱 · 종방향 물리 · 신호등 발진 · 패들 시프트 변속 · NOS · 캠페인 &amp; 랜덤 싱글플레이</p>
             </div>
           </div>
         </div>
@@ -871,7 +1185,7 @@
 
         <!-- Fallback Connection Guide Overlay (Shown when server is not loaded) -->
         <div id="demo-guide-overlay" class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-showroom-950/95 pointer-events-none">
-          <img src="assets/icons/nightro_logo.png" alt="NIGHTRO" class="h-10 max-w-[190px] object-contain mb-3 drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]">
+          <img src="assets/icons/nightro_logo_white.png" alt="NIGHTRO" class="h-10 max-w-[190px] object-contain mb-3 drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]">
           <h4 class="text-xl font-bold text-white uppercase font-mono mb-2">NIGHTRO : 실시간 1:1 드래그 레이싱 환경</h4>
           <p class="text-xs text-slate-400 font-mono max-w-lg mb-6 leading-relaxed">
             단순 기술 데모가 아닌 실제 작동하는 상용급 드래그 레이싱 게임 <strong class="text-white">NIGHTRO</strong>입니다. 로컬 시연 패키지(<code class="text-showroom-neon">B:\BUILD File\RaceDrag_Demo_20261021_Ready\START_DEMO.cmd</code>)가 실행되어 있다면 상단의 <strong>[게임 화면 연결]</strong>을 누르면 즉시 이 화면에서 실시간 플레이가 시작됩니다.
@@ -880,7 +1194,7 @@
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl w-full text-left font-mono text-[11px] mb-6">
             <div class="bg-showroom-900 border border-white/10 p-3 rounded-xl">
               <span class="text-showroom-gold block font-bold mb-1">Space</span>
-              <span class="text-slate-400">타이어 번아웃 예열 / 수동 RPM 준비</span>
+              <span class="text-slate-400">발진 전 수동 RPM 조절</span>
             </div>
             <div class="bg-showroom-900 border border-white/10 p-3 rounded-xl">
               <span class="text-showroom-neon block font-bold mb-1">L 키</span>
@@ -907,7 +1221,7 @@
       <!-- Controls Cheat Sheet Footer -->
       <div class="px-6 py-3 bg-showroom-950 border-t border-white/10 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400 gap-2">
         <div class="flex items-center gap-4">
-          <span>🎮 조작: <strong>Space</strong> (번아웃) · <strong>L</strong> (발진) · <strong>W/S</strong> (변속) · <strong>N</strong> (NOS)</span>
+          <span>🎮 조작: <strong>Space</strong> (RPM) · <strong>L</strong> (발진) · <strong>W/S</strong> (변속) · <strong>N</strong> (NOS)</span>
         </div>
         <div class="text-slate-500">
           Unity 6000.3.23f1 · URP 17.3.0 · WebGL Native Audio & DSP
@@ -917,20 +1231,547 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script src="data.js?v=20"></script>
+  <script src="app.js?v=20"></script>
   <script>
     // Initialize Lucide icons
     lucide.createIcons();
 
-    // Reveal-on-scroll (progressive: content stays visible if IntersectionObserver is missing)
+    // Porsche header scroll state + slide-out menu drawer + fleet carousel jump-to-showroom
+    (function () {
+      const header = document.getElementById('p-header');
+      const onScroll = () => header && header.classList.toggle('is-scrolled', window.scrollY > 40);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      const drawer = document.getElementById('p-drawer');
+      const backdrop = document.getElementById('p-drawer-backdrop');
+      const openBtn = document.getElementById('btn-menu-open');
+      const closeBtn = document.getElementById('btn-menu-close');
+      function setDrawer(open) {
+        if (!drawer || !backdrop) return;
+        drawer.classList.toggle('is-open', open);
+        backdrop.classList.toggle('is-open', open);
+        if (openBtn) openBtn.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      }
+      if (openBtn) openBtn.addEventListener('click', () => setDrawer(true));
+      if (closeBtn) closeBtn.addEventListener('click', () => setDrawer(false));
+      if (backdrop) backdrop.addEventListener('click', () => setDrawer(false));
+      if (drawer) drawer.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => setDrawer(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setDrawer(false); });
+
+      const track = document.getElementById('fleet-track');
+      const prev = document.getElementById('btn-fleet-prev');
+      const next = document.getElementById('btn-fleet-next');
+      if (track && prev) prev.addEventListener('click', () => track.scrollBy({ left: -460, behavior: 'smooth' }));
+      if (track && next) next.addEventListener('click', () => track.scrollBy({ left: 460, behavior: 'smooth' }));
+
+      document.querySelectorAll('[data-jump-car]').forEach(card => {
+        card.addEventListener('click', () => {
+          const car = card.dataset.jumpCar;
+          const select = document.getElementById('vehicle-select');
+          const showroom = document.getElementById('showroom');
+          if (select && car) {
+            select.value = car;
+            select.dispatchEvent(new Event('change'));
+          }
+          if (showroom) showroom.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    })();
+
+    // Reveal-on-scroll (replays cleanly whenever an element leaves and re-enters viewport)
     (function () {
       const els = document.querySelectorAll('.reveal');
       if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('is-in')); return; }
       const io = new IntersectionObserver((entries) => {
-        entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
-      }, { threshold: 0.12 });
+        entries.forEach(en => {
+          if (en.isIntersecting) en.target.classList.add('is-in');
+          else en.target.classList.remove('is-in');
+        });
+      }, { threshold: 0.08 });
       els.forEach(e => io.observe(e));
+    })();
+
+    // Showroom controller: tabs, mobile bottom sheet, clean view, telemetry HUD
+    (function () {
+      const section = document.getElementById('showroom');
+      const panel = section && section.querySelector('.sr-panel');
+      if (!panel) return;
+
+      const tabs = panel.querySelectorAll('.sr-tab');
+      const panes = panel.querySelectorAll('[data-sr-pane]');
+      const collapseBtn = document.getElementById('btn-sr-collapse');
+
+      function syncCollapse() {
+        if (!collapseBtn) return;
+        const collapsed = panel.classList.contains('is-collapsed');
+        collapseBtn.setAttribute('aria-expanded', String(!collapsed));
+        collapseBtn.textContent = collapsed ? '펼치기 ▲' : '접기 ▼';
+      }
+
+      function setPane(name) {
+        tabs.forEach(t => {
+          const on = t.dataset.srTab === name;
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-selected', String(on));
+        });
+        panes.forEach(p => p.classList.toggle('sr-off', p.dataset.srPane !== name));
+        if (name === 'mat') {
+          const matPanel = document.getElementById('mat-inspector-panel');
+          const matBtn = document.getElementById('btn-toggle-mat-inspector');
+          if (matPanel && matBtn && matPanel.classList.contains('hidden')) matBtn.click();
+        }
+      }
+
+      tabs.forEach(t => t.addEventListener('click', () => {
+        setPane(t.dataset.srTab);
+        panel.classList.remove('is-collapsed');
+        syncCollapse();
+      }));
+      setPane('view');
+
+      if (window.matchMedia('(max-width: 767px)').matches) panel.classList.add('is-collapsed');
+      if (collapseBtn) collapseBtn.addEventListener('click', () => { panel.classList.toggle('is-collapsed'); syncCollapse(); });
+      syncCollapse();
+
+      const cleanBtn = document.getElementById('btn-clean-view');
+      const cleanLabel = document.getElementById('clean-view-label');
+      if (cleanBtn) cleanBtn.addEventListener('click', () => {
+        const on = section.classList.toggle('is-clean');
+        cleanBtn.setAttribute('aria-pressed', String(on));
+        if (cleanLabel) cleanLabel.textContent = on ? 'Show Controls' : 'Clean View';
+      });
+
+      const select = document.getElementById('vehicle-select');
+      const hudName = document.getElementById('sr-hud-name');
+      const hudTags = document.getElementById('sr-hud-tags');
+      function updateHud() {
+        if (!select || !hudName || !hudTags) return;
+        const text = select.options[select.selectedIndex].text;
+        const tags = (text.match(/\(([^)]+)\)/g) || []).map(s => s.slice(1, -1));
+        hudName.textContent = text.split(' (')[0];
+        hudTags.innerHTML = tags.map(t => `<span class="chip${t.indexOf('인게임') > -1 ? ' chip-accent' : ''}">${t}</span>`).join('');
+      }
+      if (select) select.addEventListener('change', updateHud);
+      updateHud();
+    })();
+
+    // v5 Motion & Sensory Interaction Engine (respects reduced motion)
+    (function () {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      // 1. Opening Curtain Reveal + Hero Stagger
+      const curtain = document.getElementById('p-curtain');
+      const cFill = document.getElementById('p-curtain-fill');
+      const cPct = document.getElementById('p-curtain-pct');
+      if (curtain) {
+        if (reduced || typeof gsap === 'undefined') {
+          curtain.remove();
+        } else {
+          const prog = { v: 0 };
+          const tl = gsap.timeline({ onComplete: () => curtain.remove() });
+          tl.to(prog, {
+            v: 100, duration: 0.72, ease: 'power2.inOut',
+            onUpdate: () => {
+              if (cFill) cFill.style.transform = `scaleX(${prog.v / 100})`;
+              if (cPct) cPct.textContent = `${String(Math.round(prog.v)).padStart(2, '0')}%`;
+            }
+          })
+          .to(curtain, { yPercent: -100, duration: 0.82, ease: 'power4.inOut' }, '+=0.08')
+          .from('.hero-title > span', { y: 56, opacity: 0, duration: 0.95, stagger: 0.11, ease: 'power3.out' }, '-=0.45')
+          .from('#hero .btn-white, #hero .btn-ghost', { y: 20, opacity: 0, duration: 0.65, stagger: 0.07, ease: 'power3.out' }, '-=0.6');
+        }
+      }
+
+      // 2. Top Scroll Progress Bar + Hero Parallax + Hero Video Toggle
+      const scrollBar = document.getElementById('p-scroll-bar');
+      const heroMedia = document.querySelector('#hero .hero-backdrop video, #hero .hero-backdrop img');
+      const heroVid = document.getElementById('hero-video');
+      const heroVidBtn = document.getElementById('btn-hero-video');
+      const heroVidLbl = document.getElementById('hero-video-label');
+      if (heroVid && reduced) heroVid.pause();
+      if (heroVid && heroVidBtn) {
+        heroVidBtn.addEventListener('click', () => {
+          if (heroVid.paused) {
+            heroVid.play().catch(() => {});
+            heroVidBtn.setAttribute('aria-pressed', 'false');
+            if (heroVidLbl) heroVidLbl.textContent = 'Pause Reel';
+          } else {
+            heroVid.pause();
+            heroVidBtn.setAttribute('aria-pressed', 'true');
+            if (heroVidLbl) heroVidLbl.textContent = 'Play Reel';
+          }
+        });
+      }
+      const heroEl = document.getElementById('hero');
+      const heroDim = document.getElementById('hero-dim');
+      const showroomEl = document.getElementById('showroom');
+      const showroomDim = document.getElementById('showroom-dim');
+      const projectsEl = document.getElementById('projects');
+      const aboutEl = document.getElementById('about');
+      const aboutDim = document.getElementById('about-dim');
+      const contactEl = document.getElementById('contact');
+      const pageSheets = Array.from(document.querySelectorAll('.page-sheet'));
+      let heroWasCovered = false;
+
+      function replayHeroText() {
+        if (typeof gsap === 'undefined' || !heroEl) return;
+        const heroSpans = heroEl.querySelectorAll('.hero-title > span');
+        const heroBtns = heroEl.querySelectorAll('.btn-white, .btn-ghost');
+        gsap.killTweensOf(heroSpans);
+        gsap.killTweensOf(heroBtns);
+        gsap.fromTo(heroSpans,
+          { y: 54, skewY: 4, opacity: 0 },
+          { y: 0, skewY: 0, opacity: 1, duration: 0.88, stagger: 0.1, ease: 'power4.out' }
+        );
+        gsap.fromTo(heroBtns,
+          { y: 18, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.62, stagger: 0.06, ease: 'power3.out', delay: 0.14 }
+        );
+      }
+
+      function onScrollFX() {
+        const h = document.documentElement.scrollHeight - window.innerHeight;
+        const sy = window.scrollY;
+        const vh = window.innerHeight || 1;
+        if (scrollBar && h > 0) scrollBar.style.transform = `scaleX(${Math.min(1, Math.max(0, sy / h))})`;
+
+        if (!reduced) {
+          // 1) Hero sticky depth recede + TOP text replay trigger (sticky hero never leaves IO!)
+          const p = Math.min(1, Math.max(0, sy / vh));
+          if (sy > vh * 0.72) heroWasCovered = true;
+          else if (heroWasCovered && sy < vh * 0.25) {
+            heroWasCovered = false;
+            replayHeroText();
+          }
+          if (heroEl) heroEl.style.transform = p > 0.001 ? `scale(${(1 - p * 0.075).toFixed(4)})` : '';
+          if (heroDim) heroDim.style.opacity = (p * 0.62).toFixed(3);
+          if (heroMedia && sy < vh * 1.2) heroMedia.style.transform = `scale(${(1.02 + p * 0.08).toFixed(4)})`;
+
+          // 2) Showroom -> Projects depth recede (only when Projects climbs over Showroom)
+          if (showroomEl && projectsEl) {
+            const pTop = projectsEl.getBoundingClientRect().top;
+            const sp = Math.min(1, Math.max(0, (vh - pTop) / vh));
+            showroomEl.style.transform = sp > 0.01 ? `scale(${(1 - sp * 0.045).toFixed(4)})` : '';
+            if (showroomDim) showroomDim.style.opacity = (sp * 0.42).toFixed(3);
+          }
+
+          // 3) About -> Contact finale depth recede
+          if (aboutEl && contactEl) {
+            const cTop = contactEl.getBoundingClientRect().top;
+            const ap = Math.min(1, Math.max(0, (vh - cTop) / vh));
+            aboutEl.style.transform = ap > 0.01 ? `scale(${(1 - ap * 0.04).toFixed(4)})` : '';
+            if (aboutDim) aboutDim.style.opacity = (ap * 0.28).toFixed(3);
+          }
+
+          // 4) Page-sheet top corners unroll from 28px -> 0px
+          pageSheets.forEach(sheet => {
+            const top = sheet.getBoundingClientRect().top;
+            const t = Math.min(1, Math.max(0, top / (vh * 0.65)));
+            const r = (t * 28).toFixed(1);
+            sheet.style.borderTopLeftRadius = `${r}px`;
+            sheet.style.borderTopRightRadius = `${r}px`;
+          });
+        }
+      }
+      window.addEventListener('scroll', onScrollFX, { passive: true });
+      onScrollFX();
+
+      // 3. Auto-inverting Floating Chapter Rail
+      const rail = document.getElementById('p-rail');
+      const railLinks = rail ? Array.from(rail.querySelectorAll('.p-rail-item')) : [];
+      const lightSections = new Set(['teaser', 'fleet', 'projects', 'pipeline', 'about']);
+      if (rail && 'IntersectionObserver' in window) {
+        const secIO = new IntersectionObserver((entries) => {
+          entries.forEach(en => {
+            if (!en.isIntersecting) return;
+            const id = en.target.id;
+            railLinks.forEach(a => a.classList.toggle('is-active', a.dataset.rail === id));
+            rail.classList.toggle('is-light', lightSections.has(id));
+          });
+        }, { rootMargin: '-42% 0px -42% 0px', threshold: 0 });
+        document.querySelectorAll('main > section[id]').forEach(s => secIO.observe(s));
+      }
+
+      // 4. Fleet Carousel Grab-to-Scroll + Progress Bar
+      const track = document.getElementById('fleet-track');
+      const fleetFill = document.getElementById('fleet-progress-fill');
+      if (track) {
+        const syncFleetBar = () => {
+          if (!fleetFill) return;
+          const max = track.scrollWidth - track.clientWidth;
+          const ratio = max > 0 ? track.scrollLeft / max : 0;
+          fleetFill.style.transform = `translateX(${ratio * 257}%)`;
+        };
+        track.addEventListener('scroll', syncFleetBar, { passive: true });
+        syncFleetBar();
+
+        let isDown = false, startX = 0, startLeft = 0, moved = false;
+        track.addEventListener('mousedown', (e) => {
+          isDown = true; moved = false; startX = e.pageX; startLeft = track.scrollLeft;
+          track.classList.add('is-dragging');
+        });
+        window.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          const dx = e.pageX - startX;
+          if (Math.abs(dx) > 6) moved = true;
+          track.scrollLeft = startLeft - dx * 1.2;
+        });
+        window.addEventListener('mouseup', () => {
+          if (!isDown) return;
+          isDown = false; track.classList.remove('is-dragging');
+          if (moved) {
+            const stop = (ev) => { ev.stopPropagation(); ev.preventDefault(); };
+            track.addEventListener('click', stop, { capture: true, once: true });
+            setTimeout(() => track.removeEventListener('click', stop, { capture: true }), 50);
+          }
+        });
+      }
+
+      // 5. Contextual Follower Cursor + Specular Glare 3D Tilt + Magnetic Buttons (Desktop Fine Pointer)
+      if (!reduced && finePointer) {
+        const cursor = document.getElementById('p-cursor');
+        if (cursor) {
+          let mx = -100, my = -100, cx = -100, cy = -100;
+          window.addEventListener('mousemove', (e) => {
+            mx = e.clientX; my = e.clientY;
+            if (!cursor.classList.contains('is-ready')) cursor.classList.add('is-ready');
+            const target = e.target;
+            let label = '';
+            if (target.closest && target.closest('.fleet-card')) label = '3D VIEW';
+            else if (target.closest && target.closest('.project-card')) label = 'CASE STUDY';
+            else if (target.closest && target.closest('#canvas-container')) label = 'ORBIT 360°';
+            else if (target.closest && target.closest('[data-cursor]')) label = target.closest('[data-cursor]').dataset.cursor;
+            if (label) { cursor.textContent = label; cursor.classList.add('is-pill'); }
+            else { cursor.textContent = ''; cursor.classList.remove('is-pill'); }
+          }, { passive: true });
+          const tick = () => {
+            cx += (mx - cx) * 0.22; cy += (my - cy) * 0.22;
+            cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%)`;
+            requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+
+        // Specular glare + subtle 3D tilt (event delegation works for dynamic #projects-grid too!)
+        document.addEventListener('mousemove', (e) => {
+          const card = e.target.closest && e.target.closest('.fleet-card, .project-card');
+          if (!card) return;
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width;
+          const py = (e.clientY - r.top) / r.height;
+          card.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
+          card.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
+          const rx = (0.5 - py) * 4.5;
+          const ry = (px - 0.5) * 4.5;
+          card.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-4px)`;
+        }, { passive: true });
+        document.addEventListener('mouseout', (e) => {
+          const card = e.target.closest && e.target.closest('.fleet-card, .project-card');
+          if (card && !card.contains(e.relatedTarget)) card.style.transform = '';
+        });
+
+        // Magnetic CTAs
+        document.querySelectorAll('.magnetic').forEach(btn => {
+          btn.addEventListener('mousemove', (e) => {
+            const r = btn.getBoundingClientRect();
+            const dx = (e.clientX - (r.left + r.width / 2)) * 0.22;
+            const dy = (e.clientY - (r.top + r.height / 2)) * 0.22;
+            btn.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0)`;
+          });
+          btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+        });
+      }
+
+      // 6. Number Count-up (GSAP)
+      if (!reduced && typeof gsap !== 'undefined' && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(en => {
+            if (!en.isIntersecting) return;
+            io.unobserve(en.target);
+            const el = en.target;
+            const target = Number(el.dataset.count);
+            const o = { v: 0 };
+            gsap.to(o, { v: target, duration: 1.4, ease: 'power2.out', onUpdate: () => { el.textContent = Math.round(o.v); } });
+          });
+        }, { threshold: 0.6 });
+        document.querySelectorAll('[data-count]').forEach(c => io.observe(c));
+      }
+
+      // 7. Copy Email + Toast
+      const copyBtn = document.getElementById('btn-copy-email');
+      const toast = document.getElementById('p-toast');
+      if (copyBtn && toast) {
+        let timer;
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard && navigator.clipboard.writeText('parkkm1110@gmail.com').catch(() => {});
+          toast.textContent = '이메일 주소(parkkm1110@gmail.com)가 복사되었습니다.';
+          toast.classList.add('is-show');
+          clearTimeout(timer);
+          timer = setTimeout(() => toast.classList.remove('is-show'), 2400);
+        });
+      }
+
+      // 8. v7 Kinetic Typography: Word-Mask Slam + Telemetry Scramble + Scroll-Velocity Skew + Shutter Nav
+      if (!reduced && typeof gsap !== 'undefined') {
+        // 8a. Safe DOM-preserving word splitter (keeps <br> and colored <span>)
+        function splitHeadingWords(el) {
+          if (!el || el.dataset.ktSplit) return;
+          el.dataset.ktSplit = '1';
+          const walk = (node) => {
+            if (node.nodeType === 3) {
+              const text = node.nodeValue;
+              if (!text || !text.trim()) return;
+              const frag = document.createDocumentFragment();
+              text.split(/(\s+)/).forEach(part => {
+                if (!part) return;
+                if (/^\s+$/.test(part)) {
+                  frag.appendChild(document.createTextNode(part));
+                } else {
+                  const wrap = document.createElement('span');
+                  wrap.className = 'kt-word-wrap';
+                  const inner = document.createElement('span');
+                  inner.className = 'kt-word';
+                  inner.textContent = part;
+                  wrap.appendChild(inner);
+                  frag.appendChild(wrap);
+                }
+              });
+              node.parentNode.replaceChild(frag, node);
+            } else if (node.nodeType === 1 && node.tagName !== 'BR') {
+              Array.from(node.childNodes).forEach(walk);
+            }
+          };
+          Array.from(el.childNodes).forEach(walk);
+        }
+
+        document.querySelectorAll('main > section:not(#hero) h2, #pipeline h3.font-display').forEach(splitHeadingWords);
+
+        // 8b. Telemetry Scramble Decoder for eyebrows
+        const glyphs = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ/_#';
+        function scrambleDecode(el) {
+          if (!el) return;
+          if (!el.dataset.origText) el.dataset.origText = el.textContent.trim();
+          const finalTxt = el.dataset.origText;
+          let frame = 0;
+          const total = 18;
+          clearInterval(el._scrambleTimer);
+          el._scrambleTimer = setInterval(() => {
+            frame++;
+            const lockCount = Math.floor((frame / total) * finalTxt.length);
+            let out = '';
+            for (let i = 0; i < finalTxt.length; i++) {
+              const ch = finalTxt[i];
+              if (i < lockCount || ch === ' ' || ch === '—' || ch === '·') out += ch;
+              else out += glyphs[Math.floor(Math.random() * glyphs.length)];
+            }
+            el.textContent = out;
+            if (frame >= total) {
+              el.textContent = finalTxt;
+              clearInterval(el._scrambleTimer);
+            }
+          }, 24);
+        }
+
+        // 8c. Section Kinetic Choreography Player (runs on scroll enter & replays on nav jump)
+        function playSectionKinetic(sec) {
+          if (!sec) return;
+          const words = sec.querySelectorAll('.kt-word');
+          if (words.length) {
+            gsap.killTweensOf(words);
+            gsap.fromTo(words,
+              { yPercent: 120, skewY: 7, rotateZ: 1.5, opacity: 0 },
+              { yPercent: 0, skewY: 0, rotateZ: 0, opacity: 1, duration: 0.86, stagger: 0.042, ease: 'power4.out' }
+            );
+          }
+          sec.querySelectorAll('.eyebrow, .eyebrow-light').forEach(scrambleDecode);
+
+          const cards = sec.querySelectorAll('.fleet-card, .pipe-row, .spec-strip-light > div, #pipeline .grid > .group');
+          if (cards.length) {
+            gsap.killTweensOf(cards);
+            gsap.fromTo(cards,
+              { y: 32, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.72, stagger: 0.055, ease: 'power3.out', clearProps: 'transform' }
+            );
+          }
+        }
+
+        if ('IntersectionObserver' in window) {
+          const inView = new WeakSet();
+          const ktIO = new IntersectionObserver((entries) => {
+            entries.forEach(en => {
+              if (en.isIntersecting) {
+                if (!inView.has(en.target)) {
+                  inView.add(en.target);
+                  if (en.target.id === 'hero') {
+                    const heroSpans = en.target.querySelectorAll('.hero-title > span');
+                    gsap.killTweensOf(heroSpans);
+                    gsap.fromTo(heroSpans, { y: 48, opacity: 0 }, { y: 0, opacity: 1, duration: 0.85, stagger: 0.1, ease: 'power3.out' });
+                  } else {
+                    playSectionKinetic(en.target);
+                  }
+                }
+              } else {
+                inView.delete(en.target);
+              }
+            });
+          }, { threshold: 0.08 });
+          document.querySelectorAll('main > section[id]').forEach(s => {
+            if (s.id === 'hero') inView.add(s); // already played by opening curtain
+            ktIO.observe(s);
+          });
+        }
+
+        // 8d. Locomotive-style Scroll-Velocity Dynamic Skew (G-Force feel)
+        const skewTargets = Array.from(document.querySelectorAll('.section-title-light, .section-title, #fleet-track, #projects-grid'));
+        skewTargets.forEach(t => t.classList.add('kt-skew'));
+        let lastY = window.scrollY, currentSkew = 0;
+        function skewTick() {
+          const y = window.scrollY;
+          const vel = y - lastY;
+          lastY = y;
+          const targetSkew = Math.max(-4.2, Math.min(4.2, vel * 0.075));
+          currentSkew += (targetSkew - currentSkew) * 0.14;
+          if (Math.abs(currentSkew) > 0.02) {
+            const val = `skewY(${currentSkew.toFixed(2)}deg)`;
+            skewTargets.forEach(t => { t.style.transform = val; });
+          } else if (currentSkew !== 0) {
+            currentSkew = 0;
+            skewTargets.forEach(t => { t.style.transform = ''; });
+          }
+          requestAnimationFrame(skewTick);
+        }
+        requestAnimationFrame(skewTick);
+
+        // 8e. Shutter Wipe Transition when jumping via Chapter Rail or Drawer Menu
+        const shutter = document.getElementById('p-shutter');
+        if (shutter) {
+          document.querySelectorAll('#p-rail a[href^="#"], #p-drawer a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+              const id = link.getAttribute('href').slice(1);
+              const target = document.getElementById(id);
+              if (!target) return;
+              e.preventDefault();
+              gsap.killTweensOf(shutter);
+              const tl = gsap.timeline();
+              tl.set(shutter, { transformOrigin: 'top center', scaleY: 0 })
+                .to(shutter, { scaleY: 1, duration: 0.24, ease: 'power3.in' })
+                .add(() => {
+                  window.scrollTo({ top: target.offsetTop - 64, behavior: 'auto' });
+                })
+                .set(shutter, { transformOrigin: 'bottom center' })
+                .to(shutter, { scaleY: 0, duration: 0.34, ease: 'power3.out' })
+                .add(() => {
+                  if (id === 'hero') replayHeroText();
+                  else playSectionKinetic(target);
+                }, '-=0.18');
+            });
+          });
+        }
+      }
     })();
   </script>
 </body>

@@ -17,7 +17,9 @@ const mimeTypes = {
   '.json': 'application/json',
   '.fbx': 'application/octet-stream',
   '.glb': 'model/gltf-binary',
-  '.gltf': 'model/gltf+json'
+  '.gltf': 'model/gltf+json',
+  '.mp4': 'video/mp4',
+  '.webm': 'video/webm'
 };
 
 const server = http.createServer((req, res) => {
